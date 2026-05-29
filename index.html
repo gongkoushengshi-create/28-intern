@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>28卒 サマーインターン締め切り一覧</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Hiragino Sans", sans-serif; background: #f5f6fa; color: #222; min-height: 100vh; }
+
+    header { background: #1a1a2e; color: #fff; padding: 24px 32px 20px; }
+    header h1 { font-size: 1.5rem; font-weight: 700; }
+    header p  { font-size: .8rem; color: #aab; margin-top: 4px; }
+
+    .controls {
+      background: #fff;
+      border-bottom: 1px solid #e0e4ef;
+      padding: 12px 24px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      box-shadow: 0 2px 8px rgba(0,0,0,.06);
+    }
+
+    .search-box {
+      padding: 6px 12px 6px 32px;
+      border: 1.5px solid #c8cde0;
+      border-radius: 999px;
+      font-size: .85rem;
+      outline: none;
+      width: 200px;
+      background: #f8f9ff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.35-4.35'/%3E%3C/svg%3E") no-repeat 10px center;
+    }
+    .search-box:focus { border-color: #4a6cf7; }
+
+    .filter-group { display: flex; flex-wrap: wrap; gap: 5px; flex: 1; }
+    .filter-btn {
+      padding: 4px 12px;
+      border: 1.5px solid #c8cde0;
+      border-radius: 999px;
+      background: #fff;
+      font-size: .78rem;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all .15s;
+    }
+    .filter-btn:hover { border-color: #4a6cf7; color: #4a6cf7; }
+    .filter-btn.active { background: #4a6cf7; border-color: #4a6cf7; color: #fff; font-weight: 600; }
+
+    .right-controls { display: flex; gap: 8px; align-items: center; flex-shrink: 0; flex-wrap: wrap; }
+    .toggle-label { display: flex; align-items: center; gap: 5px; font-size: .8rem; cursor: pointer; user-select: none; white-space: nowrap; }
+    .toggle-label input { width: 15px; height: 15px; cursor: pointer; }
+    .sort-btn { padding: 4px 12px; border: 1.5px solid #c8cde0; border-radius: 999px; background: #fff; font-size: .78rem; cursor: pointer; white-space: nowrap; }
+    .sort-btn:hover { border-color: #4a6cf7; color: #4a6cf7; }
+
+    .summary { padding: 8px 24px; font-size: .78rem; color: #667; }
+
+    .table-wrap { padding: 0 24px 48px; overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 6px rgba(0,0,0,.07); font-size: .86rem; min-width: 900px; }
+    thead tr { background: #1a1a2e; color: #fff; }
+    thead th { padding: 11px 12px; text-align: left; font-weight: 600; white-space: nowrap; font-size: .82rem; }
+    thead th.sortable { cursor: pointer; }
+    thead th.sortable:hover { background: #2a2a4e; }
+
+    tbody tr.data-row { border-bottom: 1px solid #f0f2fa; transition: background .1s; }
+    tbody tr.data-row:hover { background: #f8f9ff; }
+    tbody tr.data-row.done-row { opacity: .38; }
+    tbody tr.data-row.today-row td:nth-child(2) { border-left: 3px solid #e74c3c; }
+    tbody tr.data-row.tomorrow-row td:nth-child(2) { border-left: 3px solid #e67e22; }
+
+    td { padding: 9px 12px; vertical-align: middle; }
+
+    /* Favorite button */
+    .fav-btn { background: none; border: none; font-size: 1.1rem; cursor: pointer; line-height: 1; padding: 2px 4px; border-radius: 4px; transition: transform .15s; }
+    .fav-btn:hover { transform: scale(1.2); }
+
+    /* Company cell */
+    .company-name { font-weight: 600; }
+    .industry-tag { display: inline-block; font-size: .68rem; color: #667; background: #f0f2fa; padding: 1px 6px; border-radius: 3px; margin-top: 2px; }
+    .program-name { font-size: .75rem; color: #889; margin-top: 2px; }
+
+    /* Deadline cell */
+    .deadline-date { font-weight: 700; }
+    .countdown { display: inline-block; font-size: .72rem; padding: 1px 6px; border-radius: 999px; margin-left: 5px; font-weight: 600; vertical-align: middle; }
+    .cd-urgent { background: #fde8e8; color: #c0392b; }
+    .cd-soon   { background: #fef3e2; color: #d35400; }
+    .cd-normal { background: #eafaf1; color: #1e8449; }
+    .cd-done   { background: #e0e4ef; color: #888; }
+
+    /* Status badge */
+    .status-badge { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: .7rem; font-weight: 700; margin-top: 3px; }
+    .sb-done     { background: #e0e4ef; color: #667; }
+    .sb-today    { background: #fde8e8; color: #c0392b; border: 1px solid #f5b7b1; }
+    .sb-tomorrow { background: #fef3e2; color: #d35400; border: 1px solid #f9d8b0; }
+    .sb-upcoming { background: #e8f4fd; color: #2874a6; border: 1px solid #aed6f1; }
+
+    /* Progress select */
+    .progress-select {
+      padding: 4px 6px;
+      border-radius: 6px;
+      border: 1.5px solid #c8cde0;
+      font-size: .75rem;
+      cursor: pointer;
+      font-weight: 600;
+      width: 100%;
+      min-width: 100px;
+      appearance: none;
+      text-align: center;
+    }
+    .prog-0 { background: #f0f2fa; color: #556; border-color: #c8cde0; }
+    .prog-1 { background: #d6eaf8; color: #1a5276; border-color: #7fb3d3; }
+    .prog-2 { background: #2471a3; color: #fff; border-color: #2471a3; }
+    .prog-3 { background: #e67e22; color: #fff; border-color: #e67e22; }
+    .prog-4 { background: #8e44ad; color: #fff; border-color: #8e44ad; }
+    .prog-5 { background: #1e8449; color: #fff; border-color: #1e8449; }
+    .prog-6 { background: #c0392b; color: #fff; border-color: #c0392b; }
+
+    /* Link button */
+    .link-btn { display: inline-block; padding: 3px 9px; background: #f0f2fa; border-radius: 5px; font-size: .74rem; color: #4a6cf7; text-decoration: none; border: 1px solid #d0d5f0; white-space: nowrap; }
+    .link-btn:hover { background: #4a6cf7; color: #fff; }
+
+    /* Memo button */
+    .memo-btn { background: none; border: 1.5px solid #c8cde0; border-radius: 6px; padding: 3px 8px; font-size: .78rem; cursor: pointer; color: #889; white-space: nowrap; }
+    .memo-btn:hover { border-color: #4a6cf7; color: #4a6cf7; }
+    .memo-btn.has-memo { border-color: #f39c12; color: #f39c12; background: #fef9e7; }
+
+    /* Memo row */
+    .memo-row td { padding: 0; background: #fffef5; border-bottom: 2px solid #f9d8a0; }
+    .memo-inner { padding: 8px 16px; display: flex; gap: 10px; align-items: flex-start; }
+    .memo-textarea {
+      flex: 1;
+      padding: 8px 10px;
+      border: 1.5px solid #e0d9a0;
+      border-radius: 6px;
+      font-size: .82rem;
+      font-family: inherit;
+      resize: vertical;
+      min-height: 60px;
+      background: #fff;
+      outline: none;
+    }
+    .memo-textarea:focus { border-color: #f39c12; }
+    .memo-label { font-size: .75rem; color: #a07a00; padding-top: 10px; white-space: nowrap; }
+
+    .empty { text-align: center; padding: 60px; color: #aab; font-size: .9rem; }
+
+    @media (max-width: 640px) {
+      header { padding: 16px; }
+      .controls { padding: 10px 14px; }
+      .table-wrap { padding: 0 10px 32px; }
+      .search-box { width: 140px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>28卒 サマーインターン 締め切り一覧</h1>
+  <p>最終更新: 2026-05-29　|　情報は収集時点のものです。各社公式サイトで必ずご確認ください。</p>
+</header>
+
+<div class="controls">
+  <input class="search-box" id="searchBox" type="search" placeholder="企業名で検索…">
+  <div class="filter-group" id="filterGroup"></div>
+  <div class="right-controls">
+    <label class="toggle-label"><input type="checkbox" id="favOnly"> ⭐ お気に入りのみ</label>
+    <label class="toggle-label"><input type="checkbox" id="hideFinished"> 締切済を隠す</label>
+    <button class="sort-btn" id="sortBtn">締切 ▲ 昇順</button>
+  </div>
+</div>
+
+<div class="summary" id="summary"></div>
+
+<div class="table-wrap">
+  <table id="mainTable">
+    <thead>
+      <tr>
+        <th style="width:36px"></th>
+        <th>企業名</th>
+        <th class="sortable" id="thDeadline">締め切り ▲</th>
+        <th style="min-width:110px">進捗</th>
+        <th>開催期間</th>
+        <th>採用サイト</th>
+        <th>メモ</th>
+      </tr>
+    </thead>
+    <tbody id="tbody"></tbody>
+  </table>
+  <div class="empty" id="empty" style="display:none">該当する企業が見つかりません</div>
+</div>
+
+<script>
+// ─── DATA ──────────────────────────────────────────────────────────────────
+// [業界, 企業名, プログラム名, 締め切り日, ステータス, 開催期間, 備考, URL]
+const DATA = [
+  ["IT・メガベンチャー","サイボウズ","エンジニア（第1期）","4/28","済","","","https://cybozu.co.jp/recruit/entry/intern/"],
+  ["IT・メガベンチャー","U-NEXT HOLDINGS","-","4/30","済","","","https://www.uext-holdings.co.jp/recruit/"],
+  ["IT・メガベンチャー","GMOインターネット","-","4/30","済","","","https://recruit.gmo.jp/engineer/jisedai/internship/"],
+  ["IT・メガベンチャー","リクルート","データスペシャリスト","5/8","済","","","https://www.recruit.co.jp/employment/students/"],
+  ["IT・メガベンチャー","DeNA","デザイナー","5/11","済","","","https://student.dena.com/"],
+  ["IT・メガベンチャー","サイボウズ","エンジニア（第2期）","5/12","済","","","https://cybozu.co.jp/recruit/entry/intern/"],
+  ["IT・メガベンチャー","ソフトバンク","-","5/18","済","","","https://recruit.softbank.jp/fresh/"],
+  ["IT・メガベンチャー","富士通","職場受入型・有償","5/26","済","","","https://www.fujitsu.com/jp/about/resources/newgraduates/"],
+  ["IT・メガベンチャー","日立システムズ","-","5/26","済","","","https://www.hitachi-systems.com/recruit/"],
+  ["IT・メガベンチャー","サイバーエージェント","-","5/28","済","","","https://www.cyberagent.co.jp/careers/students/"],
+  ["IT・メガベンチャー","Visional","プロダクト職","5/29","本日","","","https://visional.inc/recruit/"],
+  ["IT・メガベンチャー","電通デジタル","-","5/29","本日","","","https://www.dentsudigital.co.jp/recruit/"],
+  ["IT・メガベンチャー","レバレジーズ","Webエンジニア向け","5/30","明日","","","https://recruit.leverages.jp/"],
+  ["IT・メガベンチャー","メルカリ","就業型インターン（エンジニア・PM・データアナリスト）","5/31","未","","","https://mercan.mercari.com/intern/"],
+  ["IT・メガベンチャー","ラクスル","短期3days〜就業型","5/31","未","","","https://corp.raksul.com/careers/"],
+  ["IT・メガベンチャー","フューチャー","Project Camp / Engineer Camp","5/31","未","9月〜","選考直結型","https://www.future.co.jp/recruit/fresh/"],
+  ["IT・メガベンチャー","楽天","エンジニア","6/2","未","","","https://corp.rakuten.co.jp/careers/students/"],
+  ["IT・メガベンチャー","Sky","第1ターム","6/3","未","","","https://www.skygroup.jp/recruit/"],
+  ["IT・メガベンチャー","チームラボ","サマーインターンシップ","6/8","未","","","https://recruit.team-lab.com/"],
+  ["IT・メガベンチャー","チームラボ","サマーインターンシップ（第2期）","6/12","未","","","https://recruit.team-lab.com/"],
+  ["IT・メガベンチャー","DMM","エンジニア向け DMM Sprint","6/19","未","","","https://dmm-corp.com/recruit/new-graduate/"],
+  ["IT・メガベンチャー","GMOインターネット","テクノロジー（研究開発職）","6/19","未","","","https://recruit.gmo.jp/engineer/jisedai/internship/"],
+  ["IT・メガベンチャー","PKSHA Technology","アルゴリズムエンジニア","6/30","未","","","https://hrmos.co/pages/pkshatech/jobs"],
+  ["IT・メガベンチャー","ギフティ","エンジニア（企画〜実装）","6/30","未","","","https://giftee.co.jp/recruit/"],
+  ["IT・メガベンチャー","サイバーエージェント","3days インターンシップ","7/1","未","","","https://www.cyberagent.co.jp/careers/students/"],
+  ["IT・メガベンチャー","ログラス","5days エンジニア職","7/31","未","","","https://loglass.co.jp/recruit/"],
+  ["IT・メガベンチャー","レバレジーズ","Leverages Summer Internship","7/31","未","","","https://recruit.leverages.jp/"],
+  ["コンサル・シンクタンク","PwCコンサルティング","-","5/11","済","","","https://www.pwc.com/jp/ja/careers/student.html"],
+  ["コンサル・シンクタンク","PwCアドバイザリー","-","5/29","本日","","","https://www.pwc.com/jp/ja/careers/student.html"],
+  ["コンサル・シンクタンク","マッキンゼー","国内大学新卒採用インターン","5/31","未","8月","約20名・選考直結","https://www.mckinsey.com/jp/careers"],
+  ["コンサル・シンクタンク","デロイト トーマツ","Summer Job（複数部門）","5/31","未","","","https://careers2.deloitte.com/jp/ja/pages/careers/internship.html"],
+  ["コンサル・シンクタンク","日本総合研究所","ITサービス・戦略コンサル等","6/1","未","","複数コース","https://www.jri.co.jp/recruit/"],
+  ["コンサル・シンクタンク","BCG","-","6/3","未","","","https://careers.bcg.com/japan"],
+  ["コンサル・シンクタンク","ベイン・アンド・カンパニー","-","6/10","未","","","https://www.bain.com/careers/find-a-role/?country=Japan"],
+  ["コンサル・シンクタンク","アクセンチュア","-","6/18","未","","","https://www.accenture.com/jp-ja/careers/local/fresh-graduate"],
+  ["コンサル・シンクタンク","PwCコンサルティング","（別プログラム）","6/19","未","","","https://www.pwc.com/jp/ja/careers/student.html"],
+  ["コンサル・シンクタンク","博報堂コンサルティング","-","6/19","未","","","https://www.h-consulting.co.jp/"],
+  ["コンサル・シンクタンク","EYストラテジー・アンド・カンパニー","-","6/30","未","","","https://www.eyjapan.jp/careers/students/"],
+  ["コンサル・シンクタンク","KPMG FAS","-","6/30","未","","","https://home.kpmg/jp/ja/home/careers.html"],
+  ["外資金融","モルガン・スタンレー","情報技術部門","5/7","済","","","https://www.morganstanley.com/ja/people-opportunities/students/"],
+  ["外資金融","ゴールドマン・サックス","投資銀行部門","5/31","未","8〜9月","","https://www.goldmansachs.com/japan/careers/students/events/local-internship"],
+  ["外資金融","モルガン・スタンレー","Summer Insights Program","5/31","未","","","https://www.morganstanley.com/ja/people-opportunities/students/"],
+  ["外資金融","UBSグループ","Summer Job（対面）","5/31","未","","","https://www.ubs.com/global/en/careers/students-graduates.html"],
+  ["外資金融","J.P.モルガン","国内サマー・ワークショップ（複数部門）","要確認","未","8/4〜9/11（部門により異なる）","IB8/27-29・マーケッツ8/20-22等","https://careers.jpmorgan.com/global/en/students/programs"],
+  ["外資金融","ブラックロック","サマーインターン","要確認","未","8/24〜1週間","","https://careers.blackrock.com/"],
+  ["国内金融","三菱UFJ銀行","システムデジタル","5/18","済","","","https://www.bk.mufg.jp/career/"],
+  ["国内金融","NRI","ITソリューション（先行受付）","5/26","済","","","https://www.nri.com/jp/career/"],
+  ["国内金融","第一生命","-","5/29","本日","","","https://career.dai-ichi-life.co.jp/"],
+  ["国内金融","バンク・オブ・アメリカ","グローバルテクノロジー","5/31","未","","","https://careers.bankofamerica.com/en-us/students-and-graduates"],
+  ["国内金融","KPMG税理士法人","-","5/31","未","","","https://home.kpmg/jp/ja/home/careers.html"],
+  ["国内金融","日本政策金融公庫","-","5/31","未","","","https://www.jfc.go.jp/n/recruit/"],
+  ["国内金融","三菱UFJニコス","-","7/6","未","","","https://www.cr.mufg.jp/recruit/"],
+  ["商社","丸紅","Marubeni Summer Internship","5/31","未","8月〜","","https://www.marubeni.com/jp/recruit/"],
+  ["商社","三井物産","夏の1dayプログラム「志」ワークショップ","7/22","未","8/18・8/22・8/27・9/4・9/9（各1day）","対面（本店）","https://career.mitsui.com/"],
+  ["商社","住友商事","Sumisho Design Internship","要確認","未","8月下旬・5日間","約100名募集","https://www.sumitomocorp.com/ja/jp/recruit"],
+  ["商社","三菱商事","MC Gateway Session","8/6","未","8/7（1day・オンライン）","","https://www.mitsubishicorp.com/jp/ja/careerentry/"],
+  ["商社","伊藤忠商事","サマーインターン","要確認","未","","公式サイトで要確認","https://career.itochu.co.jp/student/internship/"],
+  ["メーカー・電機・精密","東芝","-","5/28","済","","","https://www.global.toshiba/jp/career/corporate/internship.html"],
+  ["メーカー・電機・精密","日本製鉄","-","5/31","未","","","https://www.nipponsteel.com/recruit/"],
+  ["メーカー・電機・精密","神戸製鋼","-","5/31","未","","","https://www.kobelco.co.jp/recruit/"],
+  ["メーカー・電機・精密","積水化学","-","5/31","未","","","https://www.sekisui.co.jp/person/freshers/internship/"],
+  ["メーカー・電機・精密","花王","-","5/31","未","","","https://www.kao.com/jp/corporate/jobs/"],
+  ["メーカー・電機・精密","ソニーセミコンダクタ（SSS）","-","6/1","未","8/24〜9/18（2〜4週間）","","https://recruit.sony-semicon.com/internship"],
+  ["メーカー・電機・精密","ソニーセミコンダクタ（SCK）","-","6/8","未","8/24〜9/4（1〜2週間）","","https://recruit.sony-semicon.com/internship"],
+  ["メーカー・電機・精密","キーエンス","早期選考直結オンライン説明会","5/30","明日","","ビジネス・エンジニア・S職","https://www.keyence-jobs.jp/"],
+  ["メーカー・電機・精密","キーエンス","ビジネス職1day仕事体験","5〜8月（随時）","未","","公式サイトで要確認","https://www.keyence-jobs.jp/"],
+  ["メーカー・電機・精密","ソニー（本体）","サマーインターン","要確認","未","8〜9月","公式マイページで確認","https://www.recruit.sony.co.jp/2028/"],
+  ["インフラ・エネルギー","大阪ガス都市開発","-","5/31","未","","","https://www.og-toshi.co.jp/recruit/"],
+  ["インフラ・エネルギー","中部電力グループ","-","6/24","未","","","https://www.chuden.co.jp/recruit/"],
+  ["インフラ・エネルギー","出光興産","-","6/25","未","","","https://www.idemitsu.com/jp/recruit/"],
+  ["インフラ・エネルギー","JR東海","-","6/26","未","","","https://company.jr-central.co.jp/recruit/"],
+  ["消費財・広告・メディア","インテージ","マーケティングコース","5/31","未","7月","","https://www.intage.co.jp/recruit/"],
+  ["消費財・広告・メディア","日本経済新聞社","SWE / データサイエンティスト","5/31","未","","","https://r.nikkei.com/"],
+  ["消費財・広告・メディア","P&G ジャパン","-","6/29","未","","","https://www.pgcareers.com/jp/ja/search-jobs?type=student"],
+
+  ["自動車・モビリティ","トヨタ自動車","技術系インターンシップ","要確認","未","8〜9月（2週間 or 4週間）","","https://www.toyota-recruit.com/saiyo/recruit/event/"],
+  ["自動車・モビリティ","本田技研工業（ホンダ）","サマーインターンシップ","要確認","未","8〜9月","","https://www.honda-recruit.com/internship/"],
+  ["自動車・モビリティ","日産自動車","技術系インターンシップ","6/21","未","9〜10月","","https://www.nissanmotor.jobs/japan/NE/recruit/event.html"],
+  ["自動車・モビリティ","ダイハツ工業","Webセミナー","6/7","未","","","https://www.daihatsu.co.jp/recruit/"],
+  ["自動車・モビリティ","パナソニックオートモーティブシステムズ","インターンシップ","6/16","未","","","https://panasonic.net/cns/corp/join/"],
+  ["自動車・モビリティ","トヨタ自動車東日本","インターンシップ","7/8","未","5days","","https://www.toyota-recruit.com/"],
+
+  ["広告・マーケティング","電通","サマーインターンシップ（選考直結型）","6/9","未","","","https://www.dentsu.co.jp/careers/"],
+  ["広告・マーケティング","博報堂","サマーインターンシップ","要確認","未","6〜9月","例年6種類のプログラム","https://hakusuku.jp/recruit/information/internship/"],
+  ["広告・マーケティング","ADK","インターンシップ","6/19","未","","","https://www.adk.jp/recruit/"],
+  ["広告・マーケティング","ADK","インターンシップ（第2期）","7/28","未","","","https://www.adk.jp/recruit/"],
+  ["広告・マーケティング","読売広告社","インターンシップ","7/16","未","","","https://www.yomiko.co.jp/"],
+
+  ["食品・飲料","サントリー","生産技術・生産（エンジニア）","要確認","未","8月","","https://www.suntory.co.jp/recruit/challenge/"],
+  ["食品・飲料","日清製粉","工学系インターンシップ","6/24","未","複数日程（6〜7月）","6/24・6/26・7/9・7/20・7/31","https://www.nisshin.com/recruit/"],
+  ["食品・飲料","ニッスイ","インターンシップ","7/1","未","","","https://www.nissui.co.jp/recruit/"],
+
+  ["航空・旅行","ANA","グローバルスタッフ職","6/15","未","","","https://www.ana.co.jp/group/recruit/"],
+  ["航空・旅行","ANA","運航乗務員（パイロット）","7/24","未","","","https://www.ana.co.jp/group/recruit/"],
+  ["航空・旅行","JAL","エンジニア","7/5","未","","","https://www.jal.com/ja/recruit/"],
+  ["航空・旅行","JAL","業務企画職・データサイエンティスト","7/15","未","","","https://www.jal.com/ja/recruit/"],
+  ["航空・旅行","JAL","パイロット","7/12","未","","","https://www.jal.com/ja/recruit/"],
+
+  ["不動産・建設","旭化成ホームズ","インターンシップ（1day）","5/28","済","","","https://www.asahi-kasei-homes.co.jp/recruit/"],
+  ["不動産・建設","三井不動産リアルティ","インターンシップ","6/2","未","","","https://recruit.mitsuifudosan-realty.co.jp/"],
+  ["不動産・建設","野村不動産","インターンシップ","6/12","未","複数日程","6/12・6/14・6/26","https://www.nomura-re.co.jp/recruit/"],
+  ["不動産・建設","三菱地所プロパティマネジメント","インターンシップ","6/18","未","","","https://www.mec-pm.co.jp/recruit/"],
+  ["不動産・建設","三井不動産","インターンシップ","6/23","未","","","https://recruit.mitsuifudosan.co.jp/shinsotsu/eventandintern/"],
+
+  ["通信","KDDI","インターンシップ（全10コース）","6/7","未","","業務系・技術系10コース","https://career.kddi.com/"],
+  ["通信","KDDI","インターンシップ（第2期）","7/5","未","","","https://career.kddi.com/"],
+  ["通信","NTT東日本","インターンシップ","6/30","未","","","https://www.ntt-east.co.jp/recruit/"],
+  ["通信","NTT西日本","インターンシップ","7/3","未","","","https://www.ntt-west.co.jp/recruit/"],
+
+  ["製薬・医療","小野薬品工業","インターンシップ","6/3","未","複数日程","6/3・6/10・6/14","https://www.ono-pharma.com/ja/company/recruit/"],
+  ["製薬・医療","ファイザー","MR職インターンシップ","6/24","未","","","https://www.pfizer.co.jp/pfizer/careers/"],
+
+  ["外資IT","Amazon Japan","インターンシップ（複数職種）","要確認","未","8〜9月","オペ・コンシューマー・SDE","https://amazon.jobs/jp/teams/internships-for-students"],
+  ["外資IT","Google Japan","インターンシップ","要確認","未","夏頃","公式サイトで随時確認","https://careers.google.com/students/"],
+  ["外資IT","Microsoft Japan","インターンシップ","要確認","未","夏頃","","https://careers.microsoft.com/students/us/en/japanstudentopportunities"],
+];
+
+// ─── STATE (localStorage) ───────────────────────────────────────────────────
+const STORE_KEY = idx => `shukatsu_28_row_${idx}`;
+function defaultState() { return { progress: 0, memo: '', fav: false }; }
+function loadState(idx) {
+  try { return Object.assign(defaultState(), JSON.parse(localStorage.getItem(STORE_KEY(idx)))); }
+  catch { return defaultState(); }
+}
+function saveState(idx, s) { localStorage.setItem(STORE_KEY(idx), JSON.stringify(s)); }
+
+// ─── PROGRESS ────────────────────────────────────────────────────────────────
+const PROGRESS = ['未応募','エントリー済','ES提出済','面接中','結果待ち','合格 ✓','不合格 ✗'];
+const PROG_CLASS = ['prog-0','prog-1','prog-2','prog-3','prog-4','prog-5','prog-6'];
+
+// ─── COUNTDOWN ───────────────────────────────────────────────────────────────
+const TODAY = new Date(2026, 4, 29); // 2026-05-29
+
+function daysUntil(deadline) {
+  const m = deadline.match(/^(\d+)\/(\d+)/);
+  if (!m) return null;
+  const target = new Date(2026, +m[1] - 1, +m[2]);
+  return Math.ceil((target - TODAY) / 86400000);
+}
+
+function countdownHtml(deadline) {
+  const d = daysUntil(deadline);
+  if (d === null) return '';
+  if (d < 0)  return `<span class="countdown cd-done">締切済</span>`;
+  if (d === 0) return `<span class="countdown cd-urgent">本日</span>`;
+  if (d <= 3)  return `<span class="countdown cd-urgent">あと${d}日</span>`;
+  if (d <= 7)  return `<span class="countdown cd-soon">あと${d}日</span>`;
+  return `<span class="countdown cd-normal">あと${d}日</span>`;
+}
+
+function deadlineToNum(d) {
+  const m = d.match(/^(\d+)\/(\d+)/);
+  if (!m) return 9999;
+  return +m[1] * 100 + +m[2];
+}
+
+// ─── FILTER STATE ────────────────────────────────────────────────────────────
+const INDUSTRIES = [...new Set(DATA.map(r => r[0]))];
+const LABEL_MAP = {
+  "IT・メガベンチャー": "IT",
+  "コンサル・シンクタンク": "コンサル",
+  "メーカー・電機・精密": "メーカー",
+  "インフラ・エネルギー": "インフラ",
+  "消費財・広告・メディア": "消費財・広告",
+};
+let activeIndustry = '全て';
+let hideFinished = false;
+let favOnly = false;
+let searchText = '';
+let sortAsc = true;
+const openMemos = new Set(); // original data indices with open memos
+
+// ─── CONTROLS SETUP ─────────────────────────────────────────────────────────
+const fg = document.getElementById('filterGroup');
+['全て', ...INDUSTRIES].forEach(ind => {
+  const btn = document.createElement('button');
+  btn.className = 'filter-btn' + (ind === '全て' ? ' active' : '');
+  btn.textContent = LABEL_MAP[ind] || ind;
+  btn.dataset.ind = ind;
+  btn.addEventListener('click', () => {
+    activeIndustry = ind;
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.toggle('active', b.dataset.ind === ind));
+    render();
+  });
+  fg.appendChild(btn);
+});
+
+document.getElementById('searchBox').addEventListener('input', e => { searchText = e.target.value.trim(); render(); });
+document.getElementById('hideFinished').addEventListener('change', e => { hideFinished = e.target.checked; render(); });
+document.getElementById('favOnly').addEventListener('change', e => { favOnly = e.target.checked; render(); });
+document.getElementById('sortBtn').addEventListener('click', () => {
+  sortAsc = !sortAsc;
+  document.getElementById('sortBtn').textContent = sortAsc ? '締切 ▲ 昇順' : '締切 ▼ 降順';
+  document.getElementById('thDeadline').textContent = sortAsc ? '締め切り ▲' : '締め切り ▼';
+  render();
+});
+document.getElementById('thDeadline').addEventListener('click', () => document.getElementById('sortBtn').click());
+
+// ─── EVENT DELEGATION ────────────────────────────────────────────────────────
+const mainTable = document.getElementById('mainTable');
+
+mainTable.addEventListener('click', e => {
+  // Favorite
+  const favBtn = e.target.closest('.fav-btn');
+  if (favBtn) {
+    const idx = +favBtn.dataset.idx;
+    const s = loadState(idx);
+    s.fav = !s.fav;
+    saveState(idx, s);
+    favBtn.textContent = s.fav ? '⭐' : '☆';
+    if (favOnly && !s.fav) {
+      const tr = document.querySelector(`tr.data-row[data-idx="${idx}"]`);
+      const memoTr = document.getElementById(`memo-${idx}`);
+      if (tr) tr.style.display = 'none';
+      if (memoTr) memoTr.style.display = 'none';
+    }
+    updateSummary();
+    return;
+  }
+
+  // Memo toggle
+  const memoBtn = e.target.closest('.memo-btn');
+  if (memoBtn) {
+    const idx = +memoBtn.dataset.idx;
+    const memoTr = document.getElementById(`memo-${idx}`);
+    if (!memoTr) return;
+    const isOpen = memoTr.style.display !== 'none';
+    memoTr.style.display = isOpen ? 'none' : 'table-row';
+    if (isOpen) openMemos.delete(idx); else openMemos.add(idx);
+    if (!isOpen) memoTr.querySelector('.memo-textarea').focus();
+  }
+});
+
+mainTable.addEventListener('change', e => {
+  const sel = e.target.closest('.progress-select');
+  if (sel) {
+    const idx = +sel.dataset.idx;
+    const s = loadState(idx);
+    s.progress = +sel.value;
+    saveState(idx, s);
+    sel.className = 'progress-select ' + PROG_CLASS[s.progress];
+  }
+});
+
+mainTable.addEventListener('input', e => {
+  const ta = e.target.closest('.memo-textarea');
+  if (ta) {
+    const idx = +ta.dataset.idx;
+    const s = loadState(idx);
+    s.memo = ta.value;
+    saveState(idx, s);
+    const btn = document.querySelector(`.memo-btn[data-idx="${idx}"]`);
+    if (btn) {
+      btn.classList.toggle('has-memo', ta.value.length > 0);
+      btn.textContent = ta.value.length > 0 ? '📝 メモあり' : '📝 メモ';
+    }
+  }
+});
+
+// ─── RENDER ──────────────────────────────────────────────────────────────────
+function render() {
+  const entries = DATA.map((r, i) => ({ r, i })).filter(({ r, i }) => {
+    if (activeIndustry !== '全て' && r[0] !== activeIndustry) return false;
+    if (hideFinished && r[4] === '済') return false;
+    if (favOnly && !loadState(i).fav) return false;
+    if (searchText && !r[1].toLowerCase().includes(searchText.toLowerCase())) return false;
+    return true;
+  });
+
+  entries.sort((a, b) => {
+    const diff = deadlineToNum(a.r[3]) - deadlineToNum(b.r[3]);
+    return sortAsc ? diff : -diff;
+  });
+
+  const tbody = document.getElementById('tbody');
+  tbody.innerHTML = '';
+
+  entries.forEach(({ r, i }) => {
+    const [industry, company, program, deadline, dlStatus, period, note, url] = r;
+    const s = loadState(i);
+
+    // Row class
+    let rowClass = 'data-row';
+    if (dlStatus === '済') rowClass += ' done-row';
+    else if (dlStatus === '本日') rowClass += ' today-row';
+    else if (dlStatus === '明日') rowClass += ' tomorrow-row';
+
+    // Status badge
+    const badgeClass = { '済': 'sb-done', '本日': 'sb-today', '明日': 'sb-tomorrow', '未': 'sb-upcoming' }[dlStatus] || 'sb-upcoming';
+    const badgeText = { '済': '締切済', '本日': '🔴 本日', '明日': '🟠 明日', '未': '未' }[dlStatus] || dlStatus;
+
+    // Progress select
+    const progOptions = PROGRESS.map((p, pi) =>
+      `<option value="${pi}" ${s.progress === pi ? 'selected' : ''}>${p}</option>`
+    ).join('');
+
+    // Link
+    const linkHtml = url
+      ? `<a class="link-btn" href="${url}" target="_blank" rel="noopener">採用サイト →</a>`
+      : '<span style="color:#ccc;font-size:.74rem">―</span>';
+
+    // Memo button
+    const hasNote = note && note !== '-';
+    const hasMemo = s.memo.length > 0;
+    const memoBtnText = hasMemo ? '📝 メモあり' : '📝 メモ';
+
+    // Main row
+    const tr = document.createElement('tr');
+    tr.className = rowClass;
+    tr.dataset.idx = i;
+    tr.innerHTML = `
+      <td style="text-align:center">
+        <button class="fav-btn" data-idx="${i}" title="お気に入り">${s.fav ? '⭐' : '☆'}</button>
+      </td>
+      <td>
+        <div class="company-name">${company}</div>
+        <span class="industry-tag">${industry}</span>
+        ${program && program !== '-' ? `<div class="program-name">${program}</div>` : ''}
+        ${hasNote ? `<div class="program-name" style="color:#e67e22">${note}</div>` : ''}
+      </td>
+      <td>
+        <span class="deadline-date">${deadline}</span>
+        ${countdownHtml(deadline)}
+        <br><span class="status-badge ${badgeClass}">${badgeText}</span>
+      </td>
+      <td>
+        <select class="progress-select ${PROG_CLASS[s.progress]}" data-idx="${i}">${progOptions}</select>
+      </td>
+      <td style="font-size:.8rem;color:#556">${period || '―'}</td>
+      <td>${linkHtml}</td>
+      <td>
+        <button class="memo-btn ${hasMemo ? 'has-memo' : ''}" data-idx="${i}">${memoBtnText}</button>
+      </td>
+    `;
+    tbody.appendChild(tr);
+
+    // Memo row
+    const memoTr = document.createElement('tr');
+    memoTr.className = 'memo-row';
+    memoTr.id = `memo-${i}`;
+    memoTr.style.display = openMemos.has(i) ? 'table-row' : 'none';
+    memoTr.innerHTML = `
+      <td colspan="7">
+        <div class="memo-inner">
+          <span class="memo-label">📝 メモ</span>
+          <textarea class="memo-textarea" data-idx="${i}" placeholder="${company} へのメモ（選考状況・ES内容・感想など）">${s.memo}</textarea>
+        </div>
+      </td>
+    `;
+    tbody.appendChild(memoTr);
+  });
+
+  const empty = document.getElementById('empty');
+  const table = document.getElementById('mainTable');
+  empty.style.display = entries.length === 0 ? 'block' : 'none';
+  table.style.display = entries.length === 0 ? 'none' : '';
+
+  updateSummary(entries);
+}
+
+function updateSummary(entries) {
+  if (!entries) {
+    // recalculate
+    entries = DATA.map((r, i) => ({ r, i })).filter(({ r, i }) => {
+      if (activeIndustry !== '全て' && r[0] !== activeIndustry) return false;
+      if (hideFinished && r[4] === '済') return false;
+      if (favOnly && !loadState(i).fav) return false;
+      if (searchText && !r[1].toLowerCase().includes(searchText.toLowerCase())) return false;
+      return true;
+    });
+  }
+  const upcoming = entries.filter(({ r }) => r[4] !== '済').length;
+  const favCount = DATA.filter((_, i) => loadState(i).fav).length;
+  document.getElementById('summary').textContent =
+    `${entries.length} 件表示（うち未締切 ${upcoming} 件）　⭐ お気に入り ${favCount} 件`;
+}
+
+render();
+</script>
+</body>
+</html>
