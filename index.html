@@ -53,6 +53,8 @@ header{background:var(--hdr);color:#fff;padding:14px 24px;display:flex;justify-c
 .controls{background:var(--surface);border-bottom:1px solid var(--border);padding:10px 24px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;position:sticky;top:0;z-index:30;box-shadow:0 2px 8px var(--shadow)}
 .search-box{padding:6px 12px 6px 32px;border:1.5px solid var(--border2);border-radius:999px;font-size:.83rem;outline:none;width:210px;background:var(--surface2) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.35-4.35'/%3E%3C/svg%3E") no-repeat 10px center;color:var(--text)}
 .search-box:focus{border-color:var(--accent)}
+.ind-sel{padding:5px 12px;border:1.5px solid var(--border2);border-radius:999px;font-size:.82rem;cursor:pointer;background:var(--surface);color:var(--text);outline:none;min-width:160px}
+.ind-sel:focus{border-color:var(--accent)}
 .filter-group{display:flex;flex-wrap:wrap;gap:4px;flex:1}
 .filter-btn{padding:4px 10px;border:1.5px solid var(--border2);border-radius:999px;background:var(--surface);color:var(--text);font-size:.74rem;cursor:pointer;white-space:nowrap;transition:all .15s}
 .filter-btn:hover{border-color:var(--accent);color:var(--accent)}
@@ -254,7 +256,7 @@ td{padding:8px 11px;vertical-align:middle;color:var(--text)}
 
 <div class="controls">
   <input class="search-box" id="searchBox" type="search" placeholder="企業名・業界・プログラムで検索…">
-  <div class="filter-group" id="filterGroup"></div>
+  <select class="ind-sel" id="industrySelect"></select>
   <div class="right-ctrls">
     <label class="toggle-lbl"><input type="checkbox" id="favOnly"> ⭐ お気に入り</label>
     <label class="toggle-lbl"><input type="checkbox" id="hideFinished"> 締切済を隠す</label>
@@ -1090,15 +1092,34 @@ function updateBulkBar() {
 }
 
 // ── CONTROLS SETUP ───────────────────────────────────────────────────────────
-// Industry filter
-const fg=document.getElementById('filterGroup');
-['全て',...INDUSTRIES].forEach(ind=>{
-  const btn=document.createElement('button');
-  btn.className='filter-btn'+(ind==='全て'?' active':'');
-  btn.textContent=LABEL_MAP[ind]||ind; btn.dataset.ind=ind;
-  btn.addEventListener('click',()=>{activeIndustry=ind;fg.querySelectorAll('.filter-btn').forEach(b=>b.classList.toggle('active',b.dataset.ind===ind));switchView(viewMode);});
-  fg.appendChild(btn);
+// Industry select (grouped)
+const IND_GROUPS = [
+  {label:'IT系',          inds:['IT・メガベンチャー','外資IT','ゲーム・エンタメ','人材・HRTech']},
+  {label:'コンサル',      inds:['コンサル・シンクタンク']},
+  {label:'金融',          inds:['外資金融','国内金融','証券・資産運用','保険']},
+  {label:'商社',          inds:['商社']},
+  {label:'メーカー・製造',inds:['メーカー・電機・精密','自動車・モビリティ','素材・化学']},
+  {label:'インフラ・建設',inds:['インフラ・エネルギー','建設・ゼネコン','鉄道・物流']},
+  {label:'消費・サービス',inds:['消費財・広告・メディア','広告・マーケティング','小売・ファッション','食品・飲料']},
+  {label:'メディア',      inds:['メディア・出版']},
+  {label:'医療・製薬',    inds:['製薬・医療']},
+  {label:'その他',        inds:['航空・旅行','不動産・建設','通信']},
+];
+const indSel = document.getElementById('industrySelect');
+const allOpt = document.createElement('option');
+allOpt.value='全て'; allOpt.textContent='全業界';
+indSel.appendChild(allOpt);
+IND_GROUPS.forEach(g=>{
+  const grp=document.createElement('optgroup');
+  grp.label=`── ${g.label} ──`;
+  g.inds.filter(i=>INDUSTRIES.includes(i)).forEach(ind=>{
+    const o=document.createElement('option');
+    o.value=ind; o.textContent=ind;
+    grp.appendChild(o);
+  });
+  if(grp.children.length) indSel.appendChild(grp);
 });
+indSel.addEventListener('change',e=>{activeIndustry=e.target.value;switchView(viewMode);});
 
 // Urgency filter
 const ug=document.getElementById('urgencyGroup');
