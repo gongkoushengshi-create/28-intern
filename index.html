@@ -1,214 +1,384 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>28卒 サマーインターン締め切り・日程一覧 | 2026年夏 110社以上</title>
-  <meta name="description" content="2028年卒（28卒）向けサマーインターンシップの締め切り・開催期間を業界別にまとめた一覧サイト。IT・コンサル・商社・外資金融・自動車・製薬・航空など110社以上を掲載。締切カレンダー・応募状況管理・メモ機能つき。">
-  <meta name="keywords" content="28卒,サマーインターン,締め切り,2026,就活,インターンシップ,一覧,スケジュール,2028年卒,夏インターン">
+  <meta name="description" content="2028年卒向けサマーインターンの締め切りを業界別にまとめ。IT・コンサル・商社・外資金融・自動車・製薬・航空など110社以上掲載。">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://gongkoushengshi-create.github.io/28-intern/">
   <meta property="og:type" content="website">
   <meta property="og:title" content="28卒 サマーインターン締め切り・日程一覧 | 2026年夏 110社以上">
-  <meta property="og:description" content="2028年卒向けサマーインターンの締め切りを業界別にまとめ。IT・コンサル・商社・外資金融・自動車・製薬・航空など110社以上を掲載。進捗管理・メモ機能つき。">
   <meta property="og:url" content="https://gongkoushengshi-create.github.io/28-intern/">
-  <meta property="og:locale" content="ja_JP">
-  <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="28卒 サマーインターン締め切り一覧">
-  <meta name="twitter:description" content="2028年卒向けサマーインターンの締め切りを業界別にまとめ。110社以上掲載。">
   <meta name="google-site-verification" content="h-Lz6BHZxMb7wI1Y7j64BlyyBobnXdhmLR5fBvZzjY0" />
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Hiragino Sans", sans-serif; background: #f5f6fa; color: #222; min-height: 100vh; }
+<style>
+/* ── Variables ── */
+:root {
+  --bg:#f5f6fa; --surface:#fff; --surface2:#f8f9ff; --surface3:#f0f2fa;
+  --hdr:#1a1a2e; --border:#e0e4ef; --border2:#c8cde0;
+  --text:#222; --text2:#667; --text3:#889;
+  --accent:#4a6cf7; --shadow:rgba(0,0,0,.07);
+  --done-op:.38; --row-hover:#f8f9ff;
+}
+[data-theme="dark"] {
+  --bg:#0f0f1a; --surface:#1a1a2e; --surface2:#16213e; --surface3:#1e2a3e;
+  --hdr:#0d0d1a; --border:#2a2a4e; --border2:#3a3a6e;
+  --text:#dde; --text2:#8890bb; --text3:#6670aa;
+  --accent:#6a8cf7; --shadow:rgba(0,0,0,.4);
+  --done-op:.22; --row-hover:#1e1e38;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Hiragino Sans",sans-serif;background:var(--bg);color:var(--text);min-height:100vh;transition:background .2s,color .2s}
 
-    header { background: #1a1a2e; color: #fff; padding: 24px 32px 20px; }
-    header h1 { font-size: 1.5rem; font-weight: 700; }
-    header p  { font-size: .8rem; color: #aab; margin-top: 4px; }
+/* ── Header ── */
+header{background:var(--hdr);color:#fff;padding:14px 24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
+.hdr-left h1{font-size:1.2rem;font-weight:700}
+.hdr-left p{font-size:.72rem;color:#aab;margin-top:3px}
+.hdr-right{display:flex;gap:5px;flex-wrap:wrap}
+.hdr-btn{padding:4px 11px;border:1px solid rgba(255,255,255,.25);border-radius:999px;background:rgba(255,255,255,.1);color:#fff;font-size:.74rem;cursor:pointer;white-space:nowrap;transition:all .15s}
+.hdr-btn:hover{background:rgba(255,255,255,.22)}
+.hdr-btn.on{background:#f39c12;border-color:#f39c12}
 
-    .controls {
-      background: #fff;
-      border-bottom: 1px solid #e0e4ef;
-      padding: 12px 24px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      align-items: center;
-      position: sticky;
-      top: 0;
-      z-index: 10;
-      box-shadow: 0 2px 8px rgba(0,0,0,.06);
-    }
+/* ── Dashboard ── */
+.dashboard{background:var(--hdr);padding:8px 24px 13px;display:flex;flex-wrap:wrap;gap:6px}
+.stat-card{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:8px;padding:6px 12px;text-align:center;flex:1;min-width:65px;cursor:default}
+.stat-num{font-size:1.25rem;font-weight:800;color:#fff;line-height:1.2}
+.stat-label{font-size:.62rem;color:#aab;margin-top:1px;white-space:nowrap}
+.s-red .stat-num{color:#e74c3c}
+.s-orange .stat-num{color:#e67e22}
+.s-green .stat-num{color:#2ecc71}
+.s-fadred .stat-num{color:#e74c3c;opacity:.7}
 
-    .search-box {
-      padding: 6px 12px 6px 32px;
-      border: 1.5px solid #c8cde0;
-      border-radius: 999px;
-      font-size: .85rem;
-      outline: none;
-      width: 200px;
-      background: #f8f9ff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.35-4.35'/%3E%3C/svg%3E") no-repeat 10px center;
-    }
-    .search-box:focus { border-color: #4a6cf7; }
+/* ── Controls Row 1 ── */
+.controls{background:var(--surface);border-bottom:1px solid var(--border);padding:10px 24px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;position:sticky;top:0;z-index:30;box-shadow:0 2px 8px var(--shadow)}
+.search-box{padding:6px 12px 6px 32px;border:1.5px solid var(--border2);border-radius:999px;font-size:.83rem;outline:none;width:210px;background:var(--surface2) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.35-4.35'/%3E%3C/svg%3E") no-repeat 10px center;color:var(--text)}
+.search-box:focus{border-color:var(--accent)}
+.filter-group{display:flex;flex-wrap:wrap;gap:4px;flex:1}
+.filter-btn{padding:4px 10px;border:1.5px solid var(--border2);border-radius:999px;background:var(--surface);color:var(--text);font-size:.74rem;cursor:pointer;white-space:nowrap;transition:all .15s}
+.filter-btn:hover{border-color:var(--accent);color:var(--accent)}
+.filter-btn.active{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600}
+.right-ctrls{display:flex;gap:6px;align-items:center;flex-shrink:0;flex-wrap:wrap}
+.toggle-lbl{display:flex;align-items:center;gap:4px;font-size:.76rem;cursor:pointer;user-select:none;white-space:nowrap;color:var(--text)}
+.toggle-lbl input{width:14px;height:14px;cursor:pointer;accent-color:var(--accent)}
+.sort-btn,.act-btn{padding:4px 10px;border:1.5px solid var(--border2);border-radius:999px;background:var(--surface);color:var(--text);font-size:.74rem;cursor:pointer;white-space:nowrap;transition:all .15s}
+.sort-btn:hover,.act-btn:hover{border-color:var(--accent);color:var(--accent)}
+.act-btn.on{border-color:#f39c12;color:#f39c12;background:#fef9e7}
+.view-grp{display:flex;border:1.5px solid var(--border2);border-radius:999px;overflow:hidden}
+.view-btn{padding:4px 10px;border:none;background:var(--surface);color:var(--text2);font-size:.74rem;cursor:pointer;transition:all .15s}
+.view-btn.active{background:var(--accent);color:#fff}
 
-    .filter-group { display: flex; flex-wrap: wrap; gap: 5px; flex: 1; }
-    .filter-btn {
-      padding: 4px 12px;
-      border: 1.5px solid #c8cde0;
-      border-radius: 999px;
-      background: #fff;
-      font-size: .78rem;
-      cursor: pointer;
-      white-space: nowrap;
-      transition: all .15s;
-    }
-    .filter-btn:hover { border-color: #4a6cf7; color: #4a6cf7; }
-    .filter-btn.active { background: #4a6cf7; border-color: #4a6cf7; color: #fff; font-weight: 600; }
+/* ── Controls Row 2 ── */
+.controls-row2{background:var(--surface2);border-bottom:1px solid var(--border);padding:7px 24px;display:flex;flex-wrap:wrap;gap:7px;align-items:center}
+.flabel{font-size:.72rem;color:var(--text3);white-space:nowrap;font-weight:600;flex-shrink:0}
+.mini-sel{padding:3px 10px;border:1.5px solid var(--border2);border-radius:999px;font-size:.74rem;cursor:pointer;background:var(--surface);color:var(--text);outline:none}
+.mini-sel:focus{border-color:var(--accent)}
 
-    .right-controls { display: flex; gap: 8px; align-items: center; flex-shrink: 0; flex-wrap: wrap; }
-    .toggle-label { display: flex; align-items: center; gap: 5px; font-size: .8rem; cursor: pointer; user-select: none; white-space: nowrap; }
-    .toggle-label input { width: 15px; height: 15px; cursor: pointer; }
-    .sort-btn { padding: 4px 12px; border: 1.5px solid #c8cde0; border-radius: 999px; background: #fff; font-size: .78rem; cursor: pointer; white-space: nowrap; }
-    .sort-btn:hover { border-color: #4a6cf7; color: #4a6cf7; }
+/* ── Tag bar ── */
+.tag-bar{background:var(--surface);border-bottom:1px solid var(--border);padding:5px 24px;display:flex;flex-wrap:wrap;gap:5px;align-items:center}
+.tag-chip{padding:2px 9px;border-radius:999px;font-size:.7rem;cursor:pointer;border:1.5px solid var(--border2);background:var(--surface);color:var(--text2);transition:all .15s}
+.tag-chip:hover{border-color:var(--accent);color:var(--accent)}
+.tag-chip.active{font-weight:600}
 
-    .summary { padding: 8px 24px; font-size: .78rem; color: #667; }
+/* ── Bulk bar ── */
+.bulk-bar{background:#1a1a2e;color:#fff;padding:8px 24px;display:flex;align-items:center;gap:10px;font-size:.8rem;display:none}
+.bulk-sel{padding:4px 9px;border-radius:6px;border:none;font-size:.76rem;cursor:pointer}
+.bulk-apply{padding:4px 13px;border-radius:999px;border:none;background:var(--accent);color:#fff;font-size:.76rem;cursor:pointer;font-weight:600}
+.bulk-clear{padding:4px 13px;border-radius:999px;border:1px solid rgba(255,255,255,.35);background:transparent;color:#fff;font-size:.76rem;cursor:pointer;margin-left:auto}
 
-    .table-wrap { padding: 0 24px 48px; overflow-x: auto; }
-    table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 6px rgba(0,0,0,.07); font-size: .86rem; min-width: 900px; }
-    thead tr { background: #1a1a2e; color: #fff; }
-    thead th { padding: 11px 12px; text-align: left; font-weight: 600; white-space: nowrap; font-size: .82rem; }
-    thead th.sortable { cursor: pointer; }
-    thead th.sortable:hover { background: #2a2a4e; }
+/* ── Summary ── */
+.summary{padding:6px 24px;font-size:.74rem;color:var(--text2)}
 
-    tbody tr.data-row { border-bottom: 1px solid #f0f2fa; transition: background .1s; }
-    tbody tr.data-row:hover { background: #f8f9ff; }
-    tbody tr.data-row.done-row { opacity: .38; }
-    tbody tr.data-row.today-row td:nth-child(2) { border-left: 3px solid #e74c3c; }
-    tbody tr.data-row.tomorrow-row td:nth-child(2) { border-left: 3px solid #e67e22; }
+/* ── Table ── */
+.table-wrap{padding:0 24px 48px;overflow-x:auto}
+table{width:100%;border-collapse:collapse;background:var(--surface);border-radius:10px;overflow:hidden;box-shadow:0 1px 6px var(--shadow);font-size:.84rem;min-width:860px}
+thead tr{background:#1a1a2e;color:#fff}
+thead th{padding:10px 11px;text-align:left;font-weight:600;white-space:nowrap;font-size:.79rem}
+thead th.sortable{cursor:pointer}
+thead th.sortable:hover{background:#2a2a4e}
+tbody tr.data-row{border-bottom:1px solid var(--border);transition:background .1s}
+tbody tr.data-row:hover{background:var(--row-hover)}
+tbody tr.data-row.done-row{opacity:var(--done-op)}
+tbody tr.data-row.today-row .td-co{border-left:3px solid #e74c3c}
+tbody tr.data-row.tomorrow-row .td-co{border-left:3px solid #e67e22}
+tbody tr.data-row.sel-row{background:#eef2ff}
+[data-theme="dark"] tbody tr.data-row.sel-row{background:#1e2a4e}
+td{padding:8px 11px;vertical-align:middle;color:var(--text)}
+.hide-period .col-period{display:none}
+.hide-site .col-site{display:none}
+.row-chk{width:14px;height:14px;cursor:pointer;accent-color:var(--accent)}
+.fav-btn{background:none;border:none;font-size:1rem;cursor:pointer;line-height:1;padding:2px 4px;border-radius:4px;transition:transform .15s}
+.fav-btn:hover{transform:scale(1.2)}
+.co-name{font-weight:600}
+.ind-tag{display:inline-block;font-size:.65rem;color:var(--text2);background:var(--surface2);padding:1px 5px;border-radius:3px;margin-top:2px;border:1px solid var(--border)}
+.prog-name{font-size:.72rem;color:var(--text3);margin-top:2px}
+.tags-row{display:flex;flex-wrap:wrap;gap:3px;margin-top:3px}
+.tbadge{font-size:.63rem;padding:1px 6px;border-radius:999px;border:1px solid}
+.deadline-date{font-weight:700}
+.countdown{display:inline-block;font-size:.69rem;padding:1px 6px;border-radius:999px;margin-left:5px;font-weight:600;vertical-align:middle}
+.cd-urgent{background:#fde8e8;color:#c0392b}
+.cd-soon{background:#fef3e2;color:#d35400}
+.cd-normal{background:#eafaf1;color:#1e8449}
+.cd-done{background:#e0e4ef;color:#888}
+.status-badge{display:inline-block;padding:2px 7px;border-radius:999px;font-size:.67rem;font-weight:700;margin-top:3px}
+.sb-done{background:#e0e4ef;color:#667}
+.sb-today{background:#fde8e8;color:#c0392b;border:1px solid #f5b7b1}
+.sb-tomorrow{background:#fef3e2;color:#d35400;border:1px solid #f9d8b0}
+.sb-upcoming{background:#e8f4fd;color:#2874a6;border:1px solid #aed6f1}
+.progress-select{padding:4px 5px;border-radius:6px;border:1.5px solid var(--border2);font-size:.72rem;cursor:pointer;font-weight:600;width:100%;min-width:98px;appearance:none;text-align:center}
+.prog-0{background:#f0f2fa;color:#556;border-color:#c8cde0}
+.prog-1{background:#d6eaf8;color:#1a5276;border-color:#7fb3d3}
+.prog-2{background:#2471a3;color:#fff;border-color:#2471a3}
+.prog-3{background:#e67e22;color:#fff;border-color:#e67e22}
+.prog-4{background:#8e44ad;color:#fff;border-color:#8e44ad}
+.prog-5{background:#1e8449;color:#fff;border-color:#1e8449}
+.prog-6{background:#c0392b;color:#fff;border-color:#c0392b}
+.link-btn{display:inline-block;padding:3px 8px;background:var(--surface2);border-radius:5px;font-size:.71rem;color:var(--accent);text-decoration:none;border:1px solid var(--border);white-space:nowrap}
+.link-btn:hover{background:var(--accent);color:#fff}
+.expand-btn{background:none;border:1.5px solid var(--border2);border-radius:6px;padding:3px 8px;font-size:.73rem;cursor:pointer;color:var(--text3);white-space:nowrap;transition:all .15s}
+.expand-btn:hover{border-color:var(--accent);color:var(--accent)}
+.expand-btn.active{border-color:var(--accent);color:var(--accent);background:var(--surface2)}
+.expand-btn.has-data{border-color:#f39c12;color:#f39c12}
+.del-row-btn{background:none;border:none;color:#e74c3c;cursor:pointer;font-size:.8rem;padding:2px 5px;opacity:.55}
+.del-row-btn:hover{opacity:1}
+/* ── Expanded row ── */
+.exp-row td{padding:0;background:var(--surface2);border-bottom:2px solid var(--border)}
+.exp-inner{padding:10px 16px 14px}
+.tabs{display:flex;gap:0;border-bottom:1px solid var(--border);margin-bottom:10px}
+.tab-btn{padding:6px 14px;border:none;background:none;font-size:.79rem;cursor:pointer;color:var(--text3);border-bottom:2px solid transparent;margin-bottom:-1px;transition:all .15s}
+.tab-btn.active{color:var(--accent);border-bottom-color:var(--accent);font-weight:600}
+.tab-pane{display:none}
+.tab-pane.active{display:block}
+.memo-ta{width:100%;padding:8px 10px;border:1.5px solid var(--border);border-radius:6px;font-size:.81rem;font-family:inherit;resize:vertical;min-height:60px;background:var(--surface);color:var(--text);outline:none}
+.memo-ta:focus{border-color:#f39c12}
+.ev-list{display:flex;flex-direction:column;gap:6px;margin-bottom:8px}
+.ev-item{display:flex;gap:6px;align-items:center}
+.ev-type{padding:3px 7px;border:1.5px solid var(--border2);border-radius:6px;font-size:.74rem;background:var(--surface);color:var(--text);cursor:pointer}
+.ev-date{padding:3px 7px;border:1.5px solid var(--border2);border-radius:6px;font-size:.74rem;background:var(--surface);color:var(--text);width:85px}
+.ev-note{padding:3px 7px;border:1.5px solid var(--border2);border-radius:6px;font-size:.74rem;background:var(--surface);color:var(--text);flex:1}
+.ev-del{background:none;border:none;color:#e74c3c;cursor:pointer;font-size:.9rem}
+.add-ev-btn{padding:3px 12px;border:1.5px dashed var(--border2);border-radius:6px;background:none;color:var(--text3);font-size:.74rem;cursor:pointer}
+.add-ev-btn:hover{border-color:var(--accent);color:var(--accent)}
+.tag-editor{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.tag-tog{padding:3px 10px;border-radius:999px;border:1.5px solid var(--border2);font-size:.72rem;cursor:pointer;background:var(--surface);color:var(--text2);transition:all .15s}
+.tag-tog.on{font-weight:600}
 
-    td { padding: 9px 12px; vertical-align: middle; }
+/* ── Calendar ── */
+.cal-wrap{padding:0 24px 48px}
+.cal-nav{display:flex;align-items:center;gap:14px;padding:14px 0}
+.cal-nav-btn{background:none;border:1.5px solid var(--border2);border-radius:999px;width:30px;height:30px;cursor:pointer;font-size:1.1rem;color:var(--text);line-height:1;transition:all .15s}
+.cal-nav-btn:hover{border-color:var(--accent);color:var(--accent)}
+.cal-month-lbl{font-size:1.05rem;font-weight:700;color:var(--text)}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px}
+.cal-dhead{text-align:center;font-size:.7rem;color:var(--text3);padding:4px 0;font-weight:600}
+.cal-cell{background:var(--surface);border-radius:6px;min-height:76px;padding:4px;border:1px solid var(--border)}
+.cal-cell.other-m{opacity:.35}
+.cal-cell.today-c{border-color:var(--accent);border-width:2px}
+.cal-dnum{font-size:.73rem;font-weight:700;color:var(--text2);margin-bottom:2px}
+.cal-ev{font-size:.63rem;padding:1px 4px;border-radius:3px;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ce-dl{background:#fde8e8;color:#c0392b}
+.ce-ev{background:#e8f4fd;color:#2874a6}
+.ce-done{background:#e0e4ef;color:#888}
 
-    /* Favorite button */
-    .fav-btn { background: none; border: none; font-size: 1.1rem; cursor: pointer; line-height: 1; padding: 2px 4px; border-radius: 4px; transition: transform .15s; }
-    .fav-btn:hover { transform: scale(1.2); }
+/* ── Cards ── */
+.cards-wrap{padding:14px 24px 48px}
+.cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:11px}
+.card{background:var(--surface);border-radius:10px;border:1px solid var(--border);padding:13px;box-shadow:0 1px 4px var(--shadow);transition:box-shadow .15s}
+.card:hover{box-shadow:0 3px 12px var(--shadow)}
+.card.card-done{opacity:var(--done-op)}
+.card-top{display:flex;justify-content:space-between;align-items:flex-start;gap:6px;margin-bottom:6px}
+.card-co{font-weight:700;font-size:.92rem;color:var(--text)}
+.card-ind{font-size:.66rem;color:var(--text2);background:var(--surface2);padding:1px 5px;border-radius:3px;border:1px solid var(--border);white-space:nowrap}
+.card-prog{font-size:.73rem;color:var(--text3);margin-top:2px}
+.card-dl{display:flex;align-items:center;gap:6px;margin:7px 0}
+.card-date{font-weight:700;font-size:.95rem;color:var(--text)}
+.card-foot{display:flex;gap:6px;justify-content:space-between;align-items:center;margin-top:8px}
 
-    /* Company cell */
-    .company-name { font-weight: 600; }
-    .industry-tag { display: inline-block; font-size: .68rem; color: #667; background: #f0f2fa; padding: 1px 6px; border-radius: 3px; margin-top: 2px; }
-    .program-name { font-size: .75rem; color: #889; margin-top: 2px; }
+/* ── Modal ── */
+.modal-ov{position:fixed;inset:0;background:rgba(0,0,0,.52);z-index:100;display:none;align-items:center;justify-content:center}
+.modal-ov.open{display:flex}
+.modal-box{background:var(--surface);border-radius:12px;padding:22px;width:min(480px,92vw);max-height:82vh;overflow-y:auto;box-shadow:0 8px 32px rgba(0,0,0,.3)}
+.modal-box.wide{width:min(680px,95vw)}
+.modal-title{font-size:1rem;font-weight:700;margin-bottom:14px;color:var(--text)}
+.modal-close{float:right;background:none;border:none;font-size:1.2rem;cursor:pointer;color:var(--text3);margin-top:-4px}
+.form-row{margin-bottom:11px}
+.form-lbl{font-size:.76rem;color:var(--text2);margin-bottom:4px;display:block}
+.form-inp,.form-sel{width:100%;padding:7px 10px;border:1.5px solid var(--border2);border-radius:6px;font-size:.84rem;background:var(--surface);color:var(--text);outline:none}
+.form-inp:focus,.form-sel:focus{border-color:var(--accent)}
+.form-row2{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:11px}
+.submit-btn{width:100%;padding:8px;border:none;border-radius:8px;background:var(--accent);color:#fff;font-size:.88rem;font-weight:700;cursor:pointer;margin-top:4px}
+.submit-btn:hover{opacity:.9}
+.hist-list{display:flex;flex-direction:column}
+.hist-item{display:flex;gap:10px;align-items:baseline;padding:6px 0;border-bottom:1px solid var(--border);font-size:.8rem}
+.hist-time{color:var(--text3);font-size:.7rem;white-space:nowrap;flex-shrink:0}
+.hist-co{font-weight:600;color:var(--text)}
+.hist-ch{color:var(--text2)}
+.col-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.col-item{display:flex;align-items:center;gap:8px;font-size:.84rem;color:var(--text);cursor:pointer}
+.col-item input{accent-color:var(--accent);width:15px;height:15px}
 
-    /* Deadline cell */
-    .deadline-date { font-weight: 700; }
-    .countdown { display: inline-block; font-size: .72rem; padding: 1px 6px; border-radius: 999px; margin-left: 5px; font-weight: 600; vertical-align: middle; }
-    .cd-urgent { background: #fde8e8; color: #c0392b; }
-    .cd-soon   { background: #fef3e2; color: #d35400; }
-    .cd-normal { background: #eafaf1; color: #1e8449; }
-    .cd-done   { background: #e0e4ef; color: #888; }
-
-    /* Status badge */
-    .status-badge { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: .7rem; font-weight: 700; margin-top: 3px; }
-    .sb-done     { background: #e0e4ef; color: #667; }
-    .sb-today    { background: #fde8e8; color: #c0392b; border: 1px solid #f5b7b1; }
-    .sb-tomorrow { background: #fef3e2; color: #d35400; border: 1px solid #f9d8b0; }
-    .sb-upcoming { background: #e8f4fd; color: #2874a6; border: 1px solid #aed6f1; }
-
-    /* Progress select */
-    .progress-select {
-      padding: 4px 6px;
-      border-radius: 6px;
-      border: 1.5px solid #c8cde0;
-      font-size: .75rem;
-      cursor: pointer;
-      font-weight: 600;
-      width: 100%;
-      min-width: 100px;
-      appearance: none;
-      text-align: center;
-    }
-    .prog-0 { background: #f0f2fa; color: #556; border-color: #c8cde0; }
-    .prog-1 { background: #d6eaf8; color: #1a5276; border-color: #7fb3d3; }
-    .prog-2 { background: #2471a3; color: #fff; border-color: #2471a3; }
-    .prog-3 { background: #e67e22; color: #fff; border-color: #e67e22; }
-    .prog-4 { background: #8e44ad; color: #fff; border-color: #8e44ad; }
-    .prog-5 { background: #1e8449; color: #fff; border-color: #1e8449; }
-    .prog-6 { background: #c0392b; color: #fff; border-color: #c0392b; }
-
-    /* Link button */
-    .link-btn { display: inline-block; padding: 3px 9px; background: #f0f2fa; border-radius: 5px; font-size: .74rem; color: #4a6cf7; text-decoration: none; border: 1px solid #d0d5f0; white-space: nowrap; }
-    .link-btn:hover { background: #4a6cf7; color: #fff; }
-
-    /* Memo button */
-    .memo-btn { background: none; border: 1.5px solid #c8cde0; border-radius: 6px; padding: 3px 8px; font-size: .78rem; cursor: pointer; color: #889; white-space: nowrap; }
-    .memo-btn:hover { border-color: #4a6cf7; color: #4a6cf7; }
-    .memo-btn.has-memo { border-color: #f39c12; color: #f39c12; background: #fef9e7; }
-
-    /* Memo row */
-    .memo-row td { padding: 0; background: #fffef5; border-bottom: 2px solid #f9d8a0; }
-    .memo-inner { padding: 8px 16px; display: flex; gap: 10px; align-items: flex-start; }
-    .memo-textarea {
-      flex: 1;
-      padding: 8px 10px;
-      border: 1.5px solid #e0d9a0;
-      border-radius: 6px;
-      font-size: .82rem;
-      font-family: inherit;
-      resize: vertical;
-      min-height: 60px;
-      background: #fff;
-      outline: none;
-    }
-    .memo-textarea:focus { border-color: #f39c12; }
-    .memo-label { font-size: .75rem; color: #a07a00; padding-top: 10px; white-space: nowrap; }
-
-    .empty { text-align: center; padding: 60px; color: #aab; font-size: .9rem; }
-
-    @media (max-width: 640px) {
-      header { padding: 16px; }
-      .controls { padding: 10px 14px; }
-      .table-wrap { padding: 0 10px 32px; }
-      .search-box { width: 140px; }
-    }
-  </style>
+/* ── Misc ── */
+.empty{text-align:center;padding:60px;color:var(--text3);font-size:.9rem}
+@media(max-width:640px){
+  header{padding:12px 16px}
+  .hdr-left h1{font-size:1rem}
+  .controls{padding:8px 14px}
+  .controls-row2{padding:6px 14px}
+  .table-wrap{padding:0 10px 32px}
+  .search-box{width:140px}
+  .dashboard{padding:7px 14px 11px}
+  .tag-bar,.bulk-bar{padding:5px 14px}
+  .cal-wrap,.cards-wrap{padding:0 14px 32px}
+  .cards-grid{grid-template-columns:1fr}
+  .cal-cell{min-height:56px}
+}
+</style>
 </head>
 <body>
 
 <header>
-  <h1>28卒 サマーインターン 締め切り一覧</h1>
-  <p>最終更新: 2026-05-29　|　情報は収集時点のものです。各社公式サイトで必ずご確認ください。</p>
+  <div class="hdr-left">
+    <h1>28卒 サマーインターン 締め切り一覧</h1>
+    <p>最終更新: 2026-05-30　|　情報は収集時点のものです。各社公式サイトで必ずご確認ください。</p>
+  </div>
+  <div class="hdr-right">
+    <button class="hdr-btn" id="darkBtn">🌙 ダーク</button>
+    <button class="hdr-btn" id="backupBtn">💾 バックアップ</button>
+    <button class="hdr-btn" id="restoreBtn">📂 復元</button>
+    <button class="hdr-btn" id="historyBtn">📋 履歴</button>
+    <button class="hdr-btn" id="addCoBtn">＋ 企業追加</button>
+  </div>
 </header>
+<input type="file" id="restoreFile" accept=".json" style="display:none">
+
+<div class="dashboard" id="dashboard"></div>
 
 <div class="controls">
-  <input class="search-box" id="searchBox" type="search" placeholder="企業名で検索…">
+  <input class="search-box" id="searchBox" type="search" placeholder="企業名・業界・プログラムで検索…">
   <div class="filter-group" id="filterGroup"></div>
-  <div class="right-controls">
-    <label class="toggle-label"><input type="checkbox" id="favOnly"> ⭐ お気に入りのみ</label>
-    <label class="toggle-label"><input type="checkbox" id="hideFinished"> 締切済を隠す</label>
+  <div class="right-ctrls">
+    <label class="toggle-lbl"><input type="checkbox" id="favOnly"> ⭐ お気に入り</label>
+    <label class="toggle-lbl"><input type="checkbox" id="hideFinished"> 締切済を隠す</label>
     <button class="sort-btn" id="sortBtn">締切 ▲ 昇順</button>
+    <button class="act-btn" id="exportBtn">📅 カレンダー出力</button>
+    <button class="act-btn" id="notifBtn">🔔 通知設定</button>
+    <div class="view-grp">
+      <button class="view-btn active" data-view="table">テーブル</button>
+      <button class="view-btn" data-view="cards">カード</button>
+      <button class="view-btn" data-view="calendar">カレンダー</button>
+    </div>
   </div>
 </div>
 
+<div class="controls-row2">
+  <span class="flabel">締切</span>
+  <div class="filter-group" id="urgencyGroup"></div>
+  <span class="flabel" style="margin-left:4px">進捗</span>
+  <select id="progressFilter" class="mini-sel">
+    <option value="all">全て</option>
+    <option value="unapplied">未応募のみ</option>
+    <option value="applied">応募済み以上</option>
+    <option value="hide_failed">不合格を隠す</option>
+  </select>
+  <span class="flabel" style="margin-left:4px">列</span>
+  <button class="act-btn" id="colBtn">表示列 ▾</button>
+</div>
+
+<div class="tag-bar" id="tagBar"></div>
+<div class="bulk-bar" id="bulkBar">
+  <span id="bulkCount">0社選択中</span>
+  <select class="bulk-sel" id="bulkSel"></select>
+  <button class="bulk-apply" id="bulkApply">一括変更</button>
+  <button class="bulk-clear" id="bulkClear">✕ 選択解除</button>
+</div>
 <div class="summary" id="summary"></div>
 
-<div class="table-wrap">
-  <table id="mainTable">
-    <thead>
-      <tr>
-        <th style="width:36px"></th>
+<!-- Table view -->
+<div id="tableView">
+  <div class="table-wrap">
+    <table id="mainTable">
+      <thead><tr>
+        <th style="width:28px"><input type="checkbox" id="selAll" class="row-chk"></th>
+        <th style="width:30px"></th>
         <th>企業名</th>
         <th class="sortable" id="thDeadline">締め切り ▲</th>
-        <th style="min-width:110px">進捗</th>
-        <th>開催期間</th>
-        <th>採用サイト</th>
-        <th>メモ</th>
-      </tr>
-    </thead>
-    <tbody id="tbody"></tbody>
-  </table>
-  <div class="empty" id="empty" style="display:none">該当する企業が見つかりません</div>
+        <th style="min-width:105px">進捗</th>
+        <th class="col-period">開催期間</th>
+        <th class="col-site">採用サイト</th>
+        <th>詳細</th>
+      </tr></thead>
+      <tbody id="tbody"></tbody>
+    </table>
+    <div class="empty" id="empty" style="display:none">該当する企業が見つかりません</div>
+  </div>
+</div>
+
+<!-- Cards view -->
+<div id="cardsView" style="display:none">
+  <div class="cards-wrap"><div class="cards-grid" id="cardsGrid"></div></div>
+</div>
+
+<!-- Calendar view -->
+<div id="calendarView" style="display:none">
+  <div class="cal-wrap">
+    <div class="cal-nav">
+      <button class="cal-nav-btn" id="calPrev">‹</button>
+      <span class="cal-month-lbl" id="calMonthLbl"></span>
+      <button class="cal-nav-btn" id="calNext">›</button>
+    </div>
+    <div class="cal-grid" id="calGrid"></div>
+  </div>
+</div>
+
+<!-- Modals -->
+<div class="modal-ov" id="addCoModal">
+  <div class="modal-box">
+    <button class="modal-close" data-close="addCoModal">✕</button>
+    <div class="modal-title">企業を追加</div>
+    <div class="form-row"><label class="form-lbl">業界 *</label>
+      <select class="form-sel" id="fIndustry"></select></div>
+    <div class="form-row"><label class="form-lbl">企業名 *</label>
+      <input class="form-inp" id="fCompany" placeholder="例: 株式会社○○"></div>
+    <div class="form-row2">
+      <div><label class="form-lbl">プログラム名</label>
+        <input class="form-inp" id="fProgram" placeholder="例: エンジニアコース"></div>
+      <div><label class="form-lbl">締め切り日</label>
+        <input class="form-inp" id="fDeadline" placeholder="例: 6/15 or 要確認"></div>
+    </div>
+    <div class="form-row2">
+      <div><label class="form-lbl">開催期間</label>
+        <input class="form-inp" id="fPeriod" placeholder="例: 8月〜"></div>
+      <div><label class="form-lbl">備考</label>
+        <input class="form-inp" id="fNote" placeholder="例: 選考直結型"></div>
+    </div>
+    <div class="form-row"><label class="form-lbl">採用サイトURL</label>
+      <input class="form-inp" id="fUrl" type="url" placeholder="https://..."></div>
+    <button class="submit-btn" id="addCoSubmit">追加する</button>
+  </div>
+</div>
+
+<div class="modal-ov" id="histModal">
+  <div class="modal-box wide">
+    <button class="modal-close" data-close="histModal">✕</button>
+    <div class="modal-title">進捗変更履歴</div>
+    <div id="histList" class="hist-list"></div>
+    <button class="submit-btn" id="clearHistBtn" style="background:#c0392b;margin-top:14px">履歴を全削除</button>
+  </div>
+</div>
+
+<div class="modal-ov" id="colModal">
+  <div class="modal-box">
+    <button class="modal-close" data-close="colModal">✕</button>
+    <div class="modal-title">表示列の設定</div>
+    <div class="col-grid">
+      <label class="col-item"><input type="checkbox" id="colPeriod"> 開催期間</label>
+      <label class="col-item"><input type="checkbox" id="colSite"> 採用サイト</label>
+    </div>
+  </div>
 </div>
 
 <script>
-// ─── DATA ──────────────────────────────────────────────────────────────────
-// [業界, 企業名, プログラム名, 締め切り日, ステータス, 開催期間, 備考, URL]
+// ── DATA ────────────────────────────────────────────────────────────────────
+// [業界, 企業名, プログラム名, 締め切り日, rawStatus, 開催期間, 備考, URL]
 const DATA = [
   ["IT・メガベンチャー","サイボウズ","エンジニア（第1期）","4/28","済","","","https://cybozu.co.jp/recruit/entry/intern/"],
   ["IT・メガベンチャー","U-NEXT HOLDINGS","-","4/30","済","","","https://www.uext-holdings.co.jp/recruit/"],
@@ -220,9 +390,9 @@ const DATA = [
   ["IT・メガベンチャー","富士通","職場受入型・有償","5/26","済","","","https://www.fujitsu.com/jp/about/resources/newgraduates/"],
   ["IT・メガベンチャー","日立システムズ","-","5/26","済","","","https://www.hitachi-systems.com/recruit/"],
   ["IT・メガベンチャー","サイバーエージェント","-","5/28","済","","","https://www.cyberagent.co.jp/careers/students/"],
-  ["IT・メガベンチャー","Visional","プロダクト職","5/29","本日","","","https://visional.inc/recruit/"],
-  ["IT・メガベンチャー","電通デジタル","-","5/29","本日","","","https://www.dentsudigital.co.jp/recruit/"],
-  ["IT・メガベンチャー","レバレジーズ","Webエンジニア向け","5/30","明日","","","https://recruit.leverages.jp/"],
+  ["IT・メガベンチャー","Visional","プロダクト職","5/29","未","","","https://visional.inc/recruit/"],
+  ["IT・メガベンチャー","電通デジタル","-","5/29","未","","","https://www.dentsudigital.co.jp/recruit/"],
+  ["IT・メガベンチャー","レバレジーズ","Webエンジニア向け","5/30","未","","","https://recruit.leverages.jp/"],
   ["IT・メガベンチャー","メルカリ","就業型インターン（エンジニア・PM・データアナリスト）","5/31","未","","","https://mercan.mercari.com/intern/"],
   ["IT・メガベンチャー","ラクスル","短期3days〜就業型","5/31","未","","","https://corp.raksul.com/careers/"],
   ["IT・メガベンチャー","フューチャー","Project Camp / Engineer Camp","5/31","未","9月〜","選考直結型","https://www.future.co.jp/recruit/fresh/"],
@@ -238,7 +408,7 @@ const DATA = [
   ["IT・メガベンチャー","ログラス","5days エンジニア職","7/31","未","","","https://loglass.co.jp/recruit/"],
   ["IT・メガベンチャー","レバレジーズ","Leverages Summer Internship","7/31","未","","","https://recruit.leverages.jp/"],
   ["コンサル・シンクタンク","PwCコンサルティング","-","5/11","済","","","https://www.pwc.com/jp/ja/careers/student.html"],
-  ["コンサル・シンクタンク","PwCアドバイザリー","-","5/29","本日","","","https://www.pwc.com/jp/ja/careers/student.html"],
+  ["コンサル・シンクタンク","PwCアドバイザリー","-","5/29","未","","","https://www.pwc.com/jp/ja/careers/student.html"],
   ["コンサル・シンクタンク","マッキンゼー","国内大学新卒採用インターン","5/31","未","8月","約20名・選考直結","https://www.mckinsey.com/jp/careers"],
   ["コンサル・シンクタンク","デロイト トーマツ","Summer Job（複数部門）","5/31","未","","","https://careers2.deloitte.com/jp/ja/pages/careers/internship.html"],
   ["コンサル・シンクタンク","日本総合研究所","ITサービス・戦略コンサル等","6/1","未","","複数コース","https://www.jri.co.jp/recruit/"],
@@ -253,17 +423,17 @@ const DATA = [
   ["外資金融","ゴールドマン・サックス","投資銀行部門","5/31","未","8〜9月","","https://www.goldmansachs.com/japan/careers/students/events/local-internship"],
   ["外資金融","モルガン・スタンレー","Summer Insights Program","5/31","未","","","https://www.morganstanley.com/ja/people-opportunities/students/"],
   ["外資金融","UBSグループ","Summer Job（対面）","5/31","未","","","https://www.ubs.com/global/en/careers/students-graduates.html"],
-  ["外資金融","J.P.モルガン","国内サマー・ワークショップ（複数部門）","要確認","未","8/4〜9/11（部門により異なる）","IB8/27-29・マーケッツ8/20-22等","https://careers.jpmorgan.com/global/en/students/programs"],
+  ["外資金融","J.P.モルガン","国内サマー・ワークショップ（複数部門）","要確認","未","8/4〜9/11","IB8/27-29・マーケッツ8/20-22等","https://careers.jpmorgan.com/global/en/students/programs"],
   ["外資金融","ブラックロック","サマーインターン","要確認","未","8/24〜1週間","","https://careers.blackrock.com/"],
   ["国内金融","三菱UFJ銀行","システムデジタル","5/18","済","","","https://www.bk.mufg.jp/career/"],
   ["国内金融","NRI","ITソリューション（先行受付）","5/26","済","","","https://www.nri.com/jp/career/"],
-  ["国内金融","第一生命","-","5/29","本日","","","https://career.dai-ichi-life.co.jp/"],
+  ["国内金融","第一生命","-","5/29","未","","","https://career.dai-ichi-life.co.jp/"],
   ["国内金融","バンク・オブ・アメリカ","グローバルテクノロジー","5/31","未","","","https://careers.bankofamerica.com/en-us/students-and-graduates"],
   ["国内金融","KPMG税理士法人","-","5/31","未","","","https://home.kpmg/jp/ja/home/careers.html"],
   ["国内金融","日本政策金融公庫","-","5/31","未","","","https://www.jfc.go.jp/n/recruit/"],
   ["国内金融","三菱UFJニコス","-","7/6","未","","","https://www.cr.mufg.jp/recruit/"],
   ["商社","丸紅","Marubeni Summer Internship","5/31","未","8月〜","","https://www.marubeni.com/jp/recruit/"],
-  ["商社","三井物産","夏の1dayプログラム「志」ワークショップ","7/22","未","8/18・8/22・8/27・9/4・9/9（各1day）","対面（本店）","https://career.mitsui.com/"],
+  ["商社","三井物産","夏の1dayプログラム「志」ワークショップ","7/22","未","8/18・8/22・8/27・9/4・9/9","対面（本店）","https://career.mitsui.com/"],
   ["商社","住友商事","Sumisho Design Internship","要確認","未","8月下旬・5日間","約100名募集","https://www.sumitomocorp.com/ja/jp/recruit"],
   ["商社","三菱商事","MC Gateway Session","8/6","未","8/7（1day・オンライン）","","https://www.mitsubishicorp.com/jp/ja/careerentry/"],
   ["商社","伊藤忠商事","サマーインターン","要確認","未","","公式サイトで要確認","https://career.itochu.co.jp/student/internship/"],
@@ -274,7 +444,7 @@ const DATA = [
   ["メーカー・電機・精密","花王","-","5/31","未","","","https://www.kao.com/jp/corporate/jobs/"],
   ["メーカー・電機・精密","ソニーセミコンダクタ（SSS）","-","6/1","未","8/24〜9/18（2〜4週間）","","https://recruit.sony-semicon.com/internship"],
   ["メーカー・電機・精密","ソニーセミコンダクタ（SCK）","-","6/8","未","8/24〜9/4（1〜2週間）","","https://recruit.sony-semicon.com/internship"],
-  ["メーカー・電機・精密","キーエンス","早期選考直結オンライン説明会","5/30","明日","","ビジネス・エンジニア・S職","https://www.keyence-jobs.jp/"],
+  ["メーカー・電機・精密","キーエンス","早期選考直結オンライン説明会","5/30","未","","ビジネス・エンジニア・S職","https://www.keyence-jobs.jp/"],
   ["メーカー・電機・精密","キーエンス","ビジネス職1day仕事体験","5〜8月（随時）","未","","公式サイトで要確認","https://www.keyence-jobs.jp/"],
   ["メーカー・電機・精密","ソニー（本体）","サマーインターン","要確認","未","8〜9月","公式マイページで確認","https://www.recruit.sony.co.jp/2028/"],
   ["インフラ・エネルギー","大阪ガス都市開発","-","5/31","未","","","https://www.og-toshi.co.jp/recruit/"],
@@ -284,74 +454,227 @@ const DATA = [
   ["消費財・広告・メディア","インテージ","マーケティングコース","5/31","未","7月","","https://www.intage.co.jp/recruit/"],
   ["消費財・広告・メディア","日本経済新聞社","SWE / データサイエンティスト","5/31","未","","","https://r.nikkei.com/"],
   ["消費財・広告・メディア","P&G ジャパン","-","6/29","未","","","https://www.pgcareers.com/jp/ja/search-jobs?type=student"],
-
-  ["自動車・モビリティ","トヨタ自動車","技術系インターンシップ","要確認","未","8〜9月（2週間 or 4週間）","","https://www.toyota-recruit.com/saiyo/recruit/event/"],
+  ["自動車・モビリティ","トヨタ自動車","技術系インターンシップ","要確認","未","8〜9月（2〜4週間）","","https://www.toyota-recruit.com/saiyo/recruit/event/"],
   ["自動車・モビリティ","本田技研工業（ホンダ）","サマーインターンシップ","要確認","未","8〜9月","","https://www.honda-recruit.com/internship/"],
   ["自動車・モビリティ","日産自動車","技術系インターンシップ","6/21","未","9〜10月","","https://www.nissanmotor.jobs/japan/NE/recruit/event.html"],
   ["自動車・モビリティ","ダイハツ工業","Webセミナー","6/7","未","","","https://www.daihatsu.co.jp/recruit/"],
   ["自動車・モビリティ","パナソニックオートモーティブシステムズ","インターンシップ","6/16","未","","","https://panasonic.net/cns/corp/join/"],
   ["自動車・モビリティ","トヨタ自動車東日本","インターンシップ","7/8","未","5days","","https://www.toyota-recruit.com/"],
-
   ["広告・マーケティング","電通","サマーインターンシップ（選考直結型）","6/9","未","","","https://www.dentsu.co.jp/careers/"],
   ["広告・マーケティング","博報堂","サマーインターンシップ","要確認","未","6〜9月","例年6種類のプログラム","https://hakusuku.jp/recruit/information/internship/"],
   ["広告・マーケティング","ADK","インターンシップ","6/19","未","","","https://www.adk.jp/recruit/"],
   ["広告・マーケティング","ADK","インターンシップ（第2期）","7/28","未","","","https://www.adk.jp/recruit/"],
   ["広告・マーケティング","読売広告社","インターンシップ","7/16","未","","","https://www.yomiko.co.jp/"],
-
   ["食品・飲料","サントリー","生産技術・生産（エンジニア）","要確認","未","8月","","https://www.suntory.co.jp/recruit/challenge/"],
   ["食品・飲料","日清製粉","工学系インターンシップ","6/24","未","複数日程（6〜7月）","6/24・6/26・7/9・7/20・7/31","https://www.nisshin.com/recruit/"],
   ["食品・飲料","ニッスイ","インターンシップ","7/1","未","","","https://www.nissui.co.jp/recruit/"],
-
   ["航空・旅行","ANA","グローバルスタッフ職","6/15","未","","","https://www.ana.co.jp/group/recruit/"],
   ["航空・旅行","ANA","運航乗務員（パイロット）","7/24","未","","","https://www.ana.co.jp/group/recruit/"],
   ["航空・旅行","JAL","エンジニア","7/5","未","","","https://www.jal.com/ja/recruit/"],
   ["航空・旅行","JAL","業務企画職・データサイエンティスト","7/15","未","","","https://www.jal.com/ja/recruit/"],
   ["航空・旅行","JAL","パイロット","7/12","未","","","https://www.jal.com/ja/recruit/"],
-
   ["不動産・建設","旭化成ホームズ","インターンシップ（1day）","5/28","済","","","https://www.asahi-kasei-homes.co.jp/recruit/"],
   ["不動産・建設","三井不動産リアルティ","インターンシップ","6/2","未","","","https://recruit.mitsuifudosan-realty.co.jp/"],
   ["不動産・建設","野村不動産","インターンシップ","6/12","未","複数日程","6/12・6/14・6/26","https://www.nomura-re.co.jp/recruit/"],
   ["不動産・建設","三菱地所プロパティマネジメント","インターンシップ","6/18","未","","","https://www.mec-pm.co.jp/recruit/"],
   ["不動産・建設","三井不動産","インターンシップ","6/23","未","","","https://recruit.mitsuifudosan.co.jp/shinsotsu/eventandintern/"],
-
   ["通信","KDDI","インターンシップ（全10コース）","6/7","未","","業務系・技術系10コース","https://career.kddi.com/"],
   ["通信","KDDI","インターンシップ（第2期）","7/5","未","","","https://career.kddi.com/"],
   ["通信","NTT東日本","インターンシップ","6/30","未","","","https://www.ntt-east.co.jp/recruit/"],
   ["通信","NTT西日本","インターンシップ","7/3","未","","","https://www.ntt-west.co.jp/recruit/"],
-
   ["製薬・医療","小野薬品工業","インターンシップ","6/3","未","複数日程","6/3・6/10・6/14","https://www.ono-pharma.com/ja/company/recruit/"],
   ["製薬・医療","ファイザー","MR職インターンシップ","6/24","未","","","https://www.pfizer.co.jp/pfizer/careers/"],
-
   ["外資IT","Amazon Japan","インターンシップ（複数職種）","要確認","未","8〜9月","オペ・コンシューマー・SDE","https://amazon.jobs/jp/teams/internships-for-students"],
   ["外資IT","Google Japan","インターンシップ","要確認","未","夏頃","公式サイトで随時確認","https://careers.google.com/students/"],
   ["外資IT","Microsoft Japan","インターンシップ","要確認","未","夏頃","","https://careers.microsoft.com/students/us/en/japanstudentopportunities"],
+  ["外資IT","Salesforce Japan","インターンシップ","要確認","未","夏頃","","https://salesforce.com/jp/company/careers/"],
+  ["外資IT","IBM Japan","テックエクスプローラー","6/20","未","","","https://www.ibm.com/jp-ja/employment/"],
+  ["外資IT","SAP Japan","インターンシップ","要確認","未","夏頃","","https://jobs.sap.com/"],
+  ["外資IT","Oracle Japan","インターンシップ","要確認","未","夏頃","","https://www.oracle.com/jp/corporate/careers/"],
+  ["外資IT","Cisco Systems Japan","インターンシップ","要確認","未","夏頃","","https://www.cisco.com/c/ja_jp/about/careers.html"],
+
+  ["IT・メガベンチャー","freee","エンジニア・ビジネス","6/15","未","","","https://jobs.freee.co.jp/"],
+  ["IT・メガベンチャー","マネーフォワード","エンジニア・ビジネス","6/20","未","","","https://hrmos.co/pages/moneyforward/jobs"],
+  ["IT・メガベンチャー","Sansan","エンジニア・ビジネス","6/15","未","","","https://jp.corp-sansan.com/recruit/"],
+  ["IT・メガベンチャー","SmartHR","エンジニア","6/15","未","","","https://smarthr.co.jp/job/"],
+  ["IT・メガベンチャー","LayerX","エンジニア","6/20","未","","選考直結型","https://layerx.co.jp/company/jobs"],
+  ["IT・メガベンチャー","BASE","エンジニア","7/1","未","","","https://thebase.com/careers"],
+  ["IT・メガベンチャー","HENNGE","エンジニア","6/25","未","","","https://hennge.com/jp/recruit/"],
+  ["IT・メガベンチャー","ヌーラボ","エンジニア","7/1","未","","","https://nulab.com/ja/about/careers/"],
+
+  ["コンサル・シンクタンク","Roland Berger","サマーインターン","6/15","未","","","https://www.rolandberger.com/ja/Career/"],
+  ["コンサル・シンクタンク","Strategy&（PwC）","サマーインターン","6/10","未","","","https://www.strategyand.pwc.com/jp/ja/careers.html"],
+  ["コンサル・シンクタンク","ADL（アーサー・ディ・リトル）","インターンシップ","6/20","未","","","https://www.adlittle.com/ja-jp/careers"],
+  ["コンサル・シンクタンク","ドリームインキュベータ","インターンシップ","6/20","未","","","https://www.dreamincubator.co.jp/recruit/"],
+  ["コンサル・シンクタンク","経営共創基盤（IGPI）","インターンシップ","6/30","未","","","https://www.igpi.co.jp/recruit/"],
+  ["コンサル・シンクタンク","シグマクシス","インターンシップ","6/30","未","","","https://www.sigmaxyz.com/recruit/"],
+  ["コンサル・シンクタンク","船井総合研究所","インターンシップ","7/1","未","","","https://www.funaisoken.co.jp/recruit/"],
+
+  ["国内金融","みずほ銀行","総合職インターン","6/5","未","","","https://www.mizuhogroup.com/japan/careers/"],
+  ["国内金融","三井住友銀行","総合職インターン","6/5","未","","","https://www.smbc.co.jp/career/"],
+  ["国内金融","三菱UFJ信託銀行","インターンシップ","6/10","未","","","https://www.tr.mufg.jp/hojin/saiyou/"],
+  ["国内金融","農林中央金庫","インターンシップ","6/15","未","","","https://www.nochubank.or.jp/recruit/"],
+  ["国内金融","みずほ信託銀行","インターンシップ","6/20","未","","","https://www.mizuho-tb.co.jp/recruit/"],
+
+  ["証券・資産運用","野村証券","インターンシップ（複数コース）","6/9","未","8月","","https://www.nomura.co.jp/recruit/newgraduate/"],
+  ["証券・資産運用","大和証券グループ","インターンシップ","6/8","未","","","https://www.daiwa.jp/recruit/"],
+  ["証券・資産運用","SMBC日興証券","インターンシップ","6/12","未","","","https://www.smbcnikko.co.jp/recruit/"],
+  ["証券・資産運用","みずほ証券","インターンシップ","6/12","未","","","https://www.mizuho-sc.com/recruit/"],
+  ["証券・資産運用","JPX（日本取引所グループ）","インターンシップ","6/20","未","","","https://www.jpx.co.jp/corporate/recruit/"],
+  ["証券・資産運用","三菱UFJモルガン・スタンレー証券","インターンシップ","6/15","未","","","https://www.mufgms.com/recruit/"],
+  ["証券・資産運用","東海東京フィナンシャルHD","インターンシップ","7/1","未","","","https://www.tokai-tokyo.co.jp/recruit/"],
+
+  ["保険","東京海上日動火災保険","サマーインターン","6/15","未","","","https://www.tokiomarine-nichido.co.jp/recruit/"],
+  ["保険","三井住友海上火災保険","サマーインターン","6/16","未","","","https://www.ms-ins.com/recruit/"],
+  ["保険","損保ジャパン","インターンシップ","6/15","未","","","https://www.sompo-japan.co.jp/recruit/"],
+  ["保険","あいおいニッセイ同和損保","インターンシップ","6/23","未","","","https://www.aioinissaydowa.co.jp/recruit/"],
+  ["保険","日本生命保険","インターンシップ","6/9","未","","","https://www.nissay.co.jp/kaisha/saiyo/"],
+  ["保険","明治安田生命保険","インターンシップ","6/16","未","","","https://www.meijiyasuda.co.jp/recruit/"],
+  ["保険","住友生命保険","インターンシップ","6/15","未","","","https://www.sumitomolife.co.jp/recruit/"],
+  ["保険","かんぽ生命保険","インターンシップ","6/30","未","","","https://www.jp-life.japanpost.jp/aboutus/recruit/"],
+
+  ["ゲーム・エンタメ","Cygames","エンジニア・アーティスト","6/16","未","","","https://www.cygames.co.jp/recruit/"],
+  ["ゲーム・エンタメ","バンダイナムコエンターテインメント","クリエイター","6/15","未","","","https://www.bandainamcoent.co.jp/recruit/"],
+  ["ゲーム・エンタメ","コナミグループ","クリエイター・エンジニア","6/10","未","","","https://www.konami.com/jobs/jp/ja/"],
+  ["ゲーム・エンタメ","カプコン","クリエイター職","6/24","未","","","https://www.capcom.co.jp/recruit/"],
+  ["ゲーム・エンタメ","スクウェア・エニックス","クリエイター職","6/15","未","","","https://www.jp.square-enix.com/recruit/"],
+  ["ゲーム・エンタメ","MIXI","エンジニア・デザイナー","6/10","未","","","https://mixi.co.jp/recruit/"],
+  ["ゲーム・エンタメ","グリー","エンジニア・ビジネス","6/20","未","","","https://corp.gree.net/jp/ja/recruit/"],
+  ["ゲーム・エンタメ","ガンホー・オンライン","クリエイター職","6/30","未","","","https://www.gungho.co.jp/recruit/"],
+  ["ゲーム・エンタメ","コーエーテクモHD","クリエイター職","7/1","未","","","https://www.koeitecmo.co.jp/recruit/"],
+  ["ゲーム・エンタメ","セガ","クリエイター・エンジニア","6/20","未","","","https://www.sega.co.jp/recruit/"],
+  ["ゲーム・エンタメ","任天堂","技術系インターン","6/20","未","","","https://www.nintendo.co.jp/jobs/"],
+
+  ["小売・ファッション","ファーストリテイリング（ユニクロ）","グローバルMD・経営","6/15","未","","グローバル採用","https://www.fastretailing.com/jp/career/"],
+  ["小売・ファッション","良品計画（無印良品）","インターンシップ","6/20","未","","","https://ryohin-keikaku.jp/recruit/"],
+  ["小売・ファッション","伊勢丹三越HD","インターンシップ","6/23","未","","","https://www.imhds.co.jp/recruit/"],
+  ["小売・ファッション","高島屋","インターンシップ","6/30","未","","","https://www.takashimaya.co.jp/recruit/"],
+  ["小売・ファッション","イオングループ","インターンシップ","7/7","未","","","https://www.aeon.info/recruit/"],
+  ["小売・ファッション","セブン&アイ・HD","インターンシップ","7/1","未","","","https://recruit.7andi.com/"],
+  ["小売・ファッション","J.フロントリテイリング","インターンシップ","7/1","未","","大丸・松坂屋","https://www.j-front-retailing.com/recruit/"],
+  ["小売・ファッション","オンワードホールディングス","インターンシップ","7/7","未","","","https://www.onward.co.jp/recruit/"],
+
+  ["素材・化学","三菱ケミカルグループ","研究・技術職","6/15","未","","","https://www.mitsubishichemicalgroup.com/jp/careers/"],
+  ["素材・化学","住友化学","技術系インターン","6/20","未","","","https://www.sumitomo-chem.co.jp/recruit/"],
+  ["素材・化学","旭化成","技術系・事務系","6/15","未","","","https://www.asahi-kasei.com/careers/"],
+  ["素材・化学","東レ","技術系インターン","6/20","未","","","https://www.toray.co.jp/recruit/"],
+  ["素材・化学","信越化学工業","技術系インターン","6/30","未","","","https://www.shinetsu.co.jp/jp/recruit/"],
+  ["素材・化学","富士フイルムHD","技術・事務職","6/15","未","","","https://www.fujifilm.com/jp/ja/about/group/careers/"],
+  ["素材・化学","三井化学","技術系インターン","6/30","未","","","https://jp.mitsuichemicals.com/jp/investor/careers/"],
+  ["素材・化学","AGC（旭硝子）","技術系インターン","7/1","未","","","https://www.agc.com/careers/"],
+  ["素材・化学","帝人","技術・事務系","7/1","未","","","https://www.teijin.co.jp/recruit/"],
+
+  ["建設・ゼネコン","鹿島建設","技術系インターン","6/20","未","","","https://www.kajima.co.jp/recruit/"],
+  ["建設・ゼネコン","大成建設","技術系インターン","6/24","未","","","https://www.taisei.co.jp/about_us/recruit/"],
+  ["建設・ゼネコン","大林組","技術系インターン","6/20","未","","","https://www.obayashi.co.jp/recruit/"],
+  ["建設・ゼネコン","清水建設","技術系インターン","6/24","未","","","https://www.shimz.co.jp/recruit/"],
+  ["建設・ゼネコン","竹中工務店","技術系インターン","7/1","未","","","https://www.takenaka.co.jp/recruit/"],
+  ["建設・ゼネコン","戸田建設","技術系インターン","7/7","未","","","https://www.toda.co.jp/recruit/"],
+  ["建設・ゼネコン","長谷工コーポレーション","技術系インターン","7/7","未","","","https://www.haseko.co.jp/recruit/"],
+
+  ["鉄道・物流","JR東日本","インターンシップ（複数コース）","6/15","未","","","https://www.jreast.co.jp/recruit/"],
+  ["鉄道・物流","JR西日本","インターンシップ","6/20","未","","","https://www.westjr.co.jp/company/recruit/"],
+  ["鉄道・物流","JR九州","インターンシップ","7/1","未","","","https://www.jrkyushu.co.jp/recruit/"],
+  ["鉄道・物流","東急グループ","インターンシップ","6/30","未","","","https://www.tokyu.co.jp/saiyo/"],
+  ["鉄道・物流","小田急電鉄","インターンシップ","6/30","未","","","https://www.odakyu.jp/recruit/"],
+  ["鉄道・物流","近鉄グループHD","インターンシップ","7/1","未","","","https://www.kintetsu.co.jp/railway/recruit/"],
+  ["鉄道・物流","ヤマトホールディングス","インターンシップ","6/20","未","","","https://www.yamatoHD.co.jp/recruit/"],
+  ["鉄道・物流","SGホールディングス（佐川急便）","インターンシップ","7/1","未","","","https://sghd.co.jp/recruit/"],
+  ["鉄道・物流","日本郵政グループ","インターンシップ","6/30","未","","","https://www.japanpost.jp/recruit/"],
+
+  ["人材・HRTech","リクルートHD","社員インターン（Career）","6/5","未","","","https://www.recruit.co.jp/employment/students/"],
+  ["人材・HRTech","パーソルHD","インターンシップ","6/15","未","","","https://www.persol-group.co.jp/recruit/"],
+  ["人材・HRTech","エン・ジャパン","インターンシップ","6/20","未","","","https://corp.en-japan.com/recruit/"],
+  ["人材・HRTech","マイナビ","インターンシップ","6/20","未","","","https://career.mynavi.jp/recruit/"],
+  ["人材・HRTech","ビジョナル（ビズリーチ）","HRTechコース","6/25","未","","","https://www.bizreach.co.jp/recruit/"],
+
+  ["メディア・出版","NHK","インターンシップ","6/15","未","8〜9月","技術・制作・経営","https://www.nhk.or.jp/saiyo/"],
+  ["メディア・出版","日本テレビ","インターンシップ","6/20","未","","","https://www.ntv.co.jp/saiyo/"],
+  ["メディア・出版","TBSホールディングス","インターンシップ","6/30","未","","","https://www.tbs.co.jp/recruit/"],
+  ["メディア・出版","テレビ東京","インターンシップ","7/1","未","","","https://www.tv-tokyo.co.jp/recruit/"],
+  ["メディア・出版","フジテレビジョン","インターンシップ","7/1","未","","","https://www.fujitv.co.jp/saiyo/"],
+  ["メディア・出版","集英社","インターンシップ","6/20","未","","","https://www.shueisha.co.jp/recruit/"],
+  ["メディア・出版","講談社","インターンシップ","6/30","未","","","https://www.kodansha.co.jp/recruit/"],
+  ["メディア・出版","TOPPANホールディングス","技術・ビジネス","6/20","未","","","https://www.holdings.toppan.com/ja/recruit/"],
+  ["メディア・出版","大日本印刷（DNP）","技術・ビジネス","6/20","未","","","https://www.dnp.co.jp/recruit/"],
+  ["メディア・出版","リクルート（メディア）","インターンシップ","6/10","未","","","https://www.recruit.co.jp/employment/students/"],
+
+  ["メーカー・電機・精密","村田製作所","技術系インターン","6/20","未","","","https://recruit.murata.com/"],
+  ["メーカー・電機・精密","TDK","技術系インターン","6/20","未","","","https://www.tdk.com/ja/careers/"],
+  ["メーカー・電機・精密","日東電工","技術系インターン","6/20","未","","","https://www.nitto.com/jp/ja/about/recruit/"],
+  ["メーカー・電機・精密","ルネサスエレクトロニクス","エンジニア（半導体設計）","6/15","未","","","https://www.renesas.com/jp/ja/about/careers"],
+  ["メーカー・電機・精密","京セラ","技術系インターン","6/20","未","","","https://www.kyocera.co.jp/recruit/"],
+  ["メーカー・電機・精密","オムロン","技術系インターン","6/20","未","","","https://www.omron.co.jp/recruit/"],
+  ["メーカー・電機・精密","島津製作所","技術系インターン","6/25","未","","","https://www.shimadzu.co.jp/recruit/"],
+  ["メーカー・電機・精密","ニコン","技術系インターン","6/30","未","","","https://www.nikon.co.jp/recruit/"],
+  ["メーカー・電機・精密","リコー","技術系インターン","7/1","未","","","https://www.ricoh.co.jp/recruit/"],
+
+  ["自動車・モビリティ","デンソー","技術系インターン","6/15","未","8〜9月","","https://careers.denso.com/"],
+  ["自動車・モビリティ","アイシン","技術系インターン","6/20","未","","","https://www.aisin.com/jp/company/job/"],
+  ["自動車・モビリティ","豊田自動織機","技術系インターン","6/20","未","","","https://www.toyota-shokki.co.jp/recruit/"],
+  ["自動車・モビリティ","ジェイテクト","技術系インターン","6/30","未","","","https://www.jtekt.co.jp/recruit/"],
+  ["自動車・モビリティ","スズキ","技術系インターン","6/20","未","","","https://www.suzuki.co.jp/recruit/"],
+  ["自動車・モビリティ","SUBARU","技術系インターン","6/15","未","","","https://www.subaru.co.jp/ad/recruit/"],
+
+  ["インフラ・エネルギー","東京電力HD","インターンシップ","6/20","未","","","https://www.tepco.co.jp/recruit/"],
+  ["インフラ・エネルギー","関西電力","インターンシップ","6/20","未","","","https://www.kepco.co.jp/recruit/"],
+  ["インフラ・エネルギー","東京ガス","インターンシップ","6/20","未","","","https://www.tokyo-gas.co.jp/recruit/"],
+  ["インフラ・エネルギー","電源開発（J-POWER）","技術系インターン","7/1","未","","","https://www.jpower.co.jp/recruit/"],
+  ["インフラ・エネルギー","東北電力","インターンシップ","6/30","未","","","https://www.tohoku-epco.co.jp/recruit/"],
+  ["インフラ・エネルギー","九州電力","インターンシップ","6/30","未","","","https://www.kyuden.co.jp/recruit/"],
+
+  ["製薬・医療","武田薬品工業","インターンシップ","6/15","未","","","https://www.takeda.com/ja-jp/careers/"],
+  ["製薬・医療","アステラス製薬","インターンシップ","6/15","未","","","https://www.astellas.com/jp/careers/"],
+  ["製薬・医療","第一三共","インターンシップ","6/20","未","","","https://www.daiichisankyo.co.jp/recruit/"],
+  ["製薬・医療","中外製薬","インターンシップ","6/20","未","","ロシュグループ","https://www.chugai-pharm.co.jp/recruit/"],
+  ["製薬・医療","エーザイ","インターンシップ","6/20","未","","","https://www.eisai.co.jp/recruit/"],
+  ["製薬・医療","大塚製薬","インターンシップ","6/30","未","","","https://www.otsuka.co.jp/recruit/"],
+  ["製薬・医療","塩野義製薬","インターンシップ","6/30","未","","","https://www.shionogi.com/jp/ja/careers.html"],
+  ["製薬・医療","テルモ","技術系インターン","6/30","未","","","https://www.terumo.co.jp/recruit/"],
 ];
 
-// ─── STATE (localStorage) ───────────────────────────────────────────────────
-const STORE_KEY = idx => `shukatsu_28_row_${idx}`;
-function defaultState() { return { progress: 0, memo: '', fav: false }; }
-function loadState(idx) {
-  try { return Object.assign(defaultState(), JSON.parse(localStorage.getItem(STORE_KEY(idx)))); }
-  catch { return defaultState(); }
-}
-function saveState(idx, s) { localStorage.setItem(STORE_KEY(idx), JSON.stringify(s)); }
-
-// ─── PROGRESS ────────────────────────────────────────────────────────────────
+// ── CONSTANTS ────────────────────────────────────────────────────────────────
 const PROGRESS = ['未応募','エントリー済','ES提出済','面接中','結果待ち','合格 ✓','不合格 ✗'];
-const PROG_CLASS = ['prog-0','prog-1','prog-2','prog-3','prog-4','prog-5','prog-6'];
+const PROG_CLS  = ['prog-0','prog-1','prog-2','prog-3','prog-4','prog-5','prog-6'];
+const EVENT_TYPES = ['ES締切','Webテスト','GD','一次面接','二次面接','最終面接','説明会','その他'];
+const PREDEFINED_TAGS = [
+  {label:'第一志望', color:'#c0392b', bg:'#fde8e8'},
+  {label:'練習枠',   color:'#d35400', bg:'#fef3e2'},
+  {label:'選考直結', color:'#8e44ad', bg:'#f5eeff'},
+  {label:'エージェント', color:'#2471a3', bg:'#e8f4fd'},
+  {label:'有給',     color:'#1e8449', bg:'#eafaf1'},
+];
+const LABEL_MAP = {
+  "IT・メガベンチャー":"IT","コンサル・シンクタンク":"コンサル",
+  "メーカー・電機・精密":"メーカー","インフラ・エネルギー":"インフラ",
+  "消費財・広告・メディア":"消費財・広告",
+  "証券・資産運用":"証券","保険":"保険",
+  "ゲーム・エンタメ":"ゲーム","小売・ファッション":"小売",
+  "素材・化学":"素材・化学","建設・ゼネコン":"建設",
+  "鉄道・物流":"鉄道・物流","人材・HRTech":"人材",
+  "メディア・出版":"メディア",
+};
 
-// ─── COUNTDOWN ───────────────────────────────────────────────────────────────
-const TODAY = new Date(2026, 4, 29); // 2026-05-29
+// ── TODAY ────────────────────────────────────────────────────────────────────
+const TODAY = new Date(); TODAY.setHours(0,0,0,0);
 
-function daysUntil(deadline) {
-  const m = deadline.match(/^(\d+)\/(\d+)/);
+// ── DATE UTILS ───────────────────────────────────────────────────────────────
+function daysUntil(dl) {
+  const m = dl.match(/^(\d+)\/(\d+)/);
   if (!m) return null;
-  const target = new Date(2026, +m[1] - 1, +m[2]);
-  return Math.ceil((target - TODAY) / 86400000);
+  return Math.ceil((new Date(2026,+m[1]-1,+m[2]) - TODAY) / 86400000);
 }
-
-function countdownHtml(deadline) {
-  const d = daysUntil(deadline);
+function getStatus(dl, raw) {
+  if (raw === '済') return '済';
+  const d = daysUntil(dl);
+  if (d === null) return raw;
+  if (d < 0) return '済';
+  if (d === 0) return '本日';
+  if (d === 1) return '明日';
+  return '未';
+}
+function countdownHtml(dl) {
+  const d = daysUntil(dl);
   if (d === null) return '';
   if (d < 0)  return `<span class="countdown cd-done">締切済</span>`;
   if (d === 0) return `<span class="countdown cd-urgent">本日</span>`;
@@ -359,246 +682,673 @@ function countdownHtml(deadline) {
   if (d <= 7)  return `<span class="countdown cd-soon">あと${d}日</span>`;
   return `<span class="countdown cd-normal">あと${d}日</span>`;
 }
-
-function deadlineToNum(d) {
-  const m = d.match(/^(\d+)\/(\d+)/);
-  if (!m) return 9999;
-  return +m[1] * 100 + +m[2];
+function dlNum(d) { const m=d.match(/^(\d+)\/(\d+)/); return m ? +m[1]*100+ +m[2] : 9999; }
+function urgScore(dl,raw) {
+  const st=getStatus(dl,raw); if(st==='済') return 99999;
+  const d=daysUntil(dl); return d===null?9999:d<0?99999:d;
 }
 
-// ─── FILTER STATE ────────────────────────────────────────────────────────────
-const INDUSTRIES = [...new Set(DATA.map(r => r[0]))];
-const LABEL_MAP = {
-  "IT・メガベンチャー": "IT",
-  "コンサル・シンクタンク": "コンサル",
-  "メーカー・電機・精密": "メーカー",
-  "インフラ・エネルギー": "インフラ",
-  "消費財・広告・メディア": "消費財・広告",
-};
-let activeIndustry = '全て';
-let hideFinished = false;
-let favOnly = false;
-let searchText = '';
-let sortAsc = true;
-const openMemos = new Set(); // original data indices with open memos
+// ── CUSTOM COMPANIES ─────────────────────────────────────────────────────────
+const CUSTOM_STORE = 'intern28_custom';
+let CUSTOM = [];
+function loadCustom() { try { CUSTOM = JSON.parse(localStorage.getItem(CUSTOM_STORE))||[]; } catch { CUSTOM=[]; } }
+function saveCustom() { localStorage.setItem(CUSTOM_STORE, JSON.stringify(CUSTOM)); }
+loadCustom();
+let _cid = CUSTOM.reduce((mx,c)=>Math.max(mx,c.id||0),0)+1;
 
-// ─── CONTROLS SETUP ─────────────────────────────────────────────────────────
-const fg = document.getElementById('filterGroup');
-['全て', ...INDUSTRIES].forEach(ind => {
-  const btn = document.createElement('button');
-  btn.className = 'filter-btn' + (ind === '全て' ? ' active' : '');
-  btn.textContent = LABEL_MAP[ind] || ind;
-  btn.dataset.ind = ind;
-  btn.addEventListener('click', () => {
-    activeIndustry = ind;
-    document.querySelectorAll('.filter-btn').forEach(b => b.classList.toggle('active', b.dataset.ind === ind));
-    render();
+function getAllData() { return [...DATA, ...CUSTOM.map(c=>c.row)]; }
+function isCustom(idx) { return idx >= DATA.length; }
+function storeKey(idx) {
+  if (!isCustom(idx)) return `shukatsu_28_row_${idx}`;
+  const c = CUSTOM[idx-DATA.length];
+  return c ? `intern28_custom_${c.id}` : null;
+}
+
+// ── STATE ────────────────────────────────────────────────────────────────────
+function defState() { return {progress:0, memo:'', fav:false, tags:[], events:[]}; }
+function loadSt(idx) {
+  const k=storeKey(idx); if(!k) return defState();
+  try { return Object.assign(defState(), JSON.parse(localStorage.getItem(k))); } catch { return defState(); }
+}
+function saveSt(idx, s) {
+  const k=storeKey(idx); if(k) localStorage.setItem(k, JSON.stringify(s));
+}
+
+// ── HISTORY ──────────────────────────────────────────────────────────────────
+const HIST_KEY = 'intern28_history';
+function logHist(company, from, to) {
+  const h = JSON.parse(localStorage.getItem(HIST_KEY)||'[]');
+  h.unshift({ts:Date.now(), company, from, to});
+  if(h.length>500) h.length=500;
+  localStorage.setItem(HIST_KEY, JSON.stringify(h));
+}
+
+// ── COLUMNS ──────────────────────────────────────────────────────────────────
+const COL_KEY = 'intern28_cols';
+let COLS = {period:true, site:true};
+function loadCols() { try { Object.assign(COLS, JSON.parse(localStorage.getItem(COL_KEY))); } catch {} }
+function saveCols() { localStorage.setItem(COL_KEY, JSON.stringify(COLS)); }
+loadCols();
+function applyCols() {
+  const t = document.getElementById('mainTable');
+  t.classList.toggle('hide-period', !COLS.period);
+  t.classList.toggle('hide-site', !COLS.site);
+  document.getElementById('colPeriod').checked = COLS.period;
+  document.getElementById('colSite').checked = COLS.site;
+}
+
+// ── DARK MODE ────────────────────────────────────────────────────────────────
+let darkMode = localStorage.getItem('intern28_dark')==='1';
+function applyDark() {
+  document.documentElement.setAttribute('data-theme', darkMode?'dark':'light');
+  const btn = document.getElementById('darkBtn');
+  btn.textContent = darkMode ? '☀️ ライト' : '🌙 ダーク';
+  btn.classList.toggle('on', darkMode);
+  localStorage.setItem('intern28_dark', darkMode?'1':'0');
+}
+applyDark();
+
+// ── FILTER / SORT STATE ──────────────────────────────────────────────────────
+const INDUSTRIES = [...new Set(DATA.map(r=>r[0]))];
+let activeIndustry='全て', activeUrgency='全て', activeTag='', progressFilter='all';
+let hideFinished=false, favOnly=false, searchText='', sortMode='asc';
+const SORT_MODES=['asc','desc','urgency'];
+const SORT_LABELS={asc:'締切 ▲ 昇順',desc:'締切 ▼ 降順',urgency:'優先度順 ★'};
+const SORT_TH={asc:'締め切り ▲',desc:'締め切り ▼',urgency:'締め切り ★'};
+let viewMode='table';
+let calYear=TODAY.getFullYear(), calMonth=TODAY.getMonth();
+let selectedRows = new Set();
+const openExpanded = new Set();
+
+// ── BACKUP / RESTORE ─────────────────────────────────────────────────────────
+function backup() {
+  const data={};
+  const allData=getAllData();
+  for(let i=0;i<allData.length;i++){const k=storeKey(i);const v=localStorage.getItem(k);if(v)data[k]=v;}
+  data[CUSTOM_STORE]=localStorage.getItem(CUSTOM_STORE);
+  data[HIST_KEY]=localStorage.getItem(HIST_KEY);
+  data['intern28_notified']=localStorage.getItem('intern28_notified');
+  data[COL_KEY]=localStorage.getItem(COL_KEY);
+  const blob=new Blob([JSON.stringify({version:2,exported:new Date().toISOString(),data})],{type:'application/json'});
+  const a=Object.assign(document.createElement('a'),{href:URL.createObjectURL(blob),download:`intern28-backup-${new Date().toISOString().slice(0,10)}.json`});
+  a.click();
+}
+function restore(file) {
+  const r=new FileReader();
+  r.onload=e=>{
+    try {
+      const obj=JSON.parse(e.target.result);
+      if(!obj.data){alert('バックアップファイルの形式が正しくありません。');return;}
+      if(!confirm('現在のデータをバックアップデータで上書きしますか？')) return;
+      Object.entries(obj.data).forEach(([k,v])=>{if(v!=null)localStorage.setItem(k,v);});
+      loadCustom(); render();
+      alert('データを復元しました。');
+    } catch { alert('ファイルの読み込みに失敗しました。'); }
+  };
+  r.readAsText(file);
+}
+
+// ── NOTIFICATIONS ────────────────────────────────────────────────────────────
+const NOTIF_STORE='intern28_notified';
+function checkNotify(force) {
+  const key=TODAY.toISOString().slice(0,10);
+  const n=JSON.parse(localStorage.getItem(NOTIF_STORE)||'{}');
+  if(!force && n[key]) return;
+  const allData=getAllData();
+  const td=allData.filter(r=>getStatus(r[3],r[4])==='本日').map(r=>r[1]);
+  const tm=allData.filter(r=>getStatus(r[3],r[4])==='明日').map(r=>r[1]);
+  const msgs=[];
+  if(td.length) msgs.push(`本日締切 ${td.length}社: ${td.join('、')}`);
+  if(tm.length) msgs.push(`明日締切 ${tm.length}社: ${tm.join('、')}`);
+  if(!msgs.length){if(force)new Notification('28卒インターン',{body:'本日・明日の締切はありません。'});return;}
+  new Notification('28卒インターン 締切アラート',{body:msgs.join('\n')});
+  n[key]=true; localStorage.setItem(NOTIF_STORE,JSON.stringify(n));
+}
+function setupNotif() {
+  const btn=document.getElementById('notifBtn');
+  const refresh=()=>{const on=Notification.permission==='granted';btn.textContent=on?'🔔 通知ON':'🔔 通知設定';btn.classList.toggle('on',on);};
+  refresh();
+  btn.addEventListener('click',async()=>{
+    if(!('Notification'in window)){alert('このブラウザはデスクトップ通知に対応していません。');return;}
+    if(Notification.permission==='granted')checkNotify(true);
+    else{await Notification.requestPermission();refresh();if(Notification.permission==='granted')checkNotify(true);}
   });
-  fg.appendChild(btn);
-});
+  if(Notification.permission==='granted') checkNotify(false);
+}
 
-document.getElementById('searchBox').addEventListener('input', e => { searchText = e.target.value.trim(); render(); });
-document.getElementById('hideFinished').addEventListener('change', e => { hideFinished = e.target.checked; render(); });
-document.getElementById('favOnly').addEventListener('change', e => { favOnly = e.target.checked; render(); });
-document.getElementById('sortBtn').addEventListener('click', () => {
-  sortAsc = !sortAsc;
-  document.getElementById('sortBtn').textContent = sortAsc ? '締切 ▲ 昇順' : '締切 ▼ 降順';
-  document.getElementById('thDeadline').textContent = sortAsc ? '締め切り ▲' : '締め切り ▼';
-  render();
-});
-document.getElementById('thDeadline').addEventListener('click', () => document.getElementById('sortBtn').click());
+// ── ICS EXPORT ───────────────────────────────────────────────────────────────
+function exportICS() {
+  const Y=2026, lines=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//28intern//JP','CALSCALE:GREGORIAN'];
+  getAllData().forEach((r,i)=>{
+    if(getStatus(r[3],r[4])==='済') return;
+    const m=r[3].match(/^(\d+)\/(\d+)/); if(!m) return;
+    const mo=String(+m[1]).padStart(2,'0'), dy=String(+m[2]).padStart(2,'0');
+    const end=new Date(Y,+m[1]-1,+m[2]+1);
+    lines.push('BEGIN:VEVENT',
+      `DTSTART;VALUE=DATE:${Y}${mo}${dy}`,
+      `DTEND;VALUE=DATE:${Y}${String(end.getMonth()+1).padStart(2,'0')}${String(end.getDate()).padStart(2,'0')}`,
+      `SUMMARY:【インターン締切】${r[1]}${r[2]&&r[2]!=='-'?' '+r[2]:''}`,
+      ...(r[7]?[`URL:${r[7]}`]:[]),
+      ...(r[6]&&r[6]!=='-'?[`DESCRIPTION:${r[6].replace(/[\\,;]/g,c=>'\\'+c)}`]:[]),
+      `UID:intern28-${i}@28intern`,
+      'END:VEVENT');
+  });
+  lines.push('END:VCALENDAR');
+  const blob=new Blob([lines.join('\r\n')],{type:'text/calendar;charset=utf-8'});
+  Object.assign(document.createElement('a'),{href:URL.createObjectURL(blob),download:'intern-deadlines-2026.ics'}).click();
+}
 
-// ─── EVENT DELEGATION ────────────────────────────────────────────────────────
-const mainTable = document.getElementById('mainTable');
+// ── DASHBOARD ────────────────────────────────────────────────────────────────
+function renderDashboard() {
+  const all=getAllData();
+  const st=all.map((r,i)=>({status:getStatus(r[3],r[4]),p:loadSt(i).progress}));
+  const up=st.filter(s=>s.status!=='済').length;
+  const td=st.filter(s=>s.status==='本日').length;
+  const tm=st.filter(s=>s.status==='明日').length;
+  const un=st.filter(s=>s.status!=='済'&&s.p===0).length;
+  const ac=st.filter(s=>s.p>=1&&s.p<=4).length;
+  const pa=st.filter(s=>s.p===5).length;
+  const fa=st.filter(s=>s.p===6).length;
+  document.getElementById('dashboard').innerHTML=`
+    <div class="stat-card"><div class="stat-num">${all.length}</div><div class="stat-label">総社数</div></div>
+    <div class="stat-card s-red"><div class="stat-num">${td}</div><div class="stat-label">本日締切</div></div>
+    <div class="stat-card s-orange"><div class="stat-num">${tm}</div><div class="stat-label">明日締切</div></div>
+    <div class="stat-card"><div class="stat-num">${up}</div><div class="stat-label">未締切</div></div>
+    <div class="stat-card"><div class="stat-num">${un}</div><div class="stat-label">未応募</div></div>
+    <div class="stat-card"><div class="stat-num">${ac}</div><div class="stat-label">選考中</div></div>
+    <div class="stat-card s-green"><div class="stat-num">${pa}</div><div class="stat-label">合格</div></div>
+    <div class="stat-card s-fadred"><div class="stat-num">${fa}</div><div class="stat-label">不合格</div></div>`;
+}
 
-mainTable.addEventListener('click', e => {
-  // Favorite
-  const favBtn = e.target.closest('.fav-btn');
-  if (favBtn) {
-    const idx = +favBtn.dataset.idx;
-    const s = loadState(idx);
-    s.fav = !s.fav;
-    saveState(idx, s);
-    favBtn.textContent = s.fav ? '⭐' : '☆';
-    if (favOnly && !s.fav) {
-      const tr = document.querySelector(`tr.data-row[data-idx="${idx}"]`);
-      const memoTr = document.getElementById(`memo-${idx}`);
-      if (tr) tr.style.display = 'none';
-      if (memoTr) memoTr.style.display = 'none';
+// ── TAG BAR ──────────────────────────────────────────────────────────────────
+function renderTagBar() {
+  const tb=document.getElementById('tagBar');
+  tb.innerHTML='<span class="flabel" style="flex-shrink:0">タグ</span>';
+  [{label:'全て',color:'',bg:''},...PREDEFINED_TAGS].forEach(t=>{
+    const btn=document.createElement('button');
+    btn.className='tag-chip'+(activeTag===t.label||(t.label==='全て'&&!activeTag)?' active':'');
+    btn.textContent=t.label;
+    if(t.bg&&(activeTag===t.label)) { btn.style.background=t.bg; btn.style.borderColor=t.color; btn.style.color=t.color; }
+    btn.addEventListener('click',()=>{activeTag=t.label==='全て'?'':t.label; renderTagBar(); render();});
+    tb.appendChild(btn);
+  });
+}
+
+// ── FILTER ENTRIES ───────────────────────────────────────────────────────────
+function getEntries() {
+  return getAllData().map((r,i)=>({r,i})).filter(({r,i})=>{
+    const st=getStatus(r[3],r[4]);
+    if(activeIndustry!=='全て'&&r[0]!==activeIndustry) return false;
+    if(hideFinished&&st==='済') return false;
+    if(activeUrgency!=='全て'){
+      const d=daysUntil(r[3]);
+      if(activeUrgency==='本日'&&st!=='本日') return false;
+      if(activeUrgency==='明日'&&st!=='明日') return false;
+      if(activeUrgency==='今週'&&(d===null||d<0||d>7)) return false;
+      if(activeUrgency==='未締切'&&st==='済') return false;
     }
-    updateSummary();
-    return;
-  }
-
-  // Memo toggle
-  const memoBtn = e.target.closest('.memo-btn');
-  if (memoBtn) {
-    const idx = +memoBtn.dataset.idx;
-    const memoTr = document.getElementById(`memo-${idx}`);
-    if (!memoTr) return;
-    const isOpen = memoTr.style.display !== 'none';
-    memoTr.style.display = isOpen ? 'none' : 'table-row';
-    if (isOpen) openMemos.delete(idx); else openMemos.add(idx);
-    if (!isOpen) memoTr.querySelector('.memo-textarea').focus();
-  }
-});
-
-mainTable.addEventListener('change', e => {
-  const sel = e.target.closest('.progress-select');
-  if (sel) {
-    const idx = +sel.dataset.idx;
-    const s = loadState(idx);
-    s.progress = +sel.value;
-    saveState(idx, s);
-    sel.className = 'progress-select ' + PROG_CLASS[s.progress];
-  }
-});
-
-mainTable.addEventListener('input', e => {
-  const ta = e.target.closest('.memo-textarea');
-  if (ta) {
-    const idx = +ta.dataset.idx;
-    const s = loadState(idx);
-    s.memo = ta.value;
-    saveState(idx, s);
-    const btn = document.querySelector(`.memo-btn[data-idx="${idx}"]`);
-    if (btn) {
-      btn.classList.toggle('has-memo', ta.value.length > 0);
-      btn.textContent = ta.value.length > 0 ? '📝 メモあり' : '📝 メモ';
-    }
-  }
-});
-
-// ─── RENDER ──────────────────────────────────────────────────────────────────
-function render() {
-  const entries = DATA.map((r, i) => ({ r, i })).filter(({ r, i }) => {
-    if (activeIndustry !== '全て' && r[0] !== activeIndustry) return false;
-    if (hideFinished && r[4] === '済') return false;
-    if (favOnly && !loadState(i).fav) return false;
-    if (searchText && !r[1].toLowerCase().includes(searchText.toLowerCase())) return false;
+    const s=loadSt(i);
+    if(progressFilter==='unapplied'&&s.progress!==0) return false;
+    if(progressFilter==='applied'&&s.progress<1) return false;
+    if(progressFilter==='hide_failed'&&s.progress===6) return false;
+    if(activeTag&&!(s.tags||[]).includes(activeTag)) return false;
+    if(favOnly&&!s.fav) return false;
+    if(searchText){const q=searchText.toLowerCase();if(![r[0],r[1],r[2],r[6]].join(' ').toLowerCase().includes(q))return false;}
     return true;
   });
-
-  entries.sort((a, b) => {
-    const diff = deadlineToNum(a.r[3]) - deadlineToNum(b.r[3]);
-    return sortAsc ? diff : -diff;
+}
+function sortEntries(entries) {
+  return entries.slice().sort((a,b)=>{
+    if(sortMode==='urgency') return urgScore(a.r[3],a.r[4])-urgScore(b.r[3],b.r[4]);
+    const d=dlNum(a.r[3])-dlNum(b.r[3]); return sortMode==='asc'?d:-d;
   });
+}
 
-  const tbody = document.getElementById('tbody');
-  tbody.innerHTML = '';
+// ── RENDER TABLE ─────────────────────────────────────────────────────────────
+function render() {
+  renderDashboard();
+  const entries=sortEntries(getEntries());
+  const tbody=document.getElementById('tbody');
+  tbody.innerHTML='';
 
-  entries.forEach(({ r, i }) => {
-    const [industry, company, program, deadline, dlStatus, period, note, url] = r;
-    const s = loadState(i);
+  entries.forEach(({r,i})=>{
+    const st=getStatus(r[3],r[4]);
+    const s=loadSt(i);
+    let rowCls='data-row';
+    if(st==='済') rowCls+=' done-row';
+    else if(st==='本日') rowCls+=' today-row';
+    else if(st==='明日') rowCls+=' tomorrow-row';
+    if(selectedRows.has(i)) rowCls+=' sel-row';
 
-    // Row class
-    let rowClass = 'data-row';
-    if (dlStatus === '済') rowClass += ' done-row';
-    else if (dlStatus === '本日') rowClass += ' today-row';
-    else if (dlStatus === '明日') rowClass += ' tomorrow-row';
+    const badgeCls={済:'sb-done',本日:'sb-today',明日:'sb-tomorrow',未:'sb-upcoming'}[st]||'sb-upcoming';
+    const badgeTx={済:'締切済',本日:'🔴 本日',明日:'🟠 明日',未:'未'}[st]||st;
+    const progOpts=PROGRESS.map((p,pi)=>`<option value="${pi}"${s.progress===pi?' selected':''}>${p}</option>`).join('');
+    const linkHtml=r[7]?`<a class="link-btn" href="${r[7]}" target="_blank" rel="noopener">採用サイト →</a>`:'<span style="color:var(--text3);font-size:.71rem">―</span>';
+    const tagsHtml=(s.tags||[]).map(t=>{const td=PREDEFINED_TAGS.find(x=>x.label===t);return td?`<span class="tbadge" style="color:${td.color};border-color:${td.color};background:${td.bg}">${t}</span>`:''}).join('');
+    const hasData=s.memo||(s.events&&s.events.length)||(s.tags&&s.tags.length);
+    const isOpen=openExpanded.has(i);
 
-    // Status badge
-    const badgeClass = { '済': 'sb-done', '本日': 'sb-today', '明日': 'sb-tomorrow', '未': 'sb-upcoming' }[dlStatus] || 'sb-upcoming';
-    const badgeText = { '済': '締切済', '本日': '🔴 本日', '明日': '🟠 明日', '未': '未' }[dlStatus] || dlStatus;
-
-    // Progress select
-    const progOptions = PROGRESS.map((p, pi) =>
-      `<option value="${pi}" ${s.progress === pi ? 'selected' : ''}>${p}</option>`
-    ).join('');
-
-    // Link
-    const linkHtml = url
-      ? `<a class="link-btn" href="${url}" target="_blank" rel="noopener">採用サイト →</a>`
-      : '<span style="color:#ccc;font-size:.74rem">―</span>';
-
-    // Memo button
-    const hasNote = note && note !== '-';
-    const hasMemo = s.memo.length > 0;
-    const memoBtnText = hasMemo ? '📝 メモあり' : '📝 メモ';
-
-    // Main row
-    const tr = document.createElement('tr');
-    tr.className = rowClass;
-    tr.dataset.idx = i;
-    tr.innerHTML = `
-      <td style="text-align:center">
-        <button class="fav-btn" data-idx="${i}" title="お気に入り">${s.fav ? '⭐' : '☆'}</button>
+    const tr=document.createElement('tr');
+    tr.className=rowCls; tr.dataset.idx=i;
+    tr.innerHTML=`
+      <td style="text-align:center"><input type="checkbox" class="row-chk" data-idx="${i}"${selectedRows.has(i)?' checked':''}></td>
+      <td style="text-align:center"><button class="fav-btn" data-idx="${i}">${s.fav?'⭐':'☆'}</button></td>
+      <td class="td-co">
+        <div class="co-name">${r[1]}</div>
+        <span class="ind-tag">${r[0]}</span>
+        ${r[2]&&r[2]!=='-'?`<div class="prog-name">${r[2]}</div>`:''}
+        ${r[6]&&r[6]!=='-'?`<div class="prog-name" style="color:#e67e22">${r[6]}</div>`:''}
+        ${tagsHtml?`<div class="tags-row">${tagsHtml}</div>`:''}
       </td>
       <td>
-        <div class="company-name">${company}</div>
-        <span class="industry-tag">${industry}</span>
-        ${program && program !== '-' ? `<div class="program-name">${program}</div>` : ''}
-        ${hasNote ? `<div class="program-name" style="color:#e67e22">${note}</div>` : ''}
+        <span class="deadline-date">${r[3]}</span>${countdownHtml(r[3])}
+        <br><span class="status-badge ${badgeCls}">${badgeTx}</span>
       </td>
+      <td><select class="progress-select ${PROG_CLS[s.progress]}" data-idx="${i}">${progOpts}</select></td>
+      <td class="col-period" style="font-size:.78rem;color:var(--text2)">${r[5]||'―'}</td>
+      <td class="col-site">${linkHtml}</td>
       <td>
-        <span class="deadline-date">${deadline}</span>
-        ${countdownHtml(deadline)}
-        <br><span class="status-badge ${badgeClass}">${badgeText}</span>
-      </td>
-      <td>
-        <select class="progress-select ${PROG_CLASS[s.progress]}" data-idx="${i}">${progOptions}</select>
-      </td>
-      <td style="font-size:.8rem;color:#556">${period || '―'}</td>
-      <td>${linkHtml}</td>
-      <td>
-        <button class="memo-btn ${hasMemo ? 'has-memo' : ''}" data-idx="${i}">${memoBtnText}</button>
-      </td>
-    `;
+        <button class="expand-btn${isOpen?' active':''}${hasData?' has-data':''}" data-idx="${i}">
+          ${isOpen?'▲ 閉じる':'▼ 詳細'}
+        </button>
+        ${isCustom(i)?`<button class="del-row-btn" data-delidx="${i}" title="この企業を削除">🗑</button>`:''}
+      </td>`;
     tbody.appendChild(tr);
 
-    // Memo row
-    const memoTr = document.createElement('tr');
-    memoTr.className = 'memo-row';
-    memoTr.id = `memo-${i}`;
-    memoTr.style.display = openMemos.has(i) ? 'table-row' : 'none';
-    memoTr.innerHTML = `
-      <td colspan="7">
-        <div class="memo-inner">
-          <span class="memo-label">📝 メモ</span>
-          <textarea class="memo-textarea" data-idx="${i}" placeholder="${company} へのメモ（選考状況・ES内容・感想など）">${s.memo}</textarea>
-        </div>
-      </td>
-    `;
-    tbody.appendChild(memoTr);
+    if(isOpen) tbody.appendChild(buildExpRow(i,r,s));
   });
 
-  const empty = document.getElementById('empty');
-  const table = document.getElementById('mainTable');
-  empty.style.display = entries.length === 0 ? 'block' : 'none';
-  table.style.display = entries.length === 0 ? 'none' : '';
+  const empty=document.getElementById('empty');
+  const table=document.getElementById('mainTable');
+  empty.style.display=entries.length===0?'block':'none';
+  table.style.display=entries.length===0?'none':'';
+  updateSummary(entries);
+  applyCols();
+}
 
+function buildExpRow(idx, r, s) {
+  const tr=document.createElement('tr');
+  tr.className='exp-row'; tr.id=`exp-${idx}`;
+  const evHtml=(s.events||[]).map((ev,ei)=>`
+    <div class="ev-item">
+      <select class="ev-type" data-idx="${idx}" data-ei="${ei}">${EVENT_TYPES.map(t=>`<option${ev.type===t?' selected':''}>${t}</option>`).join('')}</select>
+      <input class="ev-date" placeholder="6/15" value="${ev.date||''}" data-idx="${idx}" data-ei="${ei}" data-field="date">
+      <input class="ev-note" placeholder="メモ" value="${ev.note||''}" data-idx="${idx}" data-ei="${ei}" data-field="note">
+      <button class="ev-del" data-idx="${idx}" data-ei="${ei}">✕</button>
+    </div>`).join('');
+  const tagHtml=PREDEFINED_TAGS.map(t=>`
+    <button class="tag-tog${(s.tags||[]).includes(t.label)?' on':''}" data-idx="${idx}" data-tag="${t.label}"
+      style="${(s.tags||[]).includes(t.label)?`background:${t.bg};border-color:${t.color};color:${t.color}`:''}">
+      ${t.label}</button>`).join('');
+  tr.innerHTML=`<td colspan="8"><div class="exp-inner">
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="memo-${idx}">📝 メモ</button>
+      <button class="tab-btn" data-tab="ev-${idx}">📅 イベント</button>
+      <button class="tab-btn" data-tab="tag-${idx}">🏷 タグ</button>
+    </div>
+    <div class="tab-pane active" id="memo-${idx}">
+      <textarea class="memo-ta" data-idx="${idx}" placeholder="${r[1]} へのメモ（ES内容・選考状況・感想など）">${s.memo||''}</textarea>
+    </div>
+    <div class="tab-pane" id="ev-${idx}">
+      <div class="ev-list" id="evlist-${idx}">${evHtml}</div>
+      <button class="add-ev-btn" data-idx="${idx}">＋ イベントを追加</button>
+    </div>
+    <div class="tab-pane" id="tag-${idx}">
+      <div class="tag-editor">${tagHtml}</div>
+    </div>
+  </div></td>`;
+  return tr;
+}
+
+// ── RENDER CARDS ─────────────────────────────────────────────────────────────
+function renderCards() {
+  renderDashboard();
+  const entries=sortEntries(getEntries());
+  const grid=document.getElementById('cardsGrid');
+  grid.innerHTML='';
+  if(!entries.length){grid.innerHTML='<div class="empty" style="grid-column:1/-1">該当する企業が見つかりません</div>';return;}
+  entries.forEach(({r,i})=>{
+    const st=getStatus(r[3],r[4]);
+    const s=loadSt(i);
+    const badgeCls={済:'sb-done',本日:'sb-today',明日:'sb-tomorrow',未:'sb-upcoming'}[st]||'sb-upcoming';
+    const badgeTx={済:'締切済',本日:'🔴 本日',明日:'🟠 明日',未:'未'}[st]||st;
+    const progOpts=PROGRESS.map((p,pi)=>`<option value="${pi}"${s.progress===pi?' selected':''}>${p}</option>`).join('');
+    const card=document.createElement('div');
+    card.className='card'+(st==='済'?' card-done':'');
+    card.innerHTML=`
+      <div class="card-top">
+        <div><div class="card-co">${r[1]}</div><span class="card-ind">${r[0]}</span>
+          ${r[2]&&r[2]!=='-'?`<div class="card-prog">${r[2]}</div>`:''}
+        </div>
+        <button class="fav-btn" data-idx="${i}">${s.fav?'⭐':'☆'}</button>
+      </div>
+      <div class="card-dl">
+        <span class="card-date">${r[3]}</span>${countdownHtml(r[3])}
+        <span class="status-badge ${badgeCls}">${badgeTx}</span>
+      </div>
+      <select class="progress-select ${PROG_CLS[s.progress]}" data-idx="${i}" style="margin-bottom:8px">${progOpts}</select>
+      <div class="card-foot">
+        ${r[7]?`<a class="link-btn" href="${r[7]}" target="_blank" rel="noopener">採用サイト →</a>`:'<span></span>'}
+        ${r[6]&&r[6]!=='-'?`<span style="font-size:.69rem;color:var(--text3)">${r[6]}</span>`:''}
+      </div>`;
+    grid.appendChild(card);
+  });
   updateSummary(entries);
 }
 
-function updateSummary(entries) {
-  if (!entries) {
-    // recalculate
-    entries = DATA.map((r, i) => ({ r, i })).filter(({ r, i }) => {
-      if (activeIndustry !== '全て' && r[0] !== activeIndustry) return false;
-      if (hideFinished && r[4] === '済') return false;
-      if (favOnly && !loadState(i).fav) return false;
-      if (searchText && !r[1].toLowerCase().includes(searchText.toLowerCase())) return false;
-      return true;
+// ── RENDER CALENDAR ──────────────────────────────────────────────────────────
+function renderCalendar() {
+  document.getElementById('calMonthLbl').textContent=`${calYear}年${calMonth+1}月`;
+  const allData=getAllData();
+  const first=new Date(calYear,calMonth,1).getDay();
+  const days=new Date(calYear,calMonth+1,0).getDate();
+  const grid=document.getElementById('calGrid');
+  const dnames=['日','月','火','水','木','金','土'];
+  let html=dnames.map(d=>`<div class="cal-dhead">${d}</div>`).join('');
+  for(let i=0;i<first;i++) html+=`<div class="cal-cell other-m"></div>`;
+  for(let d=1;d<=days;d++){
+    const isToday=calYear===TODAY.getFullYear()&&calMonth===TODAY.getMonth()&&d===TODAY.getDate();
+    const dls=allData.map((r,i)=>({r,i})).filter(({r})=>{const m=r[3].match(/^(\d+)\/(\d+)$/);return m&&+m[1]===calMonth+1&&+m[2]===d;});
+    const evs=[];
+    allData.forEach((r,i)=>{
+      (loadSt(i).events||[]).forEach(ev=>{const m=ev.date.match(/^(\d+)\/(\d+)$/);if(m&&+m[1]===calMonth+1&&+m[2]===d)evs.push({co:r[1],type:ev.type});});
     });
+    const evHtml=[
+      ...dls.map(({r})=>`<div class="cal-ev ${getStatus(r[3],r[4])==='済'?'ce-done':'ce-dl'}" title="${r[1]}">${r[1]}</div>`),
+      ...evs.map(ev=>`<div class="cal-ev ce-ev" title="${ev.co}: ${ev.type}">${ev.co}: ${ev.type}</div>`)
+    ].join('');
+    html+=`<div class="cal-cell${isToday?' today-c':''}"><div class="cal-dnum">${d}</div>${evHtml}</div>`;
   }
-  const upcoming = entries.filter(({ r }) => r[4] !== '済').length;
-  const favCount = DATA.filter((_, i) => loadState(i).fav).length;
-  document.getElementById('summary').textContent =
-    `${entries.length} 件表示（うち未締切 ${upcoming} 件）　⭐ お気に入り ${favCount} 件`;
+  grid.innerHTML=html;
+  updateSummary(getEntries());
 }
 
+// ── SUMMARY ──────────────────────────────────────────────────────────────────
+function updateSummary(entries) {
+  const up=entries.filter(({r})=>getStatus(r[3],r[4])!=='済').length;
+  const fav=getAllData().filter((_,i)=>loadSt(i).fav).length;
+  document.getElementById('summary').textContent=`${entries.length} 件表示（うち未締切 ${up} 件）　⭐ お気に入り ${fav} 件`;
+}
+
+// ── VIEW SWITCHING ───────────────────────────────────────────────────────────
+function switchView(v) {
+  viewMode=v;
+  document.querySelectorAll('.view-btn').forEach(b=>b.classList.toggle('active',b.dataset.view===v));
+  document.getElementById('tableView').style.display=v==='table'?'':'none';
+  document.getElementById('cardsView').style.display=v==='cards'?'':'none';
+  document.getElementById('calendarView').style.display=v==='calendar'?'':'none';
+  if(v==='table') render();
+  else if(v==='cards') renderCards();
+  else renderCalendar();
+}
+
+// ── BULK SELECTION ───────────────────────────────────────────────────────────
+function updateBulkBar() {
+  const bar=document.getElementById('bulkBar');
+  bar.style.display=selectedRows.size>0?'flex':'none';
+  document.getElementById('bulkCount').textContent=`${selectedRows.size}社選択中`;
+}
+
+// ── CONTROLS SETUP ───────────────────────────────────────────────────────────
+// Industry filter
+const fg=document.getElementById('filterGroup');
+['全て',...INDUSTRIES].forEach(ind=>{
+  const btn=document.createElement('button');
+  btn.className='filter-btn'+(ind==='全て'?' active':'');
+  btn.textContent=LABEL_MAP[ind]||ind; btn.dataset.ind=ind;
+  btn.addEventListener('click',()=>{activeIndustry=ind;fg.querySelectorAll('.filter-btn').forEach(b=>b.classList.toggle('active',b.dataset.ind===ind));switchView(viewMode);});
+  fg.appendChild(btn);
+});
+
+// Urgency filter
+const ug=document.getElementById('urgencyGroup');
+['全て','本日','明日','今週','未締切'].forEach(u=>{
+  const btn=document.createElement('button');
+  btn.className='filter-btn'+(u==='全て'?' active':'');
+  btn.textContent=u; btn.dataset.urg=u;
+  btn.addEventListener('click',()=>{activeUrgency=u;ug.querySelectorAll('.filter-btn').forEach(b=>b.classList.toggle('active',b.dataset.urg===u));switchView(viewMode);});
+  ug.appendChild(btn);
+});
+
+// Add company modal: industry options
+const CUSTOM_IND_LABEL='その他（カスタム）';
+const allInds=[...INDUSTRIES, CUSTOM_IND_LABEL];
+const fInd=document.getElementById('fIndustry');
+allInds.forEach(ind=>{const o=document.createElement('option');o.value=ind;o.textContent=LABEL_MAP[ind]||ind;fInd.appendChild(o);});
+
+// Bulk progress select
+const bsel=document.getElementById('bulkSel');
+PROGRESS.forEach((p,pi)=>{const o=document.createElement('option');o.value=pi;o.textContent=p;bsel.appendChild(o);});
+
+// Search
+document.getElementById('searchBox').addEventListener('input',e=>{searchText=e.target.value.trim();switchView(viewMode);});
+// Toggles
+document.getElementById('hideFinished').addEventListener('change',e=>{hideFinished=e.target.checked;switchView(viewMode);});
+document.getElementById('favOnly').addEventListener('change',e=>{favOnly=e.target.checked;switchView(viewMode);});
+// Progress filter
+document.getElementById('progressFilter').addEventListener('change',e=>{progressFilter=e.target.value;switchView(viewMode);});
+// Sort
+document.getElementById('sortBtn').addEventListener('click',()=>{
+  sortMode=SORT_MODES[(SORT_MODES.indexOf(sortMode)+1)%SORT_MODES.length];
+  document.getElementById('sortBtn').textContent=SORT_LABELS[sortMode];
+  document.getElementById('thDeadline').textContent=SORT_TH[sortMode];
+  switchView(viewMode);
+});
+document.getElementById('thDeadline').addEventListener('click',()=>document.getElementById('sortBtn').click());
+// View buttons
+document.querySelectorAll('.view-btn').forEach(b=>b.addEventListener('click',()=>switchView(b.dataset.view)));
+// Export / Notif
+document.getElementById('exportBtn').addEventListener('click',exportICS);
+// Dark mode
+document.getElementById('darkBtn').addEventListener('click',()=>{darkMode=!darkMode;applyDark();});
+// Backup/Restore
+document.getElementById('backupBtn').addEventListener('click',backup);
+document.getElementById('restoreBtn').addEventListener('click',()=>document.getElementById('restoreFile').click());
+document.getElementById('restoreFile').addEventListener('change',e=>{if(e.target.files[0])restore(e.target.files[0]);e.target.value='';});
+// History
+document.getElementById('historyBtn').addEventListener('click',()=>{
+  const h=JSON.parse(localStorage.getItem(HIST_KEY)||'[]');
+  const list=document.getElementById('histList');
+  if(!h.length){list.innerHTML='<div style="color:var(--text3);padding:12px 0;font-size:.83rem">まだ履歴がありません。</div>';}
+  else{list.innerHTML=h.slice(0,200).map(x=>`<div class="hist-item"><span class="hist-time">${new Date(x.ts).toLocaleString('ja-JP',{month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'})}</span><span class="hist-co">${x.company}</span><span class="hist-ch">${PROGRESS[x.from]} → ${PROGRESS[x.to]}</span></div>`).join('');}
+  openModal('histModal');
+});
+document.getElementById('clearHistBtn').addEventListener('click',()=>{if(confirm('履歴を全て削除しますか？')){localStorage.removeItem(HIST_KEY);document.getElementById('histList').innerHTML='<div style="color:var(--text3);padding:12px 0;font-size:.83rem">履歴を削除しました。</div>';}});
+// Add company
+document.getElementById('addCoBtn').addEventListener('click',()=>openModal('addCoModal'));
+document.getElementById('addCoSubmit').addEventListener('click',()=>{
+  const co=document.getElementById('fCompany').value.trim();
+  if(!co){alert('企業名を入力してください。');return;}
+  const row=[
+    document.getElementById('fIndustry').value||'その他',
+    co,
+    document.getElementById('fProgram').value.trim()||'-',
+    document.getElementById('fDeadline').value.trim()||'要確認',
+    '未',
+    document.getElementById('fPeriod').value.trim(),
+    document.getElementById('fNote').value.trim(),
+    document.getElementById('fUrl').value.trim(),
+  ];
+  CUSTOM.push({id:_cid++, row});
+  saveCustom();
+  ['fCompany','fProgram','fDeadline','fPeriod','fNote','fUrl'].forEach(id=>document.getElementById(id).value='');
+  closeModal('addCoModal');
+  switchView(viewMode);
+});
+// Column visibility
+document.getElementById('colBtn').addEventListener('click',()=>{openModal('colModal');});
+document.getElementById('colPeriod').addEventListener('change',e=>{COLS.period=e.target.checked;saveCols();applyCols();});
+document.getElementById('colSite').addEventListener('change',e=>{COLS.site=e.target.checked;saveCols();applyCols();});
+// Calendar nav
+document.getElementById('calPrev').addEventListener('click',()=>{calMonth--;if(calMonth<0){calMonth=11;calYear--;}renderCalendar();});
+document.getElementById('calNext').addEventListener('click',()=>{calMonth++;if(calMonth>11){calMonth=0;calYear++;}renderCalendar();});
+// Bulk
+document.getElementById('selAll').addEventListener('change',e=>{
+  const entries=getEntries();
+  if(e.target.checked) entries.forEach(({i})=>selectedRows.add(i));
+  else selectedRows.clear();
+  updateBulkBar(); render();
+});
+document.getElementById('bulkApply').addEventListener('click',()=>{
+  const newProg=+document.getElementById('bulkSel').value;
+  selectedRows.forEach(idx=>{
+    const s=loadSt(idx); const allD=getAllData();
+    const oldP=s.progress;
+    s.progress=newProg; saveSt(idx,s);
+    logHist(allD[idx][1],oldP,newProg);
+  });
+  selectedRows.clear(); updateBulkBar(); render();
+});
+document.getElementById('bulkClear').addEventListener('click',()=>{selectedRows.clear();updateBulkBar();render();});
+
+// ── MODAL HELPERS ────────────────────────────────────────────────────────────
+function openModal(id) { document.getElementById(id).classList.add('open'); }
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+document.querySelectorAll('[data-close]').forEach(btn=>btn.addEventListener('click',()=>closeModal(btn.dataset.close)));
+document.querySelectorAll('.modal-ov').forEach(ov=>ov.addEventListener('click',e=>{if(e.target===ov)ov.classList.remove('open');}));
+
+// ── TABLE EVENT DELEGATION ───────────────────────────────────────────────────
+const mainTable=document.getElementById('mainTable');
+
+mainTable.addEventListener('click',e=>{
+  // Fav
+  const fav=e.target.closest('.fav-btn');
+  if(fav){const idx=+fav.dataset.idx;const s=loadSt(idx);s.fav=!s.fav;saveSt(idx,s);switchView(viewMode);return;}
+  // Checkbox
+  const chk=e.target.closest('.row-chk');
+  if(chk&&chk.dataset.idx!==undefined){
+    const idx=+chk.dataset.idx;
+    chk.checked?selectedRows.add(idx):selectedRows.delete(idx);
+    updateBulkBar();
+    const tr=document.querySelector(`tr.data-row[data-idx="${idx}"]`);
+    if(tr) tr.classList.toggle('sel-row',chk.checked);
+    return;
+  }
+  // Expand
+  const exp=e.target.closest('.expand-btn');
+  if(exp){
+    const idx=+exp.dataset.idx;
+    if(openExpanded.has(idx)) openExpanded.delete(idx); else openExpanded.add(idx);
+    render(); return;
+  }
+  // Delete custom
+  const del=e.target.closest('.del-row-btn');
+  if(del){
+    const idx=+del.dataset.delidx;
+    if(!confirm('この企業をリストから削除しますか？')) return;
+    CUSTOM.splice(idx-DATA.length,1); saveCustom();
+    selectedRows.delete(idx); openExpanded.delete(idx);
+    switchView(viewMode); return;
+  }
+  // Tab buttons
+  const tab=e.target.closest('.tab-btn');
+  if(tab){
+    const pane=tab.dataset.tab;
+    const container=tab.closest('.exp-inner');
+    container.querySelectorAll('.tab-btn').forEach(b=>b.classList.toggle('active',b.dataset.tab===pane));
+    container.querySelectorAll('.tab-pane').forEach(p=>p.classList.toggle('active',p.id===pane));
+    return;
+  }
+  // Add event
+  const addEv=e.target.closest('.add-ev-btn');
+  if(addEv){
+    const idx=+addEv.dataset.idx;
+    const s=loadSt(idx);
+    if(!s.events) s.events=[];
+    s.events.push({type:'ES締切',date:'',note:''});
+    saveSt(idx,s);
+    render(); openExpanded.add(idx);
+    // re-open
+    setTimeout(()=>{
+      const expRow=document.getElementById(`exp-${idx}`);
+      if(expRow) expRow.querySelectorAll('.tab-btn')[1].click();
+    },10);
+    return;
+  }
+  // Delete event
+  const evDel=e.target.closest('.ev-del');
+  if(evDel){
+    const idx=+evDel.dataset.idx, ei=+evDel.dataset.ei;
+    const s=loadSt(idx);
+    s.events.splice(ei,1); saveSt(idx,s); render(); openExpanded.add(idx);
+    setTimeout(()=>{
+      const expRow=document.getElementById(`exp-${idx}`);
+      if(expRow) expRow.querySelectorAll('.tab-btn')[1].click();
+    },10);
+    return;
+  }
+  // Tag toggle
+  const tagTog=e.target.closest('.tag-tog');
+  if(tagTog){
+    const idx=+tagTog.dataset.idx, tag=tagTog.dataset.tag;
+    const s=loadSt(idx);
+    if(!s.tags) s.tags=[];
+    const ti=s.tags.indexOf(tag);
+    if(ti>=0) s.tags.splice(ti,1); else s.tags.push(tag);
+    saveSt(idx,s); render(); openExpanded.add(idx);
+    setTimeout(()=>{
+      const expRow=document.getElementById(`exp-${idx}`);
+      if(expRow) expRow.querySelectorAll('.tab-btn')[2].click();
+    },10);
+    return;
+  }
+});
+
+mainTable.addEventListener('change',e=>{
+  // Progress select
+  const sel=e.target.closest('.progress-select');
+  if(sel){
+    const idx=+sel.dataset.idx;
+    const s=loadSt(idx);
+    const oldP=s.progress;
+    s.progress=+sel.value; saveSt(idx,s);
+    logHist(getAllData()[idx][1],oldP,s.progress);
+    sel.className='progress-select '+PROG_CLS[s.progress];
+    renderDashboard();
+    return;
+  }
+  // Event type
+  const evType=e.target.closest('.ev-type');
+  if(evType){
+    const idx=+evType.dataset.idx, ei=+evType.dataset.ei;
+    const s=loadSt(idx); s.events[ei].type=e.target.value; saveSt(idx,s); return;
+  }
+});
+
+mainTable.addEventListener('input',e=>{
+  // Memo textarea
+  const ta=e.target.closest('.memo-ta');
+  if(ta){const idx=+ta.dataset.idx;const s=loadSt(idx);s.memo=ta.value;saveSt(idx,s);renderDashboard();return;}
+  // Event fields
+  const evInp=e.target.closest('[data-field]');
+  if(evInp&&evInp.dataset.idx!==undefined){
+    const idx=+evInp.dataset.idx, ei=+evInp.dataset.ei, field=evInp.dataset.field;
+    const s=loadSt(idx); s.events[ei][field]=evInp.value; saveSt(idx,s); return;
+  }
+});
+
+// Cards event delegation
+document.getElementById('cardsGrid').addEventListener('click',e=>{
+  const fav=e.target.closest('.fav-btn');
+  if(fav){const idx=+fav.dataset.idx;const s=loadSt(idx);s.fav=!s.fav;saveSt(idx,s);renderCards();return;}
+});
+document.getElementById('cardsGrid').addEventListener('change',e=>{
+  const sel=e.target.closest('.progress-select');
+  if(sel){
+    const idx=+sel.dataset.idx;const s=loadSt(idx);const oldP=s.progress;
+    s.progress=+sel.value;saveSt(idx,s);logHist(getAllData()[idx][1],oldP,s.progress);
+    sel.className='progress-select '+PROG_CLS[s.progress];renderDashboard();
+  }
+});
+
+// ── INIT ─────────────────────────────────────────────────────────────────────
+renderTagBar();
+setupNotif();
 render();
 </script>
 
 <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  "name": "28卒 サマーインターン締め切り一覧",
-  "url": "https://gongkoushengshi-create.github.io/28-intern/",
-  "description": "2028年卒向けサマーインターンシップの締め切り・開催期間を業界別にまとめた一覧サイト",
-  "inLanguage": "ja"
-}
+{"@context":"https://schema.org","@type":"WebSite","name":"28卒 サマーインターン締め切り一覧","url":"https://gongkoushengshi-create.github.io/28-intern/","description":"2028年卒向けサマーインターンシップの締め切り・開催期間を業界別にまとめた一覧サイト","inLanguage":"ja"}
 </script>
 </body>
 </html>
