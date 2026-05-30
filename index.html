@@ -220,18 +220,60 @@ td{padding:8px 11px;vertical-align:middle;color:var(--text)}
 
 /* ── Misc ── */
 .empty{text-align:center;padding:60px;color:var(--text3);font-size:.9rem}
+
+/* ── Mobile ── */
 @media(max-width:640px){
-  header{padding:12px 16px}
-  .hdr-left h1{font-size:1rem}
-  .controls{padding:8px 14px}
-  .controls-row2{padding:6px 14px}
-  .table-wrap{padding:0 10px 32px}
-  .search-box{width:140px}
-  .dashboard{padding:7px 14px 11px}
-  .tag-bar,.bulk-bar{padding:5px 14px}
-  .cal-wrap,.cards-wrap{padding:0 14px 32px}
+  /* Header */
+  header{padding:10px 14px;gap:6px}
+  .hdr-left h1{font-size:.95rem}
+  .hdr-left p{display:none}
+  #backupBtn,#restoreBtn,#historyBtn{display:none}
+  .hdr-right{gap:4px}
+  .hdr-btn{padding:4px 9px;font-size:.7rem}
+
+  /* Dashboard: 4列に */
+  .dashboard{padding:6px 12px 10px;gap:4px}
+  .stat-card{min-width:calc(25% - 4px);padding:5px 6px}
+  .stat-num{font-size:1.05rem}
+  .stat-label{font-size:.58rem}
+
+  /* Controls row 1 */
+  .controls{padding:8px 12px;gap:6px}
+  .search-box{width:100%;order:-1;flex-shrink:0}
+  .ind-sel{flex:1;min-width:0;font-size:.78rem}
+  #exportBtn,#notifBtn,#sortBtn{display:none}
+  .toggle-lbl{font-size:.72rem}
+  .view-grp{flex-shrink:0}
+  .view-btn{padding:4px 8px;font-size:.7rem}
+
+  /* Controls row 2: 横スクロール */
+  .controls-row2{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;padding:6px 12px;gap:5px}
+  .controls-row2::-webkit-scrollbar{display:none}
+  .flabel{font-size:.68rem}
+  #colBtn{display:none}
+
+  /* Tag bar: 横スクロール */
+  .tag-bar{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;padding:5px 12px}
+  .tag-bar::-webkit-scrollbar{display:none}
+
+  /* Bulk bar */
+  .bulk-bar{padding:7px 12px;flex-wrap:wrap;gap:7px}
+
+  /* Table wrap */
+  .table-wrap{padding:0 8px 48px}
+
+  /* Cards */
+  .cards-wrap{padding:10px 10px 48px}
   .cards-grid{grid-template-columns:1fr}
-  .cal-cell{min-height:56px}
+
+  /* Calendar */
+  .cal-wrap{padding:0 10px 48px}
+  .cal-cell{min-height:52px}
+  .cal-ev{font-size:.58rem}
+
+  /* Modal */
+  .modal-box{padding:16px}
+  .form-row2{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -1365,7 +1407,9 @@ document.getElementById('cardsGrid').addEventListener('change',e=>{
 // ── INIT ─────────────────────────────────────────────────────────────────────
 renderTagBar();
 setupNotif();
-render();
+// スマホはカードビューをデフォルトに
+if(window.innerWidth <= 640) switchView('cards');
+else render();
 </script>
 
 <script type="application/ld+json">
