@@ -927,6 +927,14 @@ function exportICS() {
 }
 
 // ── DASHBOARD ────────────────────────────────────────────────────────────────
+function drawDonut(canvas, slices) {
+  const ctx=canvas.getContext('2d'), r=canvas.width/2, ri=r*0.55, total=slices.reduce((a,s)=>a+s.v,0);
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  if(!total){ctx.beginPath();ctx.arc(r,r,r-2,0,Math.PI*2);ctx.fillStyle='rgba(255,255,255,.1)';ctx.fill();return;}
+  let angle=-Math.PI/2;
+  slices.forEach(s=>{if(!s.v)return;const end=angle+(s.v/total)*Math.PI*2;ctx.beginPath();ctx.moveTo(r,r);ctx.arc(r,r,r-2,angle,end);ctx.closePath();ctx.fillStyle=s.c;ctx.fill();angle=end;});
+  ctx.beginPath();ctx.arc(r,r,ri,0,Math.PI*2);ctx.fillStyle='#1a1a2e';ctx.fill();
+}
 function renderDashboard() {
   const all=getAllData();
   const st=all.map((r,i)=>({status:getStatus(r[3],r[4]),p:loadSt(i).progress}));
@@ -945,7 +953,19 @@ function renderDashboard() {
     <div class="stat-card"><div class="stat-num">${un}</div><div class="stat-label">未応募</div></div>
     <div class="stat-card"><div class="stat-num">${ac}</div><div class="stat-label">選考中</div></div>
     <div class="stat-card s-green"><div class="stat-num">${pa}</div><div class="stat-label">合格</div></div>
-    <div class="stat-card s-fadred"><div class="stat-num">${fa}</div><div class="stat-label">不合格</div></div>`;
+    <div class="stat-card s-fadred"><div class="stat-num">${fa}</div><div class="stat-label">不合格</div></div>
+    <div class="stat-card" style="display:flex;align-items:center;gap:8px;flex:0 0 auto;padding:4px 10px">
+      <canvas id="donutChart" width="52" height="52"></canvas>
+      <div style="font-size:.6rem;color:#aab;line-height:1.7">
+        <div><span style="color:#6a8cf7">■</span> 未応募 ${un}</div>
+        <div><span style="color:#f39c12">■</span> 選考中 ${ac}</div>
+        <div><span style="color:#2ecc71">■</span> 合格 ${pa}</div>
+        <div><span style="color:#e74c3c">■</span> 不合格 ${fa}</div>
+      </div>
+    </div>`;
+  drawDonut(document.getElementById('donutChart'),[
+    {v:un,c:'#6a8cf7'},{v:ac,c:'#f39c12'},{v:pa,c:'#2ecc71'},{v:fa,c:'#e74c3c'}
+  ]);
 }
 
 // ── URGENT BANNER ────────────────────────────────────────────────────────────
