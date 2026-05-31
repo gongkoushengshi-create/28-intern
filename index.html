@@ -7,6 +7,9 @@
   <meta name="description" content="2028年卒向けサマーインターンの締め切りを業界別にまとめ。IT・コンサル・商社・外資金融・自動車・製薬・航空など110社以上掲載。">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://gongkoushengshi-create.github.io/28-intern/">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
   <meta property="og:type" content="website">
   <meta property="og:title" content="28卒 サマーインターン締め切り・日程一覧 | 2026年夏 110社以上">
   <meta property="og:url" content="https://gongkoushengshi-create.github.io/28-intern/">
@@ -28,20 +31,20 @@
   --done-op:.22; --row-hover:#1e1e38;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Hiragino Sans",sans-serif;background:var(--bg);color:var(--text);min-height:100vh;transition:background .2s,color .2s}
+body{font-family:'Noto Sans JP',-apple-system,BlinkMacSystemFont,"Segoe UI","Hiragino Sans",sans-serif;background:var(--bg);color:var(--text);min-height:100vh;transition:background .2s,color .2s}
 
 /* ── Header ── */
-header{background:var(--hdr);color:#fff;padding:14px 24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
+header{background:linear-gradient(135deg, #0f0c29, #302b63, #24243e);color:#fff;padding:14px 24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
 .hdr-left h1{font-size:1.2rem;font-weight:700}
 .hdr-left p{font-size:.72rem;color:#aab;margin-top:3px}
 .hdr-right{display:flex;gap:5px;flex-wrap:wrap}
-.hdr-btn{padding:4px 11px;border:1px solid rgba(255,255,255,.25);border-radius:999px;background:rgba(255,255,255,.1);color:#fff;font-size:.74rem;cursor:pointer;white-space:nowrap;transition:all .15s}
+.hdr-btn{padding:4px 11px;border:1px solid rgba(255,255,255,.25);border-radius:999px;background:rgba(255,255,255,.1);color:#fff;font-size:.74rem;cursor:pointer;white-space:nowrap;transition:all .15s;font-weight:500;letter-spacing:.02em}
 .hdr-btn:hover{background:rgba(255,255,255,.22)}
 .hdr-btn.on{background:#f39c12;border-color:#f39c12}
 
 /* ── Dashboard ── */
 .dashboard{background:var(--hdr);padding:8px 24px 13px;display:flex;flex-wrap:wrap;gap:6px}
-.stat-card{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:8px;padding:6px 12px;text-align:center;flex:1;min-width:65px;cursor:default}
+.stat-card{background:linear-gradient(135deg, rgba(255,255,255,.08) 0%, rgba(99,102,241,.12) 100%);border:1px solid rgba(99,102,241,.2);border-radius:8px;padding:6px 12px;text-align:center;flex:1;min-width:65px;cursor:default}
 .stat-num{font-size:1.25rem;font-weight:800;color:#fff;line-height:1.2}
 .stat-label{font-size:.62rem;color:#aab;margin-top:1px;white-space:nowrap}
 .s-red .stat-num{color:#e74c3c}
@@ -56,13 +59,13 @@ header{background:var(--hdr);color:#fff;padding:14px 24px;display:flex;justify-c
 .ind-sel{padding:5px 12px;border:1.5px solid var(--border2);border-radius:999px;font-size:.82rem;cursor:pointer;background:var(--surface);color:var(--text);outline:none;min-width:160px}
 .ind-sel:focus{border-color:var(--accent)}
 .filter-group{display:flex;flex-wrap:wrap;gap:4px;flex:1}
-.filter-btn{padding:4px 10px;border:1.5px solid var(--border2);border-radius:999px;background:var(--surface);color:var(--text);font-size:.74rem;cursor:pointer;white-space:nowrap;transition:all .15s}
+.filter-btn{padding:4px 10px;border:1.5px solid var(--border2);border-radius:8px;background:var(--surface);color:var(--text);font-size:.74rem;cursor:pointer;white-space:nowrap;transition:all .15s;font-weight:500;letter-spacing:.02em}
 .filter-btn:hover{border-color:var(--accent);color:var(--accent)}
 .filter-btn.active{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600}
 .right-ctrls{display:flex;gap:6px;align-items:center;flex-shrink:0;flex-wrap:wrap}
 .toggle-lbl{display:flex;align-items:center;gap:4px;font-size:.76rem;cursor:pointer;user-select:none;white-space:nowrap;color:var(--text)}
 .toggle-lbl input{width:14px;height:14px;cursor:pointer;accent-color:var(--accent)}
-.sort-btn,.act-btn{padding:4px 10px;border:1.5px solid var(--border2);border-radius:999px;background:var(--surface);color:var(--text);font-size:.74rem;cursor:pointer;white-space:nowrap;transition:all .15s}
+.sort-btn,.act-btn{padding:4px 10px;border:1.5px solid var(--border2);border-radius:8px;background:var(--surface);color:var(--text);font-size:.74rem;cursor:pointer;white-space:nowrap;transition:all .15s;font-weight:500;letter-spacing:.02em}
 .sort-btn:hover,.act-btn:hover{border-color:var(--accent);color:var(--accent)}
 .act-btn.on{border-color:#f39c12;color:#f39c12;background:#fef9e7}
 .view-grp{display:flex;border:1.5px solid var(--border2);border-radius:999px;overflow:hidden}
@@ -84,7 +87,7 @@ header{background:var(--hdr);color:#fff;padding:14px 24px;display:flex;justify-c
 /* ── Bulk bar ── */
 .bulk-bar{background:#1a1a2e;color:#fff;padding:8px 24px;display:flex;align-items:center;gap:10px;font-size:.8rem;display:none}
 .bulk-sel{padding:4px 9px;border-radius:6px;border:none;font-size:.76rem;cursor:pointer}
-.bulk-apply{padding:4px 13px;border-radius:999px;border:none;background:var(--accent);color:#fff;font-size:.76rem;cursor:pointer;font-weight:600}
+.bulk-apply{padding:4px 13px;border-radius:8px;border:none;background:var(--accent);color:#fff;font-size:.76rem;cursor:pointer;font-weight:600;letter-spacing:.02em}
 .bulk-clear{padding:4px 13px;border-radius:999px;border:1px solid rgba(255,255,255,.35);background:transparent;color:#fff;font-size:.76rem;cursor:pointer;margin-left:auto}
 
 /* ── Summary ── */
@@ -184,8 +187,8 @@ td{padding:8px 11px;vertical-align:middle;color:var(--text)}
 /* ── Cards ── */
 .cards-wrap{padding:14px 24px 48px}
 .cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:11px}
-.card{background:var(--surface);border-radius:10px;border:1px solid var(--border);padding:13px;box-shadow:0 1px 4px var(--shadow);transition:box-shadow .15s}
-.card:hover{box-shadow:0 3px 12px var(--shadow)}
+.card{background:var(--surface);border-radius:10px;border:1px solid var(--border);padding:13px;box-shadow:0 1px 4px var(--shadow);transition:transform .2s, box-shadow .2s}
+.card:hover{transform:translateY(-4px);box-shadow:0 8px 32px rgba(0,0,0,.25)}
 .card.card-done{opacity:var(--done-op)}
 .card-top{display:flex;justify-content:space-between;align-items:flex-start;gap:6px;margin-bottom:6px}
 .card-co{font-weight:700;font-size:.92rem;color:var(--text)}
@@ -207,7 +210,7 @@ td{padding:8px 11px;vertical-align:middle;color:var(--text)}
 .form-inp,.form-sel{width:100%;padding:7px 10px;border:1.5px solid var(--border2);border-radius:6px;font-size:.84rem;background:var(--surface);color:var(--text);outline:none}
 .form-inp:focus,.form-sel:focus{border-color:var(--accent)}
 .form-row2{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:11px}
-.submit-btn{width:100%;padding:8px;border:none;border-radius:8px;background:var(--accent);color:#fff;font-size:.88rem;font-weight:700;cursor:pointer;margin-top:4px}
+.submit-btn{width:100%;padding:8px;border:none;border-radius:8px;background:var(--accent);color:#fff;font-size:.88rem;font-weight:700;cursor:pointer;margin-top:4px;letter-spacing:.02em}
 .submit-btn:hover{opacity:.9}
 .hist-list{display:flex;flex-direction:column}
 .hist-item{display:flex;gap:10px;align-items:baseline;padding:6px 0;border-bottom:1px solid var(--border);font-size:.8rem}
@@ -217,6 +220,17 @@ td{padding:8px 11px;vertical-align:middle;color:var(--text)}
 .col-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .col-item{display:flex;align-items:center;gap:8px;font-size:.84rem;color:var(--text);cursor:pointer}
 .col-item input{accent-color:var(--accent);width:15px;height:15px}
+
+/* ── Pulse animation ── */
+@keyframes pulse {
+  0%,100%{opacity:1} 50%{opacity:.6}
+}
+.badge-today, .badge-tomorrow {
+  animation: pulse 1.5s ease-in-out infinite;
+}
+.sb-today, .sb-tomorrow {
+  animation: pulse 1.5s ease-in-out infinite;
+}
 
 /* ── Misc ── */
 .empty{text-align:center;padding:60px;color:var(--text3);font-size:.9rem}

@@ -1,0 +1,4 @@
+User-agent: *
+Disallow:
+
+Sitemap: https://gongkoushengshi-create.github.io/28-intern/sitemap.xml
