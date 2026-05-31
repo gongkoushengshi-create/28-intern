@@ -91,6 +91,15 @@ header{background:linear-gradient(135deg, #0f0c29, #302b63, #24243e);color:#fff;
 .bulk-apply{padding:4px 13px;border-radius:8px;border:none;background:var(--accent);color:#fff;font-size:.76rem;cursor:pointer;font-weight:600;letter-spacing:.02em}
 .bulk-clear{padding:4px 13px;border-radius:999px;border:1px solid rgba(255,255,255,.35);background:transparent;color:#fff;font-size:.76rem;cursor:pointer;margin-left:auto}
 
+/* ── Urgent Banner ── */
+.urgent-banner{background:linear-gradient(90deg,#c0392b,#e74c3c);color:#fff;padding:10px 20px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;font-size:.83rem;animation:pulse 2s ease-in-out infinite}
+.urgent-banner.tmr{background:linear-gradient(90deg,#d35400,#e67e22)}
+.ub-label{font-weight:700;white-space:nowrap;flex-shrink:0}
+.ub-chips{display:flex;flex-wrap:wrap;gap:5px;flex:1}
+.ub-chip{background:rgba(255,255,255,.22);border-radius:6px;padding:2px 9px;font-size:.78rem;white-space:nowrap}
+.ub-close{margin-left:auto;background:none;border:none;color:#fff;font-size:1rem;cursor:pointer;opacity:.7;flex-shrink:0}
+.ub-close:hover{opacity:1}
+
 /* ── Summary ── */
 .summary{padding:6px 24px;font-size:.74rem;color:var(--text2)}
 
@@ -342,6 +351,7 @@ td{padding:8px 11px;vertical-align:middle;color:var(--text)}
   <button class="act-btn" id="colBtn">表示列 ▾</button>
 </div>
 
+<div id="urgentBanners"></div>
 <div class="tag-bar" id="tagBar"></div>
 <div class="bulk-bar" id="bulkBar">
   <span id="bulkCount">0社選択中</span>
@@ -919,6 +929,26 @@ function renderDashboard() {
     <div class="stat-card s-fadred"><div class="stat-num">${fa}</div><div class="stat-label">不合格</div></div>`;
 }
 
+// ── URGENT BANNER ────────────────────────────────────────────────────────────
+const _ubDismissed = new Set();
+function renderUrgentBanner() {
+  const wrap = document.getElementById('urgentBanners');
+  wrap.innerHTML = '';
+  const all = getAllData();
+  const todays = all.filter((r,i) => getStatus(r[3],r[4]) === '本日' && !_ubDismissed.has('t'+i));
+  const tomorrows = all.filter((r,i) => getStatus(r[3],r[4]) === '明日' && !_ubDismissed.has('m'+i));
+  const make = (items, prefix, cls, label) => {
+    if (!items.length) return;
+    const div = document.createElement('div');
+    div.className = 'urgent-banner ' + cls;
+    div.innerHTML = `<span class="ub-label">${label}</span><div class="ub-chips">${items.map(r=>`<span class="ub-chip">${r[1]}${r[2]&&r[2]!=='-'?' ('+r[2]+')':''}</span>`).join('')}</div><button class="ub-close" title="閉じる">✕</button>`;
+    div.querySelector('.ub-close').onclick = () => { div.remove(); };
+    wrap.appendChild(div);
+  };
+  make(todays, 't', '', '🔴 本日締切');
+  make(tomorrows, 'm', 'tmr', '🟠 明日締切');
+}
+
 // ── TAG BAR ──────────────────────────────────────────────────────────────────
 function renderTagBar() {
   const tb=document.getElementById('tagBar');
@@ -1421,6 +1451,7 @@ document.getElementById('cardsGrid').addEventListener('change',e=>{
 
 // ── INIT ─────────────────────────────────────────────────────────────────────
 renderTagBar();
+renderUrgentBanner();
 setupNotif();
 if(window.innerWidth <= 640) switchView('cards');
 else switchView('table');
