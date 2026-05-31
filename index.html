@@ -9,7 +9,8 @@
   <link rel="canonical" href="https://gongkoushengshi-create.github.io/28-intern/">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet"></noscript>
   <meta property="og:type" content="website">
   <meta property="og:title" content="28卒 サマーインターン締め切り・日程一覧 | 2026年夏 110社以上">
   <meta property="og:url" content="https://gongkoushengshi-create.github.io/28-intern/">
@@ -1421,9 +1422,11 @@ document.getElementById('cardsGrid').addEventListener('change',e=>{
 // ── INIT ─────────────────────────────────────────────────────────────────────
 renderTagBar();
 setupNotif();
-// スマホはカードビューをデフォルトに
-if(window.innerWidth <= 640) switchView('cards');
-else render();
+// requestAnimationFrameで描画サイクル後に実行し、モバイルでの白画面を防ぐ
+requestAnimationFrame(() => {
+  if(window.innerWidth <= 640) switchView('cards');
+  else render();
+});
 </script>
 
 <script type="application/ld+json">
