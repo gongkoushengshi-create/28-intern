@@ -316,7 +316,7 @@ td{padding:8px 11px;vertical-align:middle;color:var(--text)}
   <select class="ind-sel" id="industrySelect"></select>
   <div class="right-ctrls">
     <label class="toggle-lbl"><input type="checkbox" id="favOnly"> ⭐ お気に入り</label>
-    <label class="toggle-lbl"><input type="checkbox" id="hideFinished"> 締切済を隠す</label>
+    <label class="toggle-lbl"><input type="checkbox" id="hideFinished" checked> 締切済を隠す</label>
     <button class="sort-btn" id="sortBtn">締切 ▲ 昇順</button>
     <button class="act-btn" id="exportBtn">📅 カレンダー出力</button>
     <button class="act-btn" id="notifBtn">🔔 通知設定</button>
@@ -810,7 +810,7 @@ applyDark();
 // ── FILTER / SORT STATE ──────────────────────────────────────────────────────
 const INDUSTRIES = [...new Set(DATA.map(r=>r[0]))];
 let activeIndustry='全て', activeUrgency='全て', activeTag='', progressFilter='all';
-let hideFinished=false, favOnly=false, searchText='', sortMode='asc';
+let hideFinished=true, favOnly=false, searchText='', sortMode='asc';
 const SORT_MODES=['asc','desc','urgency'];
 const SORT_LABELS={asc:'締切 ▲ 昇順',desc:'締切 ▼ 降順',urgency:'優先度順 ★'};
 const SORT_TH={asc:'締め切り ▲',desc:'締め切り ▼',urgency:'締め切り ★'};
