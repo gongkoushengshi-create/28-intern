@@ -66,6 +66,13 @@ header{background:linear-gradient(135deg, #0f0c29, #302b63, #24243e);color:#fff;
 .right-ctrls{display:flex;gap:6px;align-items:center;flex-shrink:0;flex-wrap:wrap}
 .toggle-lbl{display:flex;align-items:center;gap:4px;font-size:.76rem;cursor:pointer;user-select:none;white-space:nowrap;color:var(--text)}
 .toggle-lbl input{width:14px;height:14px;cursor:pointer;accent-color:var(--accent)}
+.star-filter{display:flex;gap:3px;align-items:center;font-size:.76rem;color:var(--text);white-space:nowrap}
+.star-filter select{padding:2px 6px;border:1.5px solid var(--border2);border-radius:999px;font-size:.74rem;background:var(--surface);color:var(--text);cursor:pointer;outline:none}
+.star-rating{display:inline-flex;gap:1px;cursor:pointer}
+.star-rating span{font-size:1rem;color:#ccc;transition:color .1s;line-height:1}
+.star-rating span.on{color:#f39c12}
+.star-rating:hover span{color:#f39c12}
+.star-rating span:hover~span{color:#ccc}
 .sort-btn,.act-btn{padding:4px 10px;border:1.5px solid var(--border2);border-radius:8px;background:var(--surface);color:var(--text);font-size:.74rem;cursor:pointer;white-space:nowrap;transition:all .15s;font-weight:500;letter-spacing:.02em}
 .sort-btn:hover,.act-btn:hover{border-color:var(--accent);color:var(--accent)}
 .act-btn.on{border-color:#f39c12;color:#f39c12;background:#fef9e7}
@@ -326,6 +333,14 @@ td{padding:8px 11px;vertical-align:middle;color:var(--text)}
   <div class="right-ctrls">
     <label class="toggle-lbl"><input type="checkbox" id="favOnly"> ⭐ お気に入り</label>
     <label class="toggle-lbl"><input type="checkbox" id="hideFinished" checked> 締切済を隠す</label>
+    <label class="star-filter">志望度
+      <select id="starFilter">
+        <option value="0">すべて</option>
+        <option value="1">★以上</option>
+        <option value="2">★★以上</option>
+        <option value="3">★★★のみ</option>
+      </select>
+    </label>
     <button class="sort-btn" id="sortBtn">締切 ▲ 昇順</button>
     <button class="act-btn" id="exportBtn">📅 カレンダー出力</button>
     <button class="act-btn" id="notifBtn">🔔 通知設定</button>
@@ -370,6 +385,7 @@ td{padding:8px 11px;vertical-align:middle;color:var(--text)}
         <th style="width:30px"></th>
         <th>企業名</th>
         <th class="sortable" id="thDeadline">締め切り ▲</th>
+        <th style="width:70px">志望度</th>
         <th style="min-width:105px">進捗</th>
         <th class="col-period">開催期間</th>
         <th class="col-site">採用サイト</th>
@@ -742,6 +758,9 @@ function getStatus(dl, raw) {
   if (d === 1) return '明日';
   return '未';
 }
+function starHtml(idx, cur) {
+  return `<span class="star-rating" data-sidx="${idx}">${[1,2,3].map(n=>`<span class="${n<=(cur||0)?'on':''}" data-sv="${n}">★</span>`).join('')}</span>`;
+}
 function countdownHtml(dl) {
   const d = daysUntil(dl);
   if (d === null) return '';
@@ -774,7 +793,7 @@ function storeKey(idx) {
 }
 
 // ── STATE ────────────────────────────────────────────────────────────────────
-function defState() { return {progress:0, memo:'', fav:false, tags:[], events:[]}; }
+function defState() { return {progress:0, memo:'', fav:false, tags:[], events:[], star:0}; }
 function loadSt(idx) {
   const k=storeKey(idx); if(!k) return defState();
   try { return Object.assign(defState(), JSON.parse(localStorage.getItem(k))); } catch { return defState(); }
@@ -820,7 +839,7 @@ applyDark();
 // ── FILTER / SORT STATE ──────────────────────────────────────────────────────
 const INDUSTRIES = [...new Set(DATA.map(r=>r[0]))];
 let activeIndustry='全て', activeUrgency='全て', activeTag='', progressFilter='all';
-let hideFinished=true, favOnly=false, searchText='', sortMode='asc';
+let hideFinished=true, favOnly=false, searchText='', sortMode='asc', starFilter=0;
 const SORT_MODES=['asc','desc','urgency'];
 const SORT_LABELS={asc:'締切 ▲ 昇順',desc:'締切 ▼ 降順',urgency:'優先度順 ★'};
 const SORT_TH={asc:'締め切り ▲',desc:'締め切り ▼',urgency:'締め切り ★'};
@@ -982,6 +1001,7 @@ function getEntries() {
     if(progressFilter==='hide_failed'&&s.progress===6) return false;
     if(activeTag&&!(s.tags||[]).includes(activeTag)) return false;
     if(favOnly&&!s.fav) return false;
+    if(starFilter>0&&(s.star||0)<starFilter) return false;
     if(searchText){const q=searchText.toLowerCase();if(![r[0],r[1],r[2],r[6]].join(' ').toLowerCase().includes(q))return false;}
     return true;
   });
@@ -1033,6 +1053,7 @@ function render() {
         <span class="deadline-date">${r[3]}</span>${countdownHtml(r[3])}
         <br><span class="status-badge ${badgeCls}">${badgeTx}</span>
       </td>
+      <td>${starHtml(i, s.star)}</td>
       <td><select class="progress-select ${PROG_CLS[s.progress]}" data-idx="${i}">${progOpts}</select></td>
       <td class="col-period" style="font-size:.78rem;color:var(--text2)">${r[5]||'―'}</td>
       <td class="col-site">${linkHtml}</td>
@@ -1109,7 +1130,10 @@ function renderCards() {
         <div><div class="card-co">${r[1]}</div><span class="card-ind">${r[0]}</span>
           ${r[2]&&r[2]!=='-'?`<div class="card-prog">${r[2]}</div>`:''}
         </div>
-        <button class="fav-btn" data-idx="${i}">${s.fav?'⭐':'☆'}</button>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px">
+          <button class="fav-btn" data-idx="${i}">${s.fav?'⭐':'☆'}</button>
+          ${starHtml(i, s.star)}
+        </div>
       </div>
       <div class="card-dl">
         <span class="card-date">${r[3]}</span>${countdownHtml(r[3])}
@@ -1233,6 +1257,7 @@ document.getElementById('searchBox').addEventListener('input',e=>{searchText=e.t
 // Toggles
 document.getElementById('hideFinished').addEventListener('change',e=>{hideFinished=e.target.checked;switchView(viewMode);});
 document.getElementById('favOnly').addEventListener('change',e=>{favOnly=e.target.checked;switchView(viewMode);});
+document.getElementById('starFilter').addEventListener('change',e=>{starFilter=+e.target.value;switchView(viewMode);});
 // Progress filter
 document.getElementById('progressFilter').addEventListener('change',e=>{progressFilter=e.target.value;switchView(viewMode);});
 // Sort
@@ -1319,6 +1344,9 @@ document.querySelectorAll('.modal-ov').forEach(ov=>ov.addEventListener('click',e
 const mainTable=document.getElementById('mainTable');
 
 mainTable.addEventListener('click',e=>{
+  // Star rating
+  const star=e.target.closest('.star-rating');
+  if(star&&e.target.dataset.sv){const idx=+star.dataset.sidx;const v=+e.target.dataset.sv;const s=loadSt(idx);s.star=(s.star===v?0:v);saveSt(idx,s);switchView(viewMode);return;}
   // Fav
   const fav=e.target.closest('.fav-btn');
   if(fav){const idx=+fav.dataset.idx;const s=loadSt(idx);s.fav=!s.fav;saveSt(idx,s);switchView(viewMode);return;}
@@ -1437,6 +1465,8 @@ mainTable.addEventListener('input',e=>{
 
 // Cards event delegation
 document.getElementById('cardsGrid').addEventListener('click',e=>{
+  const star=e.target.closest('.star-rating');
+  if(star&&e.target.dataset.sv){const idx=+star.dataset.sidx;const v=+e.target.dataset.sv;const s=loadSt(idx);s.star=(s.star===v?0:v);saveSt(idx,s);renderCards();return;}
   const fav=e.target.closest('.fav-btn');
   if(fav){const idx=+fav.dataset.idx;const s=loadSt(idx);s.fav=!s.fav;saveSt(idx,s);renderCards();return;}
 });
