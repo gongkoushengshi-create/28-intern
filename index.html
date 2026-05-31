@@ -352,7 +352,7 @@ td{padding:8px 11px;vertical-align:middle;color:var(--text)}
 <div class="summary" id="summary"></div>
 
 <!-- Table view -->
-<div id="tableView">
+<div id="tableView" style="display:none">
   <div class="table-wrap">
     <table id="mainTable">
       <thead><tr>
@@ -1422,11 +1422,8 @@ document.getElementById('cardsGrid').addEventListener('change',e=>{
 // ── INIT ─────────────────────────────────────────────────────────────────────
 renderTagBar();
 setupNotif();
-// requestAnimationFrameで描画サイクル後に実行し、モバイルでの白画面を防ぐ
-requestAnimationFrame(() => {
-  if(window.innerWidth <= 640) switchView('cards');
-  else render();
-});
+if(window.innerWidth <= 640) switchView('cards');
+else switchView('table');
 </script>
 
 <script type="application/ld+json">
