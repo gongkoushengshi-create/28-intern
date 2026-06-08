@@ -18,18 +18,20 @@
 <style>
 /* ── Variables ── */
 :root {
-  --bg:#f5f6fa; --surface:#fff; --surface2:#f8f9ff; --surface3:#f0f2fa;
-  --hdr:#1a1a2e; --border:#e0e4ef; --border2:#c8cde0;
-  --text:#222; --text2:#667; --text3:#889;
-  --accent:#4a6cf7; --shadow:rgba(0,0,0,.07);
-  --done-op:.38; --row-hover:#f8f9ff;
+  --bg:#f0f2f8; --surface:#fff; --surface2:#f5f7ff; --surface3:#eceffe;
+  --hdr:#13112b; --border:#dde0f0; --border2:#c4cadf;
+  --text:#1e1e2e; --text2:#5a6080; --text3:#8890aa;
+  --accent:#4f6ef7; --shadow:rgba(30,30,60,.08);
+  --done-op:.36; --row-hover:#f5f7ff;
+  --green:#16a34a; --red:#dc2626; --orange:#ea580c;
 }
 [data-theme="dark"] {
-  --bg:#0f0f1a; --surface:#1a1a2e; --surface2:#16213e; --surface3:#1e2a3e;
-  --hdr:#0d0d1a; --border:#2a2a4e; --border2:#3a3a6e;
-  --text:#dde; --text2:#8890bb; --text3:#6670aa;
-  --accent:#6a8cf7; --shadow:rgba(0,0,0,.4);
-  --done-op:.22; --row-hover:#1e1e38;
+  --bg:#0d0d1c; --surface:#181830; --surface2:#1c1c38; --surface3:#222242;
+  --hdr:#0a0a18; --border:#28284a; --border2:#38386a;
+  --text:#dde0f0; --text2:#7880aa; --text3:#5860a0;
+  --accent:#6a8cf7; --shadow:rgba(0,0,0,.45);
+  --done-op:.2; --row-hover:#1c1c38;
+  --green:#22c55e; --red:#f87171; --orange:#fb923c;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Noto Sans JP',-apple-system,BlinkMacSystemFont,"Segoe UI","Hiragino Sans",sans-serif;background:var(--bg);color:var(--text);min-height:100vh;transition:background .2s,color .2s}
@@ -249,6 +251,106 @@ td{padding:8px 11px;vertical-align:middle;color:var(--text)}
   animation: pulse 1.5s ease-in-out infinite;
 }
 
+/* ── Research View ── */
+.research-wrap{padding:14px 24px 48px}
+.research-controls{display:flex;gap:8px;align-items:center;padding:0 0 12px;flex-wrap:wrap}
+.research-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:12px}
+.rc{background:var(--surface);border-radius:10px;border:1px solid var(--border);padding:14px;box-shadow:0 1px 4px var(--shadow)}
+.rc-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px}
+.rc-name{font-weight:700;font-size:.93rem;color:var(--text)}
+.rc-meta{display:flex;gap:5px;align-items:center;flex-wrap:wrap;margin-bottom:9px}
+.rc-tabs{display:flex;gap:0;border-bottom:1px solid var(--border);margin-bottom:8px}
+.rc-tab{padding:5px 11px;border:none;background:none;font-size:.76rem;cursor:pointer;color:var(--text3);border-bottom:2px solid transparent;margin-bottom:-1px;transition:all .15s}
+.rc-tab.active{color:var(--accent);border-bottom-color:var(--accent);font-weight:600}
+.rc-pane{display:none}
+.rc-pane.active{display:block}
+.rc-ta{width:100%;padding:7px 9px;border:1.5px solid var(--border);border-radius:6px;font-size:.8rem;font-family:inherit;resize:vertical;min-height:80px;background:var(--surface);color:var(--text);outline:none;transition:border-color .15s}
+.rc-ta:focus{border-color:var(--accent)}
+.rc-ta.has-data{border-color:#f39c12}
+.rc-info{font-size:.79rem;color:var(--text);background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:8px 10px;margin-bottom:6px;line-height:1.7}
+.rc-info-lbl{font-size:.69rem;color:var(--text3);margin-bottom:4px;font-weight:600}
+.rc{cursor:pointer}
+.rc:hover{transform:translateY(-3px);box-shadow:0 6px 24px rgba(0,0,0,.18)}
+
+/* ── Detail View ── */
+.detail-view{position:fixed;inset:0;background:var(--bg);z-index:200;overflow-y:auto;transform:translateX(100%);transition:transform .28s cubic-bezier(.25,.46,.45,.94);will-change:transform}
+.detail-view.open{transform:translateX(0)}
+.detail-hdr{background:linear-gradient(135deg,#0f0c29,#302b63,#24243e);color:#fff;padding:12px 20px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;position:sticky;top:0;z-index:10}
+.detail-back{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.3);border-radius:999px;color:#fff;padding:5px 14px;font-size:.8rem;cursor:pointer;white-space:nowrap;transition:background .15s}
+.detail-back:hover{background:rgba(255,255,255,.25)}
+.detail-co-name{font-size:1.15rem;font-weight:800;color:#fff;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.detail-body{max-width:820px;margin:0 auto;padding:20px 20px 80px}
+.detail-section{background:var(--surface);border-radius:10px;border:1px solid var(--border);padding:16px;margin-bottom:14px}
+.detail-section-title{font-size:.82rem;font-weight:700;color:var(--text2);margin-bottom:12px;display:flex;align-items:center;gap:5px}
+.salary-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.salary-item{text-align:center;background:var(--surface2);border-radius:8px;padding:14px 8px;border:1px solid var(--border)}
+.salary-val{font-size:1.35rem;font-weight:800;color:var(--accent);line-height:1.2}
+.salary-lbl{font-size:.68rem;color:var(--text3);margin-top:4px}
+.detail-ta{width:100%;padding:9px 11px;border:1.5px solid var(--border);border-radius:6px;font-size:.84rem;font-family:inherit;resize:vertical;min-height:100px;background:var(--surface);color:var(--text);outline:none;transition:border-color .15s}
+.detail-ta:focus{border-color:var(--accent)}
+.detail-ta.has-data{border-color:#f39c12}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:10px}
+.info-item{background:var(--surface2);border-radius:6px;padding:7px 10px;border:1px solid var(--border)}
+.info-lbl{font-size:.64rem;color:var(--text3);margin-bottom:2px;font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+.info-val{font-size:.82rem;color:var(--text);line-height:1.45}
+.philosophy-box{background:linear-gradient(135deg,rgba(74,108,247,.07),rgba(74,108,247,.02));border:1px solid rgba(74,108,247,.25);border-radius:8px;padding:11px 14px;font-size:.85rem;color:var(--text);line-height:1.65;margin-top:8px}
+.philosophy-box::before{content:"💬 ";font-style:normal}
+@media(max-width:640px){.info-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:640px){
+  .detail-body{padding:14px 14px 80px}
+  .salary-val{font-size:1.1rem}
+  .detail-co-name{font-size:1rem}
+  .rating-grid{grid-template-columns:repeat(3,1fr)}
+  .self-axis-grid{grid-template-columns:1fr}
+  .info-grid{grid-template-columns:1fr 1fr}
+}
+
+/* ── Company Rating ── */
+.rating-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:4px}
+.rating-item{background:var(--surface2);border-radius:8px;padding:8px 4px;border:1px solid var(--border);text-align:center}
+.rating-lbl{font-size:.62rem;color:var(--text3);font-weight:700;margin-bottom:5px;letter-spacing:.02em}
+.rating-stars{display:flex;gap:1px;justify-content:center}
+.rating-star{font-size:1.1rem;cursor:pointer;color:#ddd;transition:color .1s;line-height:1;user-select:none}
+.rating-star.on{color:#f59e0b}
+.rating-star:hover{color:#f59e0b}
+
+/* ── OB/OG Visit ── */
+.visit-item{background:var(--surface2);border-radius:8px;padding:10px;margin-bottom:8px;border:1px solid var(--border)}
+.visit-row{display:flex;gap:7px;margin-bottom:7px;align-items:center}
+.visit-inp{flex:1;padding:5px 9px;border:1.5px solid var(--border);border-radius:6px;font-size:.79rem;background:var(--surface);color:var(--text);outline:none;min-width:0}
+.visit-inp:focus{border-color:var(--accent)}
+.visit-ta{width:100%;padding:7px 9px;border:1.5px solid var(--border);border-radius:6px;font-size:.79rem;background:var(--surface);color:var(--text);outline:none;resize:vertical;min-height:58px;font-family:inherit;transition:border-color .15s}
+.visit-ta:focus{border-color:var(--accent)}
+.visit-del{background:none;border:none;color:var(--red);cursor:pointer;font-size:.85rem;padding:2px 6px;opacity:.5;flex-shrink:0}
+.visit-del:hover{opacity:1}
+.add-visit-btn{padding:6px 14px;border:1.5px dashed var(--border2);border-radius:6px;background:none;color:var(--text3);font-size:.76rem;cursor:pointer;width:100%;margin-top:2px;transition:all .15s}
+.add-visit-btn:hover{border-color:var(--accent);color:var(--accent)}
+
+/* ── Self Analysis View ── */
+.self-view{position:fixed;inset:0;background:var(--bg);z-index:200;overflow-y:auto;transform:translateX(-100%);transition:transform .28s cubic-bezier(.25,.46,.45,.94);will-change:transform}
+.self-view.open{transform:translateX(0)}
+.self-hdr{background:linear-gradient(135deg,#0f0c29,#302b63,#24243e);color:#fff;padding:12px 20px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:10}
+.self-title{font-size:1.1rem;font-weight:800;color:#fff;flex:1}
+.self-body{max-width:820px;margin:0 auto;padding:20px 20px 80px}
+.self-section{background:var(--surface);border-radius:12px;border:1px solid var(--border);padding:18px;margin-bottom:14px;box-shadow:0 1px 4px var(--shadow)}
+.self-section-title{font-size:.88rem;font-weight:700;color:var(--text);margin-bottom:4px;display:flex;align-items:center;gap:6px}
+.self-section-hint{font-size:.72rem;color:var(--text3);margin-bottom:10px}
+.self-ta{width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:.84rem;font-family:inherit;resize:vertical;min-height:90px;background:var(--surface);color:var(--text);outline:none;transition:border-color .15s;line-height:1.7}
+.self-ta:focus{border-color:var(--accent)}
+.self-ta.has-data{border-color:#f59e0b}
+.self-axis-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:4px}
+.self-axis-item{display:flex;align-items:center;gap:8px;background:var(--surface2);padding:8px 10px;border-radius:8px;border:1px solid var(--border)}
+.self-axis-lbl{font-size:.74rem;color:var(--text2);min-width:90px;font-weight:600}
+.self-axis-inp{flex:1;padding:4px 8px;border:1.5px solid var(--border2);border-radius:6px;font-size:.76rem;background:var(--surface);color:var(--text);outline:none;min-width:0}
+.self-axis-inp:focus{border-color:var(--accent)}
+.self-progress-bar{height:6px;border-radius:999px;background:var(--border);margin-top:6px;overflow:hidden}
+.self-progress-fill{height:100%;border-radius:999px;background:linear-gradient(90deg,var(--accent),#8b5cf6);transition:width .4s}
+.self-complete-pct{font-size:.68rem;color:var(--text3);text-align:right;margin-top:3px}
+
+/* ── Deadline Timeline ── */
+.deadline-bar{height:4px;border-radius:999px;background:var(--border);overflow:hidden;margin-top:4px;display:inline-block;width:60px;vertical-align:middle}
+.deadline-fill{height:100%;border-radius:999px;transition:width .3s}
+
 /* ── Misc ── */
 .empty{text-align:center;padding:60px;color:var(--text3);font-size:.9rem}
 
@@ -320,6 +422,7 @@ td{padding:8px 11px;vertical-align:middle;color:var(--text)}
     <button class="hdr-btn" id="backupBtn">💾 バックアップ</button>
     <button class="hdr-btn" id="restoreBtn">📂 復元</button>
     <button class="hdr-btn" id="historyBtn">📋 履歴</button>
+    <button class="hdr-btn" id="selfBtn">📝 自己分析</button>
     <button class="hdr-btn" id="addCoBtn">＋ 企業追加</button>
   </div>
 </header>
@@ -348,6 +451,7 @@ td{padding:8px 11px;vertical-align:middle;color:var(--text)}
       <button class="view-btn active" data-view="table">テーブル</button>
       <button class="view-btn" data-view="cards">カード</button>
       <button class="view-btn" data-view="calendar">カレンダー</button>
+      <button class="view-btn" data-view="research">企業研究</button>
     </div>
   </div>
 </div>
@@ -411,6 +515,55 @@ td{padding:8px 11px;vertical-align:middle;color:var(--text)}
       <button class="cal-nav-btn" id="calNext">›</button>
     </div>
     <div class="cal-grid" id="calGrid"></div>
+  </div>
+</div>
+
+<!-- Self Analysis view (slide from left) -->
+<div class="self-view" id="selfView">
+  <div class="self-hdr">
+    <button class="detail-back" id="selfBack">← 閉じる</button>
+    <div class="self-title">📝 自己分析・就活軸</div>
+    <div id="selfCompletePct" style="font-size:.72rem;color:#aab"></div>
+  </div>
+  <div class="self-body" id="selfBody"></div>
+</div>
+
+<!-- Detail view (full-screen slide-in) -->
+<div class="detail-view" id="detailView">
+  <div class="detail-hdr">
+    <button class="detail-back" id="detailBack">← 企業研究に戻る</button>
+    <div class="detail-co-name" id="detailCoName"></div>
+    <button class="fav-btn" id="detailFav" style="font-size:1.3rem;color:#fff"></button>
+  </div>
+  <div class="detail-body" id="detailBody"></div>
+</div>
+
+<!-- Research view -->
+<div id="researchView" style="display:none">
+  <div class="research-wrap">
+    <div class="research-controls">
+      <span class="flabel">絞り込み</span>
+      <label class="toggle-lbl"><input type="checkbox" id="resFavOnly"> ⭐ お気に入り</label>
+      <label class="star-filter">志望度
+        <select id="resStarFilter">
+          <option value="0">すべて</option>
+          <option value="1">★以上</option>
+          <option value="2">★★以上</option>
+          <option value="3">★★★のみ</option>
+        </select>
+      </label>
+      <select class="mini-sel" id="resIndustry"></select>
+      <select class="mini-sel" id="resSortSel">
+        <option value="default">並び替え</option>
+        <option value="avg30s-desc">30代年収 高い順</option>
+        <option value="avg30s-asc">30代年収 低い順</option>
+        <option value="entry-desc">初任給 高い順</option>
+        <option value="entry-asc">初任給 低い順</option>
+        <option value="star-desc">志望度 高い順</option>
+        <option value="deadline-asc">締切 近い順</option>
+      </select>
+    </div>
+    <div class="research-grid" id="researchGrid"></div>
   </div>
 </div>
 
@@ -718,6 +871,500 @@ const DATA = [
   ["製薬・医療","テルモ","技術系インターン","6/30","未","","","https://www.terumo.co.jp/recruit/"],
 ];
 
+// ── COMPANY OVERVIEW ─────────────────────────────────────────────────────────
+const COMPANY_OVERVIEW = {
+  "サイボウズ": "グループウェア「kintone」「Garoon」を開発・提供する独立系SaaS企業。副業・テレワーク100%など多様な働き方で有名で、エンジニア文化が強くOSSへの貢献も活発。",
+  "U-NEXT HOLDINGS": "動画配信「U-NEXT」を中核とする持株会社。国内最大級のVODサービスで映像・通信・書籍を統合展開。",
+  "GMOインターネット": "ドメイン・ホスティング・セキュリティ・決済など幅広いインターネットインフラを提供。グループ全体で100社以上を展開する国内最大規模のドメイン登録会社。",
+  "リクルート": "人材・不動産・飲食・旅行など多様なマッチングプラットフォームを運営するメガベンチャー。「リクナビ」「SUUMO」「じゃらん」等多数のサービスを持ち、INDEEDを傘下に持つ世界的HR企業。",
+  "DeNA": "スマホゲームで急成長後、ヘルスケア・スポーツ・オートモーティブにも展開。横浜DeNAベイスターズのオーナー企業。エンジニア・PM文化が強い。",
+  "ソフトバンク": "国内通信キャリア第2位。Yahooとの連携や孫正義率いるビジョンファンドによる大規模テック投資でも知られる。通信以外の新規事業にも積極的。",
+  "富士通": "国内最大規模のITサービス企業の一つ。官公庁・金融・製造向けシステムからクラウド・AIまでをカバーし、DX推進に注力。売上約4兆円のIT大手。",
+  "日立システムズ": "日立グループのITサービス会社。企業向けITインフラ・マネージドサービス・DXソリューションが主力。官公庁・自治体案件が多い。",
+  "サイバーエージェント": "「AbemaTV」「Ameba」を擁するメガベンチャー。広告・メディア・ゲームの3本柱で若手が活躍しやすい文化として有名。",
+  "Visional": "即戦力採用プラットフォーム「ビズリーチ」を擁するHRテック企業グループ。プロダクト思考が強くデータ活用・DXにも注力。",
+  "電通デジタル": "電通グループのデジタルマーケティング専門会社。マーケティングDX・データ活用・UX設計などを手がける。",
+  "レバレジーズ": "IT人材紹介・エンジニア転職「レバテック」を展開する急成長スタートアップ。未経験エンジニア支援でも知られる。",
+  "メルカリ": "国内最大フリマアプリ「メルカリ」を運営するグローバルスタートアップ。フィンテック（メルペイ）にも展開し米国市場にも進出。",
+  "ラクスル": "印刷・集客・物流をDXするプラットフォーム企業。「ラクスル」「ノバセル」「ハコベル」を展開する印刷・広告・物流DXのパイオニア。",
+  "フューチャー": "ITコンサルとシステム開発を一体提供する独立系IT企業。金融・流通・製造など幅広い業種に対応。選考直結型インターンが業界内で有名。",
+  "楽天": "EC・フィンテック・通信など70以上のサービスを展開するメガプラットフォーマー。「楽天市場」「楽天モバイル」「楽天ペイ」「楽天証券」など多角的。社内公用語は英語。",
+  "Sky": "ソフトウェア開発と教育ICT（SKYMENU）に強みを持つ中堅IT企業。ゲーム「ファイナルファンタジー」シリーズの開発も手がける。",
+  "チームラボ": "テクノロジーとアートを融合させたデジタルアート集団。「チームラボプラネッツ」など世界中で没入型アートを展開し、アート×テックのパイオニア。",
+  "DMM": "動画配信・ECからゲーム・金融・3Dプリントまで多角展開するIT企業。「DMMプレミアム」「DMM FX」など50以上のサービスを持つ。",
+  "PKSHA Technology": "自然言語処理・機械学習アルゴリズムを開発・提供するAIスタートアップ。企業向けAIソリューションと金融DXに強みを持つ東大発のベンチャー。",
+  "ギフティ": "eギフトプラットフォーム「giftee」を運営するスタートアップ。B2Bギフトソリューションや自治体向けプロダクトも展開。",
+  "ログラス": "経営管理SaaS「Loglass」を提供するスタートアップ。CFO・経営企画向けの予実管理・経営分析ツール。創業数年で急成長中。",
+  "freee": "クラウド会計ソフト「freee」を中心に、中小企業・スタートアップ向けバックオフィスSaaSを展開するFinTech企業。",
+  "マネーフォワード": "家計管理アプリから法人向けクラウド会計・経費精算まで展開するFinTechリーダー。「マネーフォワード クラウド」シリーズを展開。",
+  "Sansan": "名刺管理SaaS「Sansan」と個人向け「Eight」でビジネスネットワーキングと営業DXを手がける。「それさ、Sansanで知り合った人」のCMで有名。",
+  "SmartHR": "クラウド人事労務ソフト「SmartHR」を提供するHRTechスタートアップ。企業評価額2000億超のユニコーン企業。人事・労務の煩雑な手続きをDX化。",
+  "LayerX": "AI・ブロックチェーン技術を活用した企業向けDXと法人カード「バクラク」を展開するFinTechスタートアップ。AI×Financeのパイオニア。",
+  "BASE": "無料ネットショップ作成サービス「BASE」を運営するEC特化プラットフォーム。中小事業者・個人クリエイターのネット販売を支援。",
+  "HENNGE": "SaaS認証・クラウドセキュリティ「HENNGE One」を展開する日本のSaaSパイオニア。多くの企業のクラウドセキュリティを担う。",
+  "ヌーラボ": "プロジェクト管理「Backlog」・図解ツール「Cacoo」を運営するBtoB SaaS企業。福岡本拠地で全リモート勤務も可能。",
+  "PwCコンサルティング": "世界4大会計事務所PwCグループの日本法人。戦略・テクノロジー・オペレーションコンサルを幅広く提供する総合ファーム。",
+  "PwCアドバイザリー": "PwCグループのM&A・財務アドバイザリー部門。企業買収・売却・PMI支援などを手がける。",
+  "マッキンゼー": "世界最大の戦略コンサルファームの一つ。国内採用は年間約20名の超難関。MBB（マッキンゼー・BCG・ベイン）の一角で最高峰の経営コンサル。",
+  "デロイト トーマツ": "BIG4の一角。監査・税務・コンサル・ファイナンシャルアドバイザリーを包括的に提供する世界最大規模のプロフェッショナルファーム。",
+  "日本総合研究所": "三井住友フィナンシャルグループのシンクタンク兼ITサービス会社。経済調査・政策提言からITソリューション・DXコンサルまで展開。",
+  "BCG": "世界的な戦略コンサルファーム。MBBの一角でデジタルトランスフォーメーション・社会課題解決にも注力。「BCGマトリクス」の考案でも有名。",
+  "ベイン・アンド・カンパニー": "MBBの一角。「成果にコミット」を掲げる戦略コンサルファーム。プライベートエクイティ分野でも業界トップ。",
+  "アクセンチュア": "世界最大級のITコンサルファーム。戦略からDX実装・テクノロジー運用まで一気通貫で提供。近年デジタル系企業買収を積極化。",
+  "博報堂コンサルティング": "博報堂グループのビジネスコンサル会社。マーケティング・ブランド・組織変革などを手がける。",
+  "EYストラテジー・アンド・コンサルティング": "BIG4のEYグループの戦略コンサル。M&A・事業変革・サイバーセキュリティなどを提供。",
+  "KPMG FAS": "KPMGグループのM&A・財務アドバイザリー部門。デューデリジェンス・バリュエーションに強み。",
+  "Roland Berger": "ドイツ系の独立系グローバル戦略コンサル。自動車・製造業・ヘルスケアの深い知見を持つ。欧州系ならではの視点が特徴。",
+  "ADL（アーサー・ディ・リトル）": "世界最古の経営コンサルティングファーム（1886年創業）。技術・イノベーション戦略に特に強みを持つ。",
+  "ドリームインキュベータ": "日本発の独立系コンサルファーム。大企業の新規事業開発・スタートアップ支援を得意とし、実行支援まで踏み込む点が特徴。",
+  "経営共創基盤（IGPI）": "マッキンゼー等出身者が創業した経営コンサル・PEファーム。企業再生・新規事業・PMIを手がける実践的なファーム。",
+  "シグマクシス": "マッキンゼー出身者が創業した独立系コンサルファーム。テクノロジー・イノベーション・トランスフォーメーションに強み。",
+  "船井総合研究所": "中堅中小企業向けの業績直結型コンサルファーム。業種別専門チームが豊富で全国展開。即効性のある施策提案が特徴。",
+  "Strategy&（PwC）": "PwCグループの戦略コンサル部門（旧ブーズ・アンド・カンパニー）。事業戦略・コーポレートファイナンスに強み。",
+  "モルガン・スタンレー": "世界有数の金融サービス会社。投資銀行・ウェルスマネジメント・投資管理の3部門が柱。外資金融の中でも人気が高い。",
+  "ゴールドマン・サックス": "世界最強の投資銀行の一つ。M&A・引受・資産運用・トレーディングなど幅広い金融サービスを提供。国内外資金融の最高峰。",
+  "UBSグループ": "スイス発の世界最大級ウェルスマネジメント会社。富裕層向け資産運用と投資銀行が主力。クレディ・スイスを2023年に統合。",
+  "J.P.モルガン": "米国最大の銀行持株会社。投資銀行・消費者金融・商業銀行・資産運用を包括的に展開。世界屈指の総合金融グループ。",
+  "ブラックロック": "世界最大の資産運用会社（運用資産約10兆ドル）。ETF「iシェアーズ」でも有名。機関投資家や個人の資産運用を担う。",
+  "三菱UFJ銀行": "国内最大のメガバンク。三菱UFJフィナンシャル・グループの中核銀行。システムデジタル系インターンがエンジニア志望者に人気。",
+  "NRI": "日本最大のシンクタンク兼ITサービス企業。証券・金融・流通向けITサービスに強み。経営コンサルとITを組み合わせた独自のビジネスモデル。",
+  "第一生命": "国内大手生命保険会社。デジタル・ヘルスケア分野への展開も進めており、フィンテック・InsurTechにも積極的。",
+  "バンク・オブ・アメリカ": "米国大手銀行の日本法人。グローバルテクノロジー部門は世界規模のIT開発を担い、最先端の金融テクノロジーに携われる。",
+  "KPMG税理士法人": "KPMGグループの税務専門法人。国際税務・移転価格・組織再編に強み。BIG4税務部門の一角。",
+  "日本政策金融公庫": "政府系金融機関。中小企業・農林漁業者・学生向けに低利融資を行う。安定した公的機関でありながら多様な政策に関われる。",
+  "三菱UFJニコス": "三菱UFJフィナンシャルグループのクレジットカード会社。DC・UFJニコスブランドを展開するカード・決済専門会社。",
+  "みずほ銀行": "国内3大メガバンクの一つ。みずほフィナンシャルグループの中核銀行。デジタルバンキングへの転換を強力に推進中。",
+  "三井住友銀行": "SMBCグループの中核銀行。デジタルバンキング・フィンテックにも積極的で、スマートフォン決済・ネット銀行を推進。",
+  "三菱UFJ信託銀行": "資産運用・不動産管理・遺産相続など信託業務特化のメガバンク傘下銀行。証券代行や確定拠出年金管理なども手がける。",
+  "農林中央金庫": "農協・漁協・森林組合などJA系の中央金融機関。国内最大の機関投資家の一つで、グローバルな債券・株式運用が特徴。",
+  "みずほ信託銀行": "みずほフィナンシャルグループの信託銀行。資産管理・年金信託・不動産信託に強み。",
+  "丸紅": "五大商社の一つ。食料・電力・インフラ・金属・化学品など幅広い分野でトレーディングと事業投資を展開。電力事業が特に強い。",
+  "三井物産": "五大商社の一つ。エネルギー・金属・化学・食料・インフラなど多角的事業投資を行う。「挑戦と創造」を掲げ新規事業にも積極的。",
+  "住友商事": "五大商社の一つ。メディア・不動産・建設・輸送機・金属・インフラなどを幅広く展開。CATV・不動産でも強みを持つ。",
+  "三菱商事": "国内最大の総合商社。エネルギー・金属・機械・食料・化学など多岐にわたる事業ポートフォリオを持つ。事業投資型商社の代表格。",
+  "伊藤忠商事": "五大商社の一つで非資源分野に強み。ファミリーマート・ヤナセなど消費者向けビジネスでも有名。繊維から発展した生活消費分野が得意。",
+  "東芝": "インフラ・半導体に強みを持つ大手総合電機メーカー。再建を経て事業ポートフォリオを再構築中。電力・鉄道・上下水道など社会インフラ分野に注力。",
+  "日本製鉄": "国内最大の鉄鋼メーカー。高品質鋼材・自動車用鋼板で世界トップクラス。USスチール買収提案でも注目を集めた。",
+  "神戸製鋼": "鉄鋼・アルミ・銅・溶接材料・建設機械・電力を手がける総合素材・エンジニアリング企業。",
+  "積水化学": "住宅（セキスイハイム）・環境ライフライン・高機能プラスチックの3事業を展開する化学メーカー。",
+  "花王": "洗剤「アタック」・化粧品「ビオレ」「SK-II」など消費財に強みを持つメーカー。環境・サステナビリティ活動にも積極的。",
+  "ソニーセミコンダクタソリューションズ（SSS）": "CMOSイメージセンサーで世界シェアトップのソニーグループ会社。スマートフォン・自動車向けに供給し、映像センシング技術の最前線。",
+  "ソニーセミコンダクタマニュファクチャリング（SCK）": "ソニーグループの半導体製造会社。熊本・長崎の工場でイメージセンサーを製造する生産技術特化の会社。",
+  "キーエンス": "センサー・測定機器の製造会社。高付加価値製品と独自の直接販売モデルで国内最高水準の年収として有名。付加価値率約55%の超高収益企業。",
+  "ソニー（本体）": "エレクトロニクス・ゲーム（PS）・映画・音楽・半導体を展開するグローバル企業。エンタメとテクノロジーの融合で独自のエコシステムを構築。",
+  "村田製作所": "積層セラミックコンデンサ（MLCC）などの電子部品で世界トップシェア。スマートフォン・自動車向けに強みを持つ電子部品の巨人。",
+  "TDK": "電子部品・エネルギーデバイスのグローバルメーカー。磁気テープから変革し、HDD磁気ヘッドや電池でも世界トップ。",
+  "日東電工": "機能性フィルム・光学部材・電子材料・医療用テープを手がける素材・精密メーカー。液晶パネル用偏光フィルムで世界トップシェア。",
+  "ルネサスエレクトロニクス": "車載マイコンで世界トップシェアを誇る半導体メーカー。IoT・産業・通信向けにも展開。日立・三菱・NECの半導体部門を統合した国内最大半導体企業。",
+  "京セラ": "セラミック技術を核にした精密部品・電子部品・太陽電池・通信端末を展開する総合メーカー。京セラフィロソフィで知られる稲盛和夫が創業。",
+  "オムロン": "FA制御機器・ヘルスケア機器・社会インフラを展開。「血圧計」でも家庭に馴染み深い。「より良い社会をつくる」をパーパスに掲げる。",
+  "島津製作所": "分析計測・医療機器・航空機器の精密機器メーカー。田中耕一氏のノーベル賞で注目を集めた。科学計測のリーディングカンパニー。",
+  "ニコン": "光学技術に強みを持つ精密機器メーカー。カメラ・半導体露光装置（ステッパー）・医療機器を展開。FPD・半導体製造装置でも世界有数。",
+  "リコー": "プリンター・複合機の大手メーカー。オフィスDXソリューションへの転換を推進。デジタルサービスへの事業転換を積極的に進めている。",
+  "大阪ガス都市開発": "大阪ガスグループの不動産・都市開発会社。オフィスビル・商業施設・住宅などを手がける。",
+  "中部電力グループ": "中部地方の電力会社。電力・ガス・通信・不動産など多角展開。JERA（発電事業会社）を東京電力と共同設立。",
+  "出光興産": "石油精製・販売を中核とするエネルギー企業。再生可能エネルギーや全固体電池（トヨタとの共同開発）への参入を積極的に進める。",
+  "JR東海": "東海道新幹線を運営する鉄道会社。輸送量・収益性は国内鉄道最高水準。リニア中央新幹線の開発も進行中。",
+  "インテージ": "国内最大のマーケティング調査会社。消費者パネル調査・商品POSデータ提供で業界トップ。データサイエンス・マーケティングリサーチのリーダー。",
+  "日本経済新聞社": "日本の経済紙最大手。nikkei.comは有料会員数国内有数のデジタルメディアに転換。「日経電子版」でデジタルシフトのモデルケースとなった。",
+  "P&G ジャパン": "世界最大の消費財メーカーP&Gの日本法人。「パンパース」「アリエール」「SK-II」等を展開。マーケティング教育が充実しており、ブランドマネージャー制度が有名。",
+  "トヨタ自動車": "世界最大の自動車メーカー（販売台数ベース）。EV・水素・コネクテッドカーに巨額投資中。「カイゼン」「トヨタ生産方式（TPS）」で世界的に有名。",
+  "本田技研工業（ホンダ）": "二輪・四輪・航空機エンジンを持つ総合輸送機メーカー。「人の可能性を信じる」を掲げ独自のEV戦略を推進。二輪は世界シェアトップ。",
+  "日産自動車": "EVのパイオニア「リーフ」を持つ自動車メーカー。ルノー・三菱自動車とのアライアンスを形成。電動化・自動運転に注力。",
+  "ダイハツ工業": "トヨタ傘下の軽自動車専門メーカー。国内軽自動車シェアトップクラス。新興国向け小型車開発にも強み。",
+  "パナソニックオートモーティブシステムズ": "パナソニックグループの車載電子部品・IVI（車載情報システム）専門会社。コネクテッドカー・自動運転向け製品を開発。",
+  "トヨタ自動車東日本": "東北地方の製造拠点を持つトヨタグループの生産会社。コンパクトカーの開発・製造を担当。",
+  "電通": "国内最大の広告代理店。クリエイティブ・メディア・マーケティングの総合サービスを提供。デジタル・グローバル化を積極推進中。",
+  "博報堂": "国内第2位の広告代理店。「生活者発想」を掲げる独自の哲学が特徴。マーケティング・クリエイティブ・テクノロジーを融合。",
+  "ADK": "国内第3位の広告代理店グループ。テレビ・デジタル・イベントなど幅広いプロモーションを展開。",
+  "読売広告社": "読売新聞グループの広告代理店。総合広告サービスを提供。新聞・デジタルメディアに強み。",
+  "サントリー": "「サントリーウイスキー」「伊右衛門」「BOSS」を展開する飲料・食品メーカー。非上場の独立系大手。Beam Suntory（米国）を傘下に持つグローバル企業。",
+  "日清製粉": "国内最大の製粉メーカー。小麦粉・パスタ・冷凍食品など幅広い食品事業を展開。日清食品（カップヌードル）とは別会社。",
+  "ニッスイ": "水産・食品の大手メーカー（日本水産）。冷凍食品・魚肉加工品・マリンバイオを展開。「ニッスイ」ブランドで家庭食品でも知られる。",
+  "ANA": "国内最大の航空会社（全日本空輸）。国際線・国内線に加えマイレージ・ホテルなど幅広いサービス。スターアライアンス加盟。",
+  "JAL": "国内第2位の航空会社（日本航空）。一度経営破綻後に再上場した。ワンワールドアライアンス加盟。「おもてなし」の接客で高評価。",
+  "旭化成ホームズ": "「ヘーベルハウス」ブランドで戸建住宅を展開。長寿命住宅・耐震性能で高評価。旭化成グループの住宅事業会社。",
+  "三井不動産リアルティ": "三井不動産グループの仲介・不動産サービス会社。「三井のリハウス」で仲介業界トップクラス。",
+  "野村不動産": "野村HDグループの不動産会社。マンション「プラウド」シリーズで首都圏トップクラスのブランド力。",
+  "三菱地所プロパティマネジメント": "三菱地所グループのビル・施設管理会社。大丸有エリアの物件管理が主体。ビル管理のノウハウを持つ。",
+  "三井不動産": "国内最大級のデベロッパー。ビル・商業施設・住宅・物流施設など幅広い不動産事業を展開。三井アウトレットパークも展開。",
+  "KDDI": "NTT・ソフトバンクに続く国内第3の通信キャリア。「au」ブランドで知られ、金融・エネルギー・LX（ライフデザイン）事業にも展開。",
+  "NTT東日本": "東日本の固定電話・光ファイバー（フレッツ光）通信を担うNTTグループ会社。インフラ・ICTサービスを提供。",
+  "NTT西日本": "西日本の固定電話・光ファイバー通信を担うNTTグループ会社。通信インフラとビジネスソリューションを提供。",
+  "小野薬品工業": "がん治療薬「オプジーボ」で知られる中堅製薬会社。本庶佑氏のノーベル賞でも注目された。がん免疫療法のパイオニア。",
+  "ファイザー": "世界最大級の製薬会社。新型コロナワクチンで知名度急上昇。抗生物質・ワクチン・がん治療薬に強みを持つグローバルファーマ。",
+  "Amazon Japan": "世界最大のEC・クラウド（AWS）企業の日本法人。Alexa・Prime VideoなどD2Cサービスも展開。AWSは世界クラウド市場でシェアトップ。",
+  "Google Japan": "世界最大の検索エンジンを持つAlphabet傘下の日本法人。AI・広告・クラウド（GCP）に注力。ChatGPT対抗のGeminiも展開。",
+  "Microsoft Japan": "WindowsからAzure・Microsoft 365・OpenAI提携でシェア拡大中の日本法人。AI（Copilot）統合で企業向けソリューションを刷新中。",
+  "Salesforce Japan": "CRM・SaaSのリーディングカンパニー。Slackを買収し企業向けコラボレーション分野にも展開。AI（Einstein）統合でも先行。",
+  "IBM Japan": "クラウド・AI（Watson）・コンサルに経営資源を集中するITサービスの老舗大手。量子コンピュータ研究でも世界をリード。",
+  "SAP Japan": "企業向けERPソフトウェアの世界最大手ドイツ・SAPの日本法人。S/4HANAへのクラウド移行を推進中。",
+  "Oracle Japan": "データベース・クラウドインフラ（OCI）の世界大手日本法人。Java・MySQL・NetSuiteも展開。エンタープライズITの基盤を担う。",
+  "Cisco Systems Japan": "ネットワーク機器・セキュリティのグローバルリーダー日本法人。ルーター・スイッチで世界シェアトップ。AI時代のネットワークインフラを担う。",
+  "野村証券": "国内最大の証券会社。投資銀行・リテール・アセットマネジメントを展開。国内債券・株式の引受でトップシェア。",
+  "大和証券グループ": "国内第2位の証券会社。リテール・法人・国際業務を幅広く展開。「ダイワ」ブランドで個人向け資産運用も強い。",
+  "SMBC日興証券": "三井住友フィナンシャルグループ傘下の証券会社。SMBCグループのネットワークを活かした総合金融サービスを提供。",
+  "みずほ証券": "みずほフィナンシャルグループの証券会社。国内外の機関投資家向けサービスと個人向けリテールを展開。",
+  "JPX（日本取引所グループ）": "東京証券取引所・大阪取引所を運営する市場インフラ企業。日本の金融市場の基盤を担う公共性の高い企業。",
+  "三菱UFJモルガン・スタンレー証券": "三菱UFJ銀行とモルガン・スタンレーの合弁証券会社。国内最大規模の証券会社の一つ。",
+  "東海東京フィナンシャルHD": "中部・名古屋を本拠とする独立系中堅証券グループ。地域密着の営業で安定した顧客基盤を持つ。",
+  "東京海上日動火災保険": "国内最大の損害保険会社。東京海上ホールディングスの中核。自動車・火災・海上保険から企業向けリスク対応まで幅広い。",
+  "三井住友海上火災保険": "MS&ADグループの損害保険会社。企業向けリスクソリューションと個人向け保険を展開。",
+  "損保ジャパン": "SOMPOホールディングスの損害保険会社。介護・ヘルスケア事業にも展開し、「保険×テクノロジー」のInsurTechに積極的。",
+  "あいおいニッセイ同和損保": "MS&ADグループの損害保険会社。トヨタグループとの連携が深く、テレマティクス保険でも先進的。",
+  "日本生命保険": "国内最大の生命保険会社（相互会社）。資産運用規模も国内トップクラス。「ニッセイ」ブランドで全国に広大なネットワーク。",
+  "明治安田生命保険": "国内第3位の生命保険会社（相互会社）。健康経営・ウェルネスに積極的で、スポーツ支援にも力を入れる。",
+  "住友生命保険": "相互会社形態の大手生命保険会社。「Vitality」ヘルスケアサービスで先進的な健康増進型保険を展開。",
+  "かんぽ生命保険": "郵便局ネットワークを活用する生命保険会社。日本郵政グループの一員で全国2万局の販売網を持つ。",
+  "Cygames": "「グランブルーファンタジー」「ウマ娘」などで知られる急成長ゲーム会社。コンシューマゲームにも参入し技術力の高さで有名。",
+  "バンダイナムコエンターテインメント": "「パックマン」「鉄拳」「ドラゴンボール」「ガンダム」などの大型IPを保有するゲーム会社。バンダイとナムコが合併して誕生。",
+  "コナミグループ": "「遊☆戯☆王」「プロ野球スピリッツ」「メタルギア」などのIPを持つゲーム・スポーツジム（コナミスポーツ）運営会社。",
+  "カプコン": "「モンスターハンター」「バイオハザード」「ストリートファイター」など世界的IPを持つゲーム会社。スマートフォンよりもコンシューマに強み。",
+  "スクウェア・エニックス": "「ファイナルファンタジー」「ドラゴンクエスト」「キングダムハーツ」などのRPGで世界的に有名なゲーム会社。",
+  "MIXI": "「モンスターストライク」から多角化したゲーム・メタバース企業。FC東京の株主でスポーツ事業にも展開する。",
+  "グリー": "「釣り★スタ」から多角化したゲーム・メタバース企業。モバイルゲームの草分け的存在。",
+  "ガンホー・オンライン": "「パズル&ドラゴンズ」で爆発的成長を遂げたゲーム会社。パズドラは累計6000万DL超の国民的スマホゲーム。",
+  "コーエーテクモHD": "「信長の野望」「三國志」「Dead or Alive」「仁王」などを持つゲーム・エンタメ会社。歴史シミュレーションの最大手。",
+  "セガ": "「ソニック」「龍が如く」「ペルソナ」「チェインクロニクル」などの人気IPを持つゲーム・アミューズメント会社。",
+  "任天堂": "「マリオ」「ゼルダ」「ポケモン」「どうぶつの森」など世界的IPを持つゲームメーカー。Switch・DS・Wiiなど独創的なハードを開発し、ゲーム業界を牽引。",
+  "ファーストリテイリング（ユニクロ）": "「ユニクロ」「GU」「セオリー」を展開するグローバルアパレル企業。機能性衣料と手頃な価格で世界市場を席巻。ファストリとして東証プライム上場。",
+  "良品計画（無印良品）": "「無印良品」ブランドで衣料・食品・生活雑貨を展開。シンプルデザインと高品質が特徴。海外展開も積極的に進めている。",
+  "伊勢丹三越HD": "国内最大の百貨店グループ。伊勢丹・三越・丸井今井などを運営。OMO戦略でデジタルとリアルを融合中。",
+  "高島屋": "老舗百貨店。国内外に店舗を展開し高品質商品と接客サービスに定評。日本橋・新宿・大阪・横浜などに主要店舗。",
+  "イオングループ": "国内最大の流通グループ。スーパー・コンビニ・ドラッグストア・モールを全国展開。電子マネー「WAON」も展開。",
+  "セブン&アイ・HD": "セブン-イレブン・イトーヨーカドー・そごう西武などを擁する国内最大規模のコンビニグループ。7Payの失敗も経験しながらDXを推進。",
+  "J.フロントリテイリング": "大丸・松坂屋の百貨店を運営する持株会社。PARCO事業も展開し、都市型商業施設のDXを積極的に進める。",
+  "オンワードホールディングス": "「23区」「組曲」「自由区」「ICB」などのアパレルブランドを展開する大手ファッション企業。",
+  "三菱ケミカルグループ": "国内最大の化学メーカー。機能材料・産業ガス・健康・医療を展開。三菱レイヨン・三菱化学・三菱樹脂が合併して誕生。",
+  "住友化学": "農薬・医薬（大日本住友製薬）・電子材料・合成樹脂などを手がける総合化学メーカー。住友グループの中核企業の一つ。",
+  "旭化成": "住宅・繊維・化学・医薬・電子材料など多角的に展開する総合化学メーカー。「旭化成は（略）」のCMで有名。",
+  "東レ": "炭素繊維（トレカ）で世界シェアトップ。合成繊維・プラスチック・フィルム・水処理など先端素材に強みを持つ。航空機用炭素繊維でボーイングとも取引。",
+  "信越化学工業": "シリコン・半導体シリコンウェーハ・塩化ビニール樹脂などで世界トップシェアを持つ化学メーカー。高収益で知られる優良企業。",
+  "富士フイルムHD": "フィルムから医療機器・バイオ医薬品・オフィス機器へと変革した多角化企業。DXと医療イノベーションを牽引。",
+  "三井化学": "素材・包装材料・ヘルスケアに強みを持つ総合化学メーカー。三井グループの中核化学企業。",
+  "AGC（旭硝子）": "ガラス・化学品・セラミックスで世界トップクラスの素材メーカー。建築・自動車・電子デバイス向けに幅広く展開。",
+  "帝人": "炭素繊維・アラミド繊維・ポリエステルなど先端素材に強みを持つ化学メーカー。医療事業にも展開し「素材・医療」の二本柱。",
+  "鹿島建設": "スーパーゼネコン5社の一つ。土木・建築・エンジニアリングを展開。技術力と安全性に定評があり、大型インフラ案件に強い。",
+  "大成建設": "スーパーゼネコン。建設ロボット「T-iROBO」などスマート建設技術に注力。「人がいきいきとできる環境・社会」づくりを掲げる。",
+  "大林組": "スーパーゼネコン。超高層建築・地下工事・海外展開に強み。環境配慮型建設にも積極的。",
+  "清水建設": "スーパーゼネコン。「超・建設業」を目指してDX・スマート建設を推進。歴史的建造物の修復にも実績がある。",
+  "竹中工務店": "スーパーゼネコンの一つ。設計・施工一貫体制が特徴。商業施設・オフィスビルが得意。非上場の独立系ゼネコン。",
+  "戸田建設": "中堅ゼネコン。マンション・病院・学校など民間建築に強み。環境に配慮したZEB（ゼロエネルギービル）建築にも注力。",
+  "長谷工コーポレーション": "マンション専業ゼネコン。分譲マンション施工数で国内トップクラス。マンション供給の大手デベロッパーとも密接に取引。",
+  "JR東日本": "首都圏を中心とした国内最大の鉄道会社。Suica・駅ナカ・不動産・ホテルなど非鉄事業にも注力するサービス企業へと進化。",
+  "JR西日本": "近畿・中国・北陸地方の鉄道会社。観光特急「TWILIGHT EXPRESS 瑞風」・都市再開発にも積極的。安全・DX・地域活性化に注力。",
+  "JR九州": "九州の鉄道会社。D&S列車（観光列車）や不動産・農業・外食など多角化が進む。豪華クルーズトレイン「ななつ星」でも有名。",
+  "東急グループ": "東京・神奈川の鉄道・バス・不動産・ホテル・旅行を展開する総合生活インフラグループ。渋谷開発を牽引。",
+  "小田急電鉄": "新宿〜小田原・箱根を結ぶ鉄道と沿線開発・不動産を展開。「ロマンスカー」で観光・通勤双方に人気。",
+  "近鉄グループHD": "近畿を中心とした大手私鉄グループ。ホテル（近鉄ホテルズ）・観光・百貨店・不動産も展開。",
+  "ヤマトホールディングス": "「クロネコヤマト」で知られる国内宅配最大手。EC拡大で業務量が急増、物流DXと効率化に積極投資。",
+  "SGホールディングス（佐川急便）": "宅配・BtoB物流・3PLに強みを持つ物流グループ。「飛脚」ブランドの佐川急便を中核に多角的に物流サービスを展開。",
+  "日本郵政グループ": "全国約2万局の郵便局ネットワークを持つ郵便・金融（ゆうちょ銀行）・保険（かんぽ生命）の複合企業グループ。",
+  "リクルートHD": "人材・住宅・旅行・飲食など多角的マッチングプラットフォームを運営。INDEEDを傘下に持つ世界的HR企業。年間売上3兆円超。",
+  "パーソルHD": "「テンプスタッフ」で知られる大手人材派遣・HRサービスグループ。転職サービス「DODA」も運営し総合HR企業へと展開。",
+  "エン・ジャパン": "転職サイト「en転職」などHRサービスを提供する中堅人材企業。海外展開も進める。",
+  "マイナビ": "就活サービス「マイナビ」「マイナビ転職」を運営する大手人材情報企業。新卒採用支援では業界トップシェア。",
+  "ビジョナル（ビズリーチ）": "即戦力採用「ビズリーチ」・M&A支援「バトンズ」を中核とするHRTechグループ。Visionalとして東証グロース上場。",
+  "NHK": "日本唯一の公共放送。ニュース・教育・文化コンテンツを提供。「NHKスペシャル」「大河ドラマ」など質の高いコンテンツを制作。国際放送NHKワールドも展開。",
+  "日本テレビ": "民放キー局。読売新聞グループ傘下。「ドラえもん」「名探偵コナン」のアニメ放映でも有名。スポーツ中継・バラエティに強い。",
+  "TBSホールディングス": "民放キー局。ドラマ制作・動画配信事業への転換にも注力するメディア企業。「半沢直樹」などヒットドラマを多数制作。",
+  "テレビ東京": "独自の経済（WBS）・アニメ・旅番組が特徴の民放キー局。テレ東らしさ（テレ東砲）で独自路線を歩む。",
+  "フジテレビジョン": "コメディ・バラエティが特徴の民放キー局。フジ・メディア・ホールディングス傘下。動画配信「FOD」も展開。",
+  "集英社": "「週刊少年ジャンプ」「マーガレット」「non-no」など多数の漫画・ファッション誌を持つ大手出版社。「ONE PIECE」「NARUTO」等の世界的IPを保有。",
+  "講談社": "「週刊少年マガジン」「モーニング」「アフタヌーン」など漫画・文芸・コミックに強い大手出版社。「進撃の巨人」「FAIRY TAIL」などのIPを持つ。",
+  "TOPPANホールディングス": "印刷業から情報・セキュリティ・マーケティング・VRへと変革した総合情報企業。凸版印刷が社名変更。",
+  "大日本印刷（DNP）": "印刷業から情報・医療・エレクトロニクスへ多角化した企業グループ。有機EL材料・スマートセキュリティにも展開。",
+  "デンソー": "トヨタグループの大手自動車部品メーカー。ADAS・電動化・熱管理で世界トップクラス。売上5兆円超のグローバル企業。",
+  "アイシン": "トヨタグループのトランスミッション・ブレーキなどシャシー系部品の大手。電動化・自動化部品にも転換中。",
+  "豊田自動織機": "トヨタグループのフォークリフト（世界シェアトップ）・カーエアコン・テキスタイル機械メーカー。トヨタ自動車の親会社でもある。",
+  "ジェイテクト": "ステアリング・軸受（ベアリング）のメーカー。トヨタグループ系で光洋精工と豊田工機が合併して誕生。",
+  "スズキ": "軽自動車・小型車に強みを持つ自動車メーカー。インド市場でシェアトップ（マルチ・スズキ）。コンパクトカーの世界的メーカー。",
+  "SUBARU": "全輪駆動（AWD）技術とボクサーエンジンが特徴の自動車メーカー。航空機部品製造（防衛省向け）も行う。",
+  "東京電力HD": "東日本の電力を担う大手電力会社。福島第一原発事故後の廃炉・リサイクル・再生可能エネルギーに取り組む。送配電・小売・発電（JERA）を分離する体制に移行。",
+  "関西電力": "関西地方の電力会社。電力・ガス・通信・不動産など多角展開。原子力比率が高く、電力コスト競争力を持つ。",
+  "東京ガス": "国内最大の都市ガス会社。電力・エネルギーソリューション・不動産にも事業領域を拡大。水素・LNG事業にも注力。",
+  "電源開発（J-POWER）": "電力発電専門会社。水力・火力・風力・地熱など多様な電源を保有。海外電力事業にも展開する。",
+  "東北電力": "東北地方の電力会社。再生可能エネルギーへの転換を進め、風力・地熱・水力など東北の豊富な自然エネルギーを活用。",
+  "九州電力": "九州地方の電力会社。再生可能エネルギー比率が高く、国内有数のグリーン電力会社。太陽光・風力・地熱が豊富。",
+  "武田薬品工業": "国内最大の製薬会社（売上約4兆円）。消化器・神経・希少疾患・血漿分画製剤が主力。アイルランドのシャイアー買収でグローバルトップ10入り。",
+  "アステラス製薬": "泌尿器・眼科・がん・移植領域に強みを持つ大手製薬会社。「Focus Area」戦略で特定疾患に集中投資。",
+  "第一三共": "抗がん剤「エンハーツ」でアストラゼネカとの共同開発により世界的な注目を集める製薬会社。循環器・感染症も主力領域。",
+  "中外製薬": "スイス・ロシュグループの一員。バイオ医薬品・がん治療薬に強み。「ヘムライブラ」「アレセンサ」などの革新的新薬を輩出。",
+  "エーザイ": "アルツハイマー治療薬「レカネマブ」でFDA承認を取得した製薬会社。神経・消化器・がん領域が主力。",
+  "大塚製薬": "「オロナミンC」「ポカリスエット」「カロリーメイト」でも有名な製薬会社。精神・神経疾患の薬に強み。",
+  "塩野義製薬": "感染症・疼痛・精神神経の3領域に注力する中堅製薬会社。国産の新型コロナ経口治療薬「ゾコーバ」を開発・承認取得。",
+  "テルモ": "輸液・注射器・医療機器メーカー。カテーテル治療用デバイスで世界トップクラス。低侵襲治療分野のグローバルリーダー。",
+};
+
+// ── COMPANY SALARY ───────────────────────────────────────────────────────────
+// entry: 初任給（月額）, avg30s: 30代平均年収, note: 補足
+const COMPANY_SALARY = {
+  "サイボウズ":           {entry:"約26万円", avg30s:"約600万円"},
+  "リクルート":           {entry:"約30万円", avg30s:"約900万円", note:"職種・評価により大きく変動"},
+  "DeNA":                {entry:"約28万円", avg30s:"約800万円"},
+  "ソフトバンク":         {entry:"約24万円", avg30s:"約720万円"},
+  "富士通":              {entry:"約25万円", avg30s:"約730万円"},
+  "日立システムズ":       {entry:"約22万円", avg30s:"約630万円"},
+  "サイバーエージェント": {entry:"約28万円", avg30s:"約700万円"},
+  "Visional":            {entry:"約28万円", avg30s:"約780万円"},
+  "メルカリ":            {entry:"約29万円", avg30s:"約900万円"},
+  "ラクスル":            {entry:"約28万円", avg30s:"約700万円"},
+  "フューチャー":        {entry:"約25万円", avg30s:"約800万円"},
+  "楽天":               {entry:"約25万円", avg30s:"約720万円"},
+  "freee":              {entry:"約30万円", avg30s:"約700万円"},
+  "マネーフォワード":    {entry:"約30万円", avg30s:"約700万円"},
+  "Sansan":             {entry:"約28万円", avg30s:"約700万円"},
+  "SmartHR":            {entry:"約35万円", avg30s:"約830万円"},
+  "LayerX":             {entry:"約35万円", avg30s:"約900万円"},
+  "BASE":               {entry:"約28万円", avg30s:"約600万円"},
+  "HENNGE":             {entry:"約27万円", avg30s:"約650万円"},
+  "ヌーラボ":            {entry:"約24万円", avg30s:"約560万円"},
+  "PKSHA Technology":   {entry:"約30万円", avg30s:"約820万円"},
+  "ギフティ":            {entry:"約27万円", avg30s:"約620万円"},
+  "ログラス":            {entry:"約35万円", avg30s:"約850万円"},
+  "チームラボ":          {entry:"約26万円", avg30s:"約650万円"},
+  "DMM":                {entry:"約28万円", avg30s:"約650万円"},
+  "キーエンス":          {entry:"約28万円", avg30s:"約1,800万円", note:"賞与が給与の3〜4倍。月給は他社並みだが年収は国内最高水準"},
+
+  "マッキンゼー":               {entry:"約75万円", avg30s:"約2,000万円", note:"新卒アナリスト採用。昇進で大幅増。"},
+  "BCG":                       {entry:"約75万円", avg30s:"約2,000万円", note:"新卒アソシエイト採用（MBA取得者は別水準）"},
+  "ベイン・アンド・カンパニー": {entry:"約65万円", avg30s:"約1,800万円"},
+  "アクセンチュア":             {entry:"約28万円", avg30s:"約800万円"},
+  "デロイト トーマツ":          {entry:"約27万円", avg30s:"約800万円"},
+  "PwCコンサルティング":        {entry:"約27万円", avg30s:"約800万円"},
+  "PwCアドバイザリー":          {entry:"約27万円", avg30s:"約850万円"},
+  "Strategy&（PwC）":          {entry:"約50万円", avg30s:"約1,500万円"},
+  "日本総合研究所":             {entry:"約24万円", avg30s:"約750万円"},
+  "Roland Berger":             {entry:"約30万円", avg30s:"約1,000万円"},
+  "ADL（アーサー・ディ・リトル）":{entry:"約30万円", avg30s:"約1,000万円"},
+  "ドリームインキュベータ":     {entry:"約35万円", avg30s:"約1,000万円"},
+  "経営共創基盤（IGPI）":       {entry:"約35万円", avg30s:"約1,000万円"},
+  "シグマクシス":               {entry:"約28万円", avg30s:"約850万円"},
+  "船井総合研究所":             {entry:"約25万円", avg30s:"約600万円"},
+  "EYストラテジー・アンド・コンサルティング":{entry:"約27万円", avg30s:"約800万円"},
+  "KPMG FAS":                  {entry:"約27万円", avg30s:"約850万円"},
+  "博報堂コンサルティング":     {entry:"約27万円", avg30s:"約800万円"},
+
+  "ゴールドマン・サックス":     {entry:"約35万円", avg30s:"約2,000万円+", note:"ベース＋ボーナス。役職・部門により総報酬は大幅に変動"},
+  "モルガン・スタンレー":       {entry:"約30万円", avg30s:"約1,500万円", note:"ボーナス比率が高く総報酬は役職で大きく変動"},
+  "J.P.モルガン":              {entry:"約30万円", avg30s:"約1,500万円"},
+  "UBSグループ":               {entry:"約30万円", avg30s:"約1,200万円"},
+  "ブラックロック":             {entry:"約30万円", avg30s:"約1,400万円"},
+  "バンク・オブ・アメリカ":     {entry:"約30万円", avg30s:"約1,000万円"},
+
+  "三菱UFJ銀行":    {entry:"約25万円", avg30s:"約750万円"},
+  "みずほ銀行":     {entry:"約24万円", avg30s:"約730万円"},
+  "三井住友銀行":   {entry:"約25万円", avg30s:"約760万円"},
+  "NRI":           {entry:"約24万円", avg30s:"約900万円"},
+  "第一生命":       {entry:"約24万円", avg30s:"約700万円"},
+  "野村証券":       {entry:"約26万円", avg30s:"約850万円", note:"営業成績により変動大"},
+  "大和証券グループ":{entry:"約25万円", avg30s:"約750万円"},
+  "JPX（日本取引所グループ）":{entry:"約23万円", avg30s:"約900万円"},
+  "東京海上日動火災保険":{entry:"約24万円", avg30s:"約800万円"},
+  "損保ジャパン":   {entry:"約23万円", avg30s:"約750万円"},
+  "日本生命保険":   {entry:"約22万円", avg30s:"約700万円"},
+  "農林中央金庫":   {entry:"約25万円", avg30s:"約900万円"},
+
+  "三菱商事":   {entry:"約27万円", avg30s:"約1,400万円"},
+  "三井物産":   {entry:"約27万円", avg30s:"約1,350万円"},
+  "住友商事":   {entry:"約27万円", avg30s:"約1,200万円"},
+  "伊藤忠商事": {entry:"約27万円", avg30s:"約1,200万円"},
+  "丸紅":      {entry:"約27万円", avg30s:"約1,100万円"},
+
+  "キーエンス":          {entry:"約28万円", avg30s:"約1,800万円", note:"賞与が給与の3〜4倍。月給は他社並みだが年収は国内最高水準"},
+  "ソニー（本体）":      {entry:"約25万円", avg30s:"約900万円"},
+  "信越化学工業":        {entry:"約26万円", avg30s:"約1,200万円"},
+  "富士フイルムHD":      {entry:"約24万円", avg30s:"約760万円"},
+  "村田製作所":          {entry:"約24万円", avg30s:"約730万円"},
+  "ルネサスエレクトロニクス":{entry:"約25万円", avg30s:"約810万円"},
+  "TDK":                {entry:"約23万円", avg30s:"約680万円"},
+  "島津製作所":          {entry:"約23万円", avg30s:"約670万円"},
+  "オムロン":            {entry:"約23万円", avg30s:"約700万円"},
+  "京セラ":              {entry:"約23万円", avg30s:"約660万円"},
+  "リコー":              {entry:"約23万円", avg30s:"約650万円"},
+  "旭化成":              {entry:"約25万円", avg30s:"約750万円"},
+  "東レ":               {entry:"約24万円", avg30s:"約710万円"},
+  "三菱ケミカルグループ":{entry:"約24万円", avg30s:"約700万円"},
+
+  "トヨタ自動車":   {entry:"約22万円", avg30s:"約820万円", note:"賞与が大きく年収は相当高水準"},
+  "本田技研工業（ホンダ）":{entry:"約23万円", avg30s:"約760万円"},
+  "日産自動車":    {entry:"約23万円", avg30s:"約660万円"},
+  "デンソー":      {entry:"約23万円", avg30s:"約710万円"},
+  "SUBARU":        {entry:"約22万円", avg30s:"約680万円"},
+  "スズキ":        {entry:"約21万円", avg30s:"約620万円"},
+
+  "電通":          {entry:"約28万円", avg30s:"約1,000万円"},
+  "博報堂":        {entry:"約28万円", avg30s:"約900万円"},
+
+  "サントリー":    {entry:"約25万円", avg30s:"約760万円"},
+
+  "ANA":           {entry:"約22万円", avg30s:"約700万円"},
+  "JAL":           {entry:"約22万円", avg30s:"約660万円"},
+
+  "三井不動産":           {entry:"約27万円", avg30s:"約1,000万円"},
+  "三菱地所プロパティマネジメント":{entry:"約24万円", avg30s:"約680万円"},
+  "野村不動産":           {entry:"約26万円", avg30s:"約850万円"},
+
+  "KDDI":          {entry:"約24万円", avg30s:"約830万円"},
+
+  "武田薬品工業":   {entry:"約26万円", avg30s:"約910万円"},
+  "アステラス製薬": {entry:"約25万円", avg30s:"約870万円"},
+  "第一三共":       {entry:"約25万円", avg30s:"約870万円"},
+  "中外製薬":       {entry:"約25万円", avg30s:"約890万円"},
+  "エーザイ":       {entry:"約24万円", avg30s:"約820万円"},
+  "小野薬品工業":   {entry:"約24万円", avg30s:"約830万円"},
+  "テルモ":        {entry:"約24万円", avg30s:"約760万円"},
+
+  "Amazon Japan":  {entry:"約35万円", avg30s:"約1,000万円+", note:"RSU（株式報酬）が大きく総報酬はさらに高い"},
+  "Google Japan":  {entry:"約40万円+", avg30s:"約1,500万円+", note:"株式報酬込み。ロールにより大きく異なる"},
+  "Microsoft Japan":{entry:"約32万円", avg30s:"約1,000万円+"},
+  "Salesforce Japan":{entry:"約32万円", avg30s:"約950万円"},
+  "IBM Japan":     {entry:"約28万円", avg30s:"約720万円"},
+
+  "任天堂":        {entry:"約24万円", avg30s:"約870万円"},
+  "Cygames":       {entry:"約30万円", avg30s:"約800万円"},
+  "バンダイナムコエンターテインメント":{entry:"約24万円", avg30s:"約640万円"},
+  "カプコン":      {entry:"約23万円", avg30s:"約620万円"},
+  "スクウェア・エニックス":{entry:"約24万円", avg30s:"約640万円"},
+  "セガ":          {entry:"約24万円", avg30s:"約650万円"},
+
+  "ファーストリテイリング（ユニクロ）":{entry:"約25万円", avg30s:"約800万円", note:"グローバル人材コースは別水準"},
+  "良品計画（無印良品）":{entry:"約23万円", avg30s:"約640万円"},
+
+  "NHK":           {entry:"約24万円", avg30s:"約900万円"},
+  "電源開発（J-POWER）":{entry:"約23万円", avg30s:"約780万円"},
+
+  "鹿島建設":      {entry:"約24万円", avg30s:"約870万円"},
+  "大成建設":      {entry:"約24万円", avg30s:"約840万円"},
+  "清水建設":      {entry:"約24万円", avg30s:"約830万円"},
+  "大林組":        {entry:"約24万円", avg30s:"約810万円"},
+
+  "JR東日本":      {entry:"約22万円", avg30s:"約700万円"},
+  "JR東海":        {entry:"約23万円", avg30s:"約750万円"},
+  "ヤマトホールディングス":{entry:"約21万円", avg30s:"約550万円"},
+
+  "出光興産":      {entry:"約24万円", avg30s:"約850万円"},
+  "東京電力HD":    {entry:"約22万円", avg30s:"約720万円"},
+  "関西電力":      {entry:"約23万円", avg30s:"約760万円"},
+  "東京ガス":      {entry:"約23万円", avg30s:"約750万円"},
+
+  "リクルートHD":  {entry:"約30万円", avg30s:"約900万円"},
+  "パーソルHD":    {entry:"約22万円", avg30s:"約550万円"},
+  "マイナビ":      {entry:"約23万円", avg30s:"約620万円"},
+  "ビジョナル（ビズリーチ）":{entry:"約28万円", avg30s:"約780万円"},
+};
+
+// ── COMPANY INFO ─────────────────────────────────────────────────────────────
+// ceo/founded/employees/hq/revenue/op_profit/market_cap/listing/philosophy
+const COMPANY_INFO = {
+  "サイボウズ":           {ceo:"青野慶久",       founded:"1997年", employees:"約1,100名",          hq:"東京都中央区",    revenue:"約225億円",   op_profit:"約16億円",   market_cap:"約1,700億円",  listing:"東証プライム",      philosophy:"チームワークあふれる社会を創る"},
+  "リクルート":           {ceo:"出木場久征",      founded:"1960年", employees:"約57,000名（連結）",   hq:"東京都千代田区",  revenue:"約3.7兆円",   op_profit:"約4,200億円", market_cap:"約14兆円",    listing:"東証プライム",      philosophy:"Follow Your Heart"},
+  "DeNA":               {ceo:"岡村信悟",        founded:"1999年", employees:"約2,600名",           hq:"東京都渋谷区",    revenue:"約1,400億円", op_profit:"約30億円",   market_cap:"約1,500億円",  listing:"東証プライム",      philosophy:"一人一人に寄り添う力で、世界を唸らせる"},
+  "ソフトバンク":         {ceo:"宮川潤一",        founded:"1986年", employees:"約52,000名",          hq:"東京都港区",      revenue:"約6兆円",     op_profit:"約8,000億円", market_cap:"約7兆円",     listing:"東証プライム",      philosophy:"情報革命で人々を幸せに"},
+  "富士通":             {ceo:"時田隆仁",        founded:"1935年", employees:"約130,000名（連結）",  hq:"東京都港区",      revenue:"約3.7兆円",   op_profit:"約2,800億円", market_cap:"約5兆円",     listing:"東証プライム",      philosophy:"Fujitsuウェイ：Innovation・Trust・Contribution to Society"},
+  "日立システムズ":       {ceo:"柴原節男",        founded:"2010年", employees:"約8,700名",           hq:"東京都品川区",    revenue:"約3,000億円", op_profit:"非公開",     listing:"非上場（日立製作所子会社）", philosophy:"社会イノベーション事業を推進する"},
+  "サイバーエージェント": {ceo:"藤田晋",          founded:"1998年", employees:"約9,000名",           hq:"東京都渋谷区",    revenue:"約7,800億円", op_profit:"約500億円",  market_cap:"約4,000億円",  listing:"東証プライム",      philosophy:"21世紀を代表する会社を創る"},
+  "Visional":           {ceo:"南壮一郎",        founded:"2020年", employees:"約1,400名",           hq:"東京都渋谷区",    revenue:"約940億円",   op_profit:"約130億円",  market_cap:"約2,300億円",  listing:"東証グロース",      philosophy:"新しい可能性を、次々と。"},
+  "メルカリ":            {ceo:"山田進太郎",       founded:"2013年", employees:"約2,700名",           hq:"東京都港区",      revenue:"約2,100億円", op_profit:"（投資期）", market_cap:"約4,000億円",  listing:"東証プライム",      philosophy:"あらゆる価値を循環させ、あらゆる人の可能性を広げる"},
+  "ラクスル":            {ceo:"松本恭攝",        founded:"2009年", employees:"約700名",             hq:"東京都品川区",    revenue:"約340億円",   op_profit:"約20億円",   market_cap:"約1,000億円",  listing:"東証プライム",      philosophy:"仕組みを変えれば、世界はもっと良くなる"},
+  "フューチャー":         {ceo:"金丸恭文",        founded:"1989年", employees:"約6,800名（グループ）", hq:"東京都品川区",    revenue:"約670億円",   op_profit:"約77億円",   market_cap:"約1,200億円",  listing:"東証プライム",      philosophy:"未来の産業を創造する"},
+  "楽天":               {ceo:"三木谷浩史",       founded:"1997年", employees:"約29,000名",          hq:"東京都世田谷区",  revenue:"約2兆円",     op_profit:"（モバイル投資で赤字）", market_cap:"約1.5兆円", listing:"東証プライム", philosophy:"イノベーションを通じて、人々と社会をエンパワーメントする"},
+  "チームラボ":          {ceo:"猪子寿之",        founded:"2001年", employees:"約1,000名",           hq:"東京都文京区",    revenue:"非公開",      listing:"非上場",       philosophy:"世界を非連続に面白くする"},
+  "DMM":               {ceo:"片桐孝憲",        founded:"1999年", employees:"約2,500名",           hq:"東京都港区",      revenue:"非公開",      listing:"非上場",       philosophy:"圧倒的な事業の多角化と挑戦で、ビジネスの可能性を広げる"},
+  "PKSHA Technology":  {ceo:"上野山勝也",       founded:"2012年", employees:"約600名",             hq:"東京都文京区",    revenue:"約200億円",   op_profit:"約30億円",   market_cap:"約1,000億円",  listing:"東証プライム",      philosophy:"Algorithms that lead the future"},
+  "ギフティ":            {ceo:"太田睦",          founded:"2010年", employees:"約330名",             hq:"東京都豊島区",    revenue:"約130億円",   op_profit:"約12億円",   market_cap:"約450億円",   listing:"東証グロース",      philosophy:"優しい気持ちをつなぐ"},
+  "ログラス":            {ceo:"布川友也",        founded:"2019年", employees:"約250名",             hq:"東京都千代田区",  revenue:"非公開",      listing:"非上場",       philosophy:"良い景気を作ろう"},
+  "freee":             {ceo:"佐々木大輔",       founded:"2012年", employees:"約2,100名",           hq:"東京都品川区",    revenue:"約325億円",   op_profit:"（成長投資期）", market_cap:"約2,000億円", listing:"東証グロース",   philosophy:"スモールビジネスを、世界の主役に。"},
+  "マネーフォワード":     {ceo:"辻庸介",          founded:"2012年", employees:"約2,600名",           hq:"東京都港区",      revenue:"約440億円",   op_profit:"（成長投資期）", market_cap:"約3,000億円", listing:"東証プライム",  philosophy:"すべての人の、「お金のプラットフォーム」になる"},
+  "Sansan":            {ceo:"寺田親弘",        founded:"2007年", employees:"約1,400名",           hq:"東京都渋谷区",    revenue:"約310億円",   op_profit:"約40億円",   market_cap:"約2,000億円",  listing:"東証プライム",      philosophy:"出会いからイノベーションを生み出す"},
+  "SmartHR":           {ceo:"芹澤雅人",        founded:"2013年", employees:"約1,200名",           hq:"東京都港区",      revenue:"非公開（推定400億円+）", listing:"非上場（ユニコーン）", philosophy:"Well-working 労働にまつわる社会課題をなくし、誰もが働きやすい社会をつくる"},
+  "LayerX":            {ceo:"福島良典",        founded:"2018年", employees:"約500名",             hq:"東京都中央区",    revenue:"非公開",      listing:"非上場",       philosophy:"すべての経済活動を、デジタル化する"},
+
+  "マッキンゼー":               {ceo:"Bob Sternfels（グローバル）",      founded:"1926年（日本法人：1971年）", employees:"約45,000名（グローバル）", hq:"東京都千代田区（日本）", revenue:"非公開",       listing:"非上場（パートナーシップ）", philosophy:"Leadership in lasting positive change"},
+  "BCG":                       {ceo:"Christoph Schweizer（グローバル）", founded:"1963年（日本法人：1966年）", employees:"約35,000名（グローバル）", hq:"東京都千代田区（日本）", revenue:"非公開",       listing:"非上場",       philosophy:"Unlocking the potential of those who advance the world"},
+  "ベイン・アンド・カンパニー": {ceo:"Manny Maceda（グローバル）",       founded:"1973年（日本法人：1981年）", employees:"約13,000名（グローバル）", hq:"東京都港区（日本）",   revenue:"非公開",       listing:"非上場",       philosophy:"True Results"},
+  "アクセンチュア":             {ceo:"Julie Sweet（グローバルCEO）",     founded:"1989年",  employees:"約750,000名（グローバル）",  hq:"東京都港区（日本）",   revenue:"約65,000億円（グローバル）", op_profit:"約9,000億円", market_cap:"約23兆円（NYSE）", listing:"NYSE（米国上場）", philosophy:"Technology and human ingenuity to create a better future"},
+  "デロイト トーマツ":          {ceo:"國井泰成（日本CEO）",              founded:"1968年（日本法人）",          employees:"約15,000名（日本）",        hq:"東京都千代田区",       revenue:"約2,500億円（日本推定）", listing:"非上場（パートナーシップ）", philosophy:"Make an impact that matters"},
+  "PwCコンサルティング":        {ceo:"大竹伸明（日本）",                 founded:"1984年（日本法人）",          employees:"約10,000名（日本）",        hq:"東京都千代田区",       revenue:"非公開",       listing:"非上場",       philosophy:"社会における信頼を構築し、重要な問題を解決する"},
+  "日本総合研究所":             {ceo:"谷崎勝教",                        founded:"1969年",  employees:"約5,500名",                hq:"東京都品川区",         revenue:"約2,500億円",  op_profit:"約230億円",  listing:"非上場（SMBCグループ）", philosophy:"創発・協奏・先見"},
+  "Strategy&（PwC）":          {ceo:"（PwCグループ傘下）",              founded:"1914年（旧ブーズ）",          employees:"約4,000名（グローバル）",   hq:"東京都千代田区（日本）", revenue:"非公開",      listing:"非上場",       philosophy:"Essential Advantage"},
+  "Roland Berger":             {ceo:"Stefan Schaible（グローバル）",    founded:"1967年（日本法人：1991年）", employees:"約3,500名（グローバル）",  hq:"東京都千代田区（日本）", revenue:"非公開",       listing:"非上場",       philosophy:"Think:Act"},
+
+  "ゴールドマン・サックス":     {ceo:"David Solomon（グローバル）",    founded:"1869年（日本法人：1974年）", employees:"約46,000名（グローバル）", hq:"東京都港区（日本）",   revenue:"約7兆円（グローバル）", op_profit:"約2兆円", market_cap:"約22兆円（NYSE）", listing:"NYSE（米国上場）", philosophy:"Helping clients succeed in global markets"},
+  "モルガン・スタンレー":       {ceo:"Ted Pick（グローバル）",         founded:"1935年（日本法人：1970年）", employees:"約80,000名（グローバル）", hq:"東京都千代田区（日本）", revenue:"約7兆円（グローバル）", market_cap:"約19兆円（NYSE）", listing:"NYSE（米国上場）", philosophy:"Do the right thing. Get it done. Put clients first."},
+  "J.P.モルガン":              {ceo:"Jamie Dimon（グローバル）",       founded:"2000年（JPMorgan Chase合併）", employees:"約310,000名（グローバル）", hq:"東京都千代田区（日本）", revenue:"約20兆円（グローバル）", market_cap:"約80兆円（NYSE）", listing:"NYSE（米国上場）", philosophy:"Move Fast. Keep it Simple. Be Genuine."},
+  "UBSグループ":               {ceo:"Sergio Ermotti（グローバル）",   founded:"1862年（日本法人：1963年）", employees:"約110,000名（グローバル）", hq:"東京都港区（日本）",   revenue:"非公開",       market_cap:"約15兆円（NYSE）", listing:"NYSE/SIX（米・スイス上場）", philosophy:"For some of life's questions, you're not alone"},
+  "ブラックロック":             {ceo:"Larry Fink（グローバル）",       founded:"1988年（日本法人：1998年）", employees:"約22,000名（グローバル）", hq:"東京都千代田区（日本）", revenue:"非公開（運用資産約10兆ドル）", market_cap:"約16兆円（NYSE）", listing:"NYSE（米国上場）", philosophy:"投資を通じて、人々の経済的繁栄を支援する"},
+
+  "三菱UFJ銀行":    {ceo:"半沢淳一",    founded:"2006年（三菱東京UFJ合併）",         employees:"約35,000名（単体）",  hq:"東京都千代田区", revenue:"約4兆円（MUFG連結）", op_profit:"約1.7兆円", market_cap:"約18兆円（MUFG）", listing:"東証プライム",  philosophy:"世界が進むチカラになる"},
+  "みずほ銀行":     {ceo:"加藤勝彦",    founded:"2002年（第一勧銀・富士・興銀合併）", employees:"約30,000名",         hq:"東京都千代田区", revenue:"約2.2兆円",          op_profit:"約7,000億円", market_cap:"約7兆円（MHFG）",  listing:"東証プライム",  philosophy:"ともに挑む。ともに実る。"},
+  "三井住友銀行":   {ceo:"福留朗裕",    founded:"2002年（三井・住友合併）",          employees:"約28,000名",         hq:"東京都千代田区", revenue:"約3兆円（SMFG連結）", op_profit:"約1兆円",    market_cap:"約13兆円（SMFG）", listing:"東証プライム",  philosophy:"私たちは、お客さまの夢の実現を支援し、ともに成長する"},
+  "NRI":           {ceo:"此本臣吾",    founded:"1965年",                            employees:"約15,000名",         hq:"東京都千代田区", revenue:"約6,200億円",         op_profit:"約880億円",  market_cap:"約1.3兆円",       listing:"東証プライム",  philosophy:"未来を創る"},
+  "野村証券":       {ceo:"奥田健太郎",  founded:"1925年",                            employees:"約28,000名（連結）", hq:"東京都中央区",   revenue:"約2.5兆円（HD）",     op_profit:"約1,000億円", market_cap:"約2兆円",         listing:"東証プライム",  philosophy:"社会への最良のサービスを提供することにより利益は自然に生まれる"},
+  "農林中央金庫":   {ceo:"奥和登",      founded:"1923年",                            employees:"約3,600名（単体）", hq:"東京都千代田区",   revenue:"非公開（運用資産約40兆円）", listing:"非上場",    philosophy:"農林水産業の協同組織を基盤とする金融機関として、協同組合の理念に基づいた事業活動を行う"},
+  "東京海上日動火災保険":{ceo:"白川儀一", founded:"2004年（東京海上・日動合併）",     employees:"約17,000名",         hq:"東京都千代田区", revenue:"約3.5兆円（TMNF）",   op_profit:"約2,200億円", market_cap:"約8兆円（THD）",   listing:"東証プライム",  philosophy:"すべての人々と社会のために、いつも、もっと、安心と安全を"},
+  "日本生命保険":   {ceo:"清水博",      founded:"1889年",                            employees:"約70,000名",         hq:"大阪府大阪市",   revenue:"約7兆円（保険料等収入）", listing:"非上場（相互会社）", philosophy:"よりそう、ともに、つなぐ"},
+
+  "三菱商事":   {ceo:"中西勝也",  founded:"1954年（前身：1870年）", employees:"約82,000名（連結）",  hq:"東京都千代田区", revenue:"約22兆円",   op_profit:"約1.1兆円", market_cap:"約13兆円", listing:"東証プライム", philosophy:"三綱領：所期奉公・処事光明・立業貿易"},
+  "三井物産":   {ceo:"堀健一",    founded:"1947年",                 employees:"約44,000名（連結）",  hq:"東京都千代田区", revenue:"約14兆円",   op_profit:"約9,000億円", market_cap:"約9兆円", listing:"東証プライム", philosophy:"360°business innovator"},
+  "住友商事":   {ceo:"兵頭誠之",  founded:"1919年（前身）",         employees:"約73,000名（連結）",  hq:"東京都千代田区", revenue:"約7兆円",    op_profit:"約4,000億円", market_cap:"約4兆円", listing:"東証プライム", philosophy:"住友の事業精神：信用を重んじ浮利を追わず"},
+  "伊藤忠商事": {ceo:"石井敬太",  founded:"1949年（前身：1858年）", employees:"約111,000名（連結）", hq:"東京都港区",     revenue:"約21兆円",   op_profit:"約7,000億円", market_cap:"約14兆円", listing:"東証プライム", philosophy:"三方よし"},
+  "丸紅":       {ceo:"柿木真澄",  founded:"1949年（前身：1858年）", employees:"約50,000名（連結）",  hq:"東京都千代田区", revenue:"約10兆円",   op_profit:"約3,000億円", market_cap:"約4.5兆円", listing:"東証プライム", philosophy:"誠実・夢・革新"},
+
+  "キーエンス": {ceo:"山本晃則（社長）",    founded:"1974年", employees:"約11,000名",          hq:"大阪府大阪市東淀川区", revenue:"約9,200億円",  op_profit:"約5,400億円", market_cap:"約17兆円",  listing:"東証プライム",      philosophy:"付加価値の追求"},
+  "ソニー（本体）":{ceo:"十時裕樹（社長）", founded:"1946年", employees:"約110,000名（連結）",  hq:"東京都港区",           revenue:"約13兆円",     op_profit:"約1.2兆円",  market_cap:"約15兆円",  listing:"東証プライム",      philosophy:"クリエイティビティとテクノロジーの力で、世界を感動で満たす"},
+  "信越化学工業":  {ceo:"斉藤恭彦",         founded:"1926年", employees:"約32,000名（連結）",  hq:"東京都千代田区",       revenue:"約2.8兆円",    op_profit:"約9,500億円", market_cap:"約11兆円",  listing:"東証プライム",      philosophy:"自由闊達・独創技術・堅実経営"},
+  "富士フイルムHD":{ceo:"後藤禎一",         founded:"1934年", employees:"約73,000名（連結）",  hq:"東京都港区",           revenue:"約3兆円",      op_profit:"約2,400億円", market_cap:"約5兆円",   listing:"東証プライム",      philosophy:"先進・独自の技術をもって、新たな価値を創造し、社会に貢献する"},
+  "村田製作所":    {ceo:"中島規巨",         founded:"1950年", employees:"約79,000名（連結）",  hq:"京都府長岡京市",       revenue:"約1.7兆円",    op_profit:"約2,200億円", market_cap:"約5兆円",   listing:"東証プライム",      philosophy:"革新的な電子部品で、社会と人の可能性を広げる"},
+  "ルネサスエレクトロニクス":{ceo:"柴田英利", founded:"2002年", employees:"約22,000名",         hq:"東京都江東区",         revenue:"約1.5兆円",    op_profit:"約3,000億円", market_cap:"約3.5兆円", listing:"東証プライム",      philosophy:"Winning Together for a Better Future"},
+  "東レ":         {ceo:"日覺昭廣",          founded:"1926年", employees:"約48,000名（連結）",  hq:"東京都中央区",         revenue:"約2.4兆円",    op_profit:"約900億円",  market_cap:"約7,000億円", listing:"東証プライム",     philosophy:"最先端の素材で社会に貢献する"},
+
+  "トヨタ自動車":       {ceo:"佐藤恒治",  founded:"1937年", employees:"約380,000名（連結）", hq:"愛知県豊田市",       revenue:"約45兆円",   op_profit:"約5兆円",    market_cap:"約40兆円", listing:"東証プライム", philosophy:"豊田綱領：研究と創造に心を致し、常に時流に先んずべし"},
+  "本田技研工業（ホンダ）":{ceo:"三部敏宏", founded:"1948年", employees:"約199,000名（連結）", hq:"東京都港区",         revenue:"約20兆円",   op_profit:"約1.4兆円", market_cap:"約7兆円",  listing:"東証プライム", philosophy:"夢の力・技術の力で、人の可能性を広げる"},
+  "日産自動車":         {ceo:"内田誠",    founded:"1933年", employees:"約133,000名（連結）", hq:"神奈川県横浜市",     revenue:"約13兆円",   op_profit:"（業績回復途上）", market_cap:"約2兆円", listing:"東証プライム", philosophy:"人々の生活を豊かに。イノベーションをドライブし続ける"},
+  "デンソー":           {ceo:"林新之助",  founded:"1949年", employees:"約168,000名（連結）", hq:"愛知県刈谷市",       revenue:"約7兆円",    op_profit:"約5,000億円", market_cap:"約5兆円", listing:"東証プライム", philosophy:"夢の力で未来を拓く"},
+
+  "電通":       {ceo:"馬場俊一（HD）",     founded:"1901年", employees:"約70,000名（グループ）", hq:"東京都港区",    revenue:"約1.5兆円",  op_profit:"約1,400億円", market_cap:"約1.5兆円", listing:"東証プライム", philosophy:"Good Innovation."},
+  "博報堂":     {ceo:"水島正幸（HD）",     founded:"1895年", employees:"約14,000名（単体）",     hq:"東京都港区",    revenue:"約9,000億円（HD）", op_profit:"約500億円", market_cap:"約6,000億円", listing:"東証プライム（BHDN）", philosophy:"生活者発想で世界を変えていく"},
+
+  "サントリー": {ceo:"新浪剛史",           founded:"1899年（前身）",  employees:"約40,000名（連結）", hq:"大阪府大阪市", revenue:"約3.3兆円",  op_profit:"約2,300億円", listing:"非上場",  philosophy:"やってみなはれ"},
+
+  "ANA":   {ceo:"芝田浩二（HD）",    founded:"1952年", employees:"約45,000名（グループ）", hq:"東京都港区",    revenue:"約2.2兆円",  op_profit:"約1,200億円", market_cap:"約1.5兆円", listing:"東証プライム", philosophy:"安心と信頼を基礎に、世界をつなぐ心の翼で夢にあふれる未来へ"},
+  "JAL":   {ceo:"鳥取三津子",        founded:"1951年", employees:"約35,000名（グループ）", hq:"東京都品川区",  revenue:"約1.7兆円",  op_profit:"約1,000億円", market_cap:"約1.2兆円", listing:"東証プライム", philosophy:"地球をつなぐ想いをのせて、夢にあふれる未来へ"},
+
+  "三井不動産": {ceo:"植田俊",    founded:"1941年", employees:"約20,000名（グループ）", hq:"東京都中央区",   revenue:"約2.4兆円",  op_profit:"約3,500億円", market_cap:"約3.5兆円", listing:"東証プライム", philosophy:"共生・共存・共創により、持続可能な社会を実現する"},
+  "KDDI":      {ceo:"高橋誠",    founded:"2000年", employees:"約50,000名（連結）",     hq:"東京都千代田区", revenue:"約5.7兆円",  op_profit:"約1兆円",     market_cap:"約8兆円",   listing:"東証プライム", philosophy:"つなぐチカラを進化させ、誰もが思いを実現できる社会をつくる"},
+
+  "武田薬品工業":  {ceo:"クリストフ・ウェバー", founded:"1781年",            employees:"約49,000名（連結）",  hq:"東京都中央区",   revenue:"約4.3兆円",  op_profit:"約4,000億円",  market_cap:"約5兆円",  listing:"東証プライム",   philosophy:"患者さんを中心に考え、生命を脅かす疾患に革新的な医薬品を届ける"},
+  "第一三共":      {ceo:"眞鍋淳",              founded:"2005年（三共・第一合併）", employees:"約16,000名",    hq:"東京都中央区",   revenue:"約1.7兆円",  op_profit:"約3,000億円",  market_cap:"約7兆円",  listing:"東証プライム",   philosophy:"革新的医薬品を継続的に創出し、多様な医療ニーズに応える"},
+  "中外製薬":      {ceo:"奥田修",              founded:"1943年",            employees:"約8,000名",          hq:"東京都中央区",   revenue:"約1.2兆円",  op_profit:"約4,000億円",  market_cap:"約9兆円",  listing:"東証プライム（ロシュ傘下）", philosophy:"革新的な医薬品とサービスの提供を通じて新しい価値を創造する"},
+  "アステラス製薬": {ceo:"岡村直樹",             founded:"2005年（藤沢・山之内合併）", employees:"約14,000名（連結）", hq:"東京都中央区", revenue:"約1.6兆円",  op_profit:"（研究投資期）", market_cap:"約3兆円", listing:"東証プライム", philosophy:"先端・信頼の医薬で、世界の人々の健康に貢献する"},
+
+  "Amazon Japan":  {ceo:"Andy Jassy（グローバル）",      founded:"2000年（日本法人）",  employees:"約1,600,000名（グローバル）", hq:"東京都目黒区（日本）",    revenue:"約90兆円（グローバル）",  op_profit:"約5.5兆円",  market_cap:"約270兆円（NASDAQ）", listing:"NASDAQ（米国上場）", philosophy:"地球上で最もお客様を大切にする企業"},
+  "Google Japan":  {ceo:"Sundar Pichai（Alphabet CEO）", founded:"2001年（日本法人）",  employees:"約190,000名（グローバル）",   hq:"東京都渋谷区（日本）",    revenue:"約43兆円（グローバル）",  op_profit:"約12兆円",   market_cap:"約300兆円（NASDAQ）", listing:"NASDAQ（米国上場）", philosophy:"すべての情報を整理し、世界中の人々がアクセスできて役に立つものにする"},
+  "Microsoft Japan":{ceo:"Satya Nadella（グローバル）",  founded:"1991年（日本法人）",  employees:"約220,000名（グローバル）",   hq:"東京都港区（日本）",      revenue:"約33兆円（グローバル）",  op_profit:"約12兆円",   market_cap:"約500兆円（NASDAQ）", listing:"NASDAQ（米国上場）", philosophy:"地球上のすべての個人とすべての組織が、より多くのことを達成できるようにする"},
+  "Salesforce Japan":{ceo:"Marc Benioff（グローバル）",  founded:"2000年（日本法人）",  employees:"約72,000名（グローバル）",    hq:"東京都千代田区（日本）",  revenue:"約4兆円（グローバル）",   op_profit:"約4,000億円", market_cap:"約30兆円（NYSE）", listing:"NYSE（米国上場）",      philosophy:"The Business of Business is Improving the State of the World"},
+  "IBM Japan":     {ceo:"Arvind Krishna（グローバル）",  founded:"1937年（日本法人）",  employees:"約280,000名（グローバル）",   hq:"東京都中央区（日本）",    revenue:"約9兆円（グローバル）",   op_profit:"約1.3兆円",  market_cap:"約20兆円（NYSE）", listing:"NYSE（米国上場）",      philosophy:"Be Essential"},
+
+  "任天堂": {ceo:"古川俊太郎",  founded:"1889年（前身）/ 1963年（現法人）", employees:"約7,000名",  hq:"京都府京都市",    revenue:"約1.7兆円",   op_profit:"約5,000億円", market_cap:"約9兆円",    listing:"東証プライム", philosophy:"娯楽を通して人々に笑顔を届ける"},
+  "Cygames":  {ceo:"渡邊耕一",  founded:"2011年",                            employees:"約3,000名",  hq:"東京都渋谷区",    revenue:"非公開（推定2,000億円+）", listing:"非上場",       philosophy:"最高のコンテンツを作り続ける"},
+  "カプコン":  {ceo:"辻本春弘",  founded:"1979年",                            employees:"約3,400名",  hq:"大阪府大阪市北区", revenue:"約1,300億円", op_profit:"約550億円",  market_cap:"約1.4兆円",  listing:"東証プライム", philosophy:"「遊文化」の創造企業"},
+  "セガ":      {ceo:"里見治紀（親会社セガサミーHD）", founded:"1960年", employees:"約6,500名",  hq:"東京都品川区",    revenue:"約4,500億円（セガサミーHD）", op_profit:"約600億円", market_cap:"約4,000億円（HD）", listing:"東証プライム", philosophy:"ALWAYS IN THE GAME"},
+
+  "ファーストリテイリング（ユニクロ）":{ceo:"柳井正", founded:"1963年", employees:"約120,000名（グループ）", hq:"山口県山口市（登記）/ 東京都港区", revenue:"約3.4兆円", op_profit:"約5,000億円", market_cap:"約12兆円", listing:"東証プライム", philosophy:"服を変え、常識を変え、世界を変えていく"},
+
+  "鹿島建設": {ceo:"天野裕正", founded:"1840年（前身）/ 1947年（現法人）", employees:"約11,000名（単体）", hq:"東京都港区",    revenue:"約2.8兆円",  op_profit:"約1,400億円", market_cap:"約1.8兆円",  listing:"東証プライム", philosophy:"技術力・人・文化を磨いて未来を切り拓く"},
+  "大成建設":  {ceo:"相川善郎", founded:"1873年",  employees:"約9,000名",          hq:"東京都新宿区",  revenue:"約1.9兆円",  op_profit:"約1,100億円", market_cap:"約8,000億円", listing:"東証プライム", philosophy:"人がいきいきとできる環境・社会の持続的な発展に貢献する"},
+
+  "JR東日本": {ceo:"喜勢陽一", founded:"1987年（国鉄民営化）", employees:"約73,000名",   hq:"東京都渋谷区",    revenue:"約3.1兆円",  op_profit:"約2,500億円", market_cap:"約3兆円",  listing:"東証プライム", philosophy:"人の移動から始まる、可能性の旅。"},
+  "JR東海":   {ceo:"丹羽俊介", founded:"1987年",               employees:"約28,000名",   hq:"愛知県名古屋市",  revenue:"約1.7兆円",  op_profit:"約4,600億円", market_cap:"約6兆円",  listing:"東証プライム", philosophy:"安全・正確・快適な輸送サービスと豊かな地域づくりへの貢献"},
+  "ヤマトホールディングス":{ceo:"長尾裕", founded:"1919年", employees:"約220,000名（グループ）", hq:"東京都中央区", revenue:"約1.8兆円", op_profit:"（DX投資中）", market_cap:"約8,000億円", listing:"東証プライム", philosophy:"クロネコヤマトはお客様のものです"},
+
+  "電通デジタル":{ceo:"瀧本恒",   founded:"2016年", employees:"約3,000名",  hq:"東京都港区", revenue:"非公開（電通グループ子会社）", listing:"非上場", philosophy:"テクノロジーとクリエイティビティの力で、ビジネスの課題を解決する"},
+  "NHK":       {ceo:"稲葉延雄（会長）", founded:"1950年（現法人）", employees:"約10,700名", hq:"東京都渋谷区", revenue:"約6,900億円（受信料収入）", listing:"非上場（公共放送）", philosophy:"放送を通じ、正しく豊かな文化の発達に寄与する"},
+  "出光興産":   {ceo:"木藤俊一", founded:"1940年（前身：1911年）", employees:"約7,000名（単体）", hq:"東京都千代田区", revenue:"約8.5兆円", op_profit:"約1,400億円", market_cap:"約1.5兆円", listing:"東証プライム", philosophy:"人間尊重"},
+};
+
 // ── CONSTANTS ────────────────────────────────────────────────────────────────
 const PROGRESS = ['未応募','エントリー済','ES提出済','面接中','結果待ち','合格 ✓','不合格 ✗'];
 const PROG_CLS  = ['prog-0','prog-1','prog-2','prog-3','prog-4','prog-5','prog-6'];
@@ -765,10 +1412,12 @@ function countdownHtml(dl) {
   const d = daysUntil(dl);
   if (d === null) return '';
   if (d < 0)  return `<span class="countdown cd-done">締切済</span>`;
-  if (d === 0) return `<span class="countdown cd-urgent">本日</span>`;
+  if (d === 0) return `<span class="countdown cd-urgent">🔴 本日</span>`;
   if (d <= 3)  return `<span class="countdown cd-urgent">あと${d}日</span>`;
   if (d <= 7)  return `<span class="countdown cd-soon">あと${d}日</span>`;
-  return `<span class="countdown cd-normal">あと${d}日</span>`;
+  const total=30, pct=Math.max(0,Math.min(100,Math.round((1-d/total)*100)));
+  const col=d<=14?'#f59e0b':'#4f6ef7';
+  return `<span class="countdown cd-normal">あと${d}日</span><span class="deadline-bar"><span class="deadline-fill" style="width:${pct}%;background:${col}"></span></span>`;
 }
 function dlNum(d) { const m=d.match(/^(\d+)\/(\d+)/); return m ? +m[1]*100+ +m[2] : 9999; }
 function urgScore(dl,raw) {
@@ -793,7 +1442,38 @@ function storeKey(idx) {
 }
 
 // ── STATE ────────────────────────────────────────────────────────────────────
-function defState() { return {progress:0, memo:'', fav:false, tags:[], events:[], star:0}; }
+function defState() { return {progress:0, memo:'', fav:false, tags:[], events:[], star:0, research:{overview:'',motivation:'',interview:''}, ratings:{challenge:0,salary:0,stability:0,growth:0,wlb:0}, visits:[]}; }
+
+// ── SELF ANALYSIS ────────────────────────────────────────────────────────────
+const SELF_KEY='intern28_self';
+const SELF_FIELDS=[
+  {key:'axis',       emoji:'🎯', label:'就活軸（重視すること）',         hint:'給与・成長機会・安定性・やりがい・社風など、何を軸に企業を選ぶか'},
+  {key:'pr',         emoji:'✨', label:'自己PR',                        hint:'強みを具体的なエピソードで。200〜400字程度'},
+  {key:'gakuchika',  emoji:'🏆', label:'ガクチカ（学生時代に力を入れたこと）', hint:'取り組み・課題・工夫・結果を具体的に'},
+  {key:'strengths',  emoji:'💪', label:'強み',                          hint:'長所・得意なこと。複数でもOK'},
+  {key:'weaknesses', emoji:'📈', label:'弱み・改善点',                   hint:'短所と、それに対してどう向き合っているか'},
+  {key:'industries', emoji:'🏢', label:'志望業界・企業の傾向と理由',      hint:'なぜこの業界・この企業群を選んでいるか。共通の軸は？'},
+  {key:'notes',      emoji:'📓', label:'気づき・メモ',                   hint:'面接で使えたエピソード・フィードバック・反省など'},
+];
+const SELF_AXIS_ITEMS=[
+  {key:'ax_salary',     label:'給与・待遇'},
+  {key:'ax_growth',     label:'成長機会'},
+  {key:'ax_stability',  label:'安定性'},
+  {key:'ax_purpose',    label:'やりがい'},
+  {key:'ax_culture',    label:'社風・文化'},
+  {key:'ax_wlb',        label:'WLB'},
+];
+function loadSelf(){try{return Object.assign({ax_salary:'',ax_growth:'',ax_stability:'',ax_purpose:'',ax_culture:'',ax_wlb:'',axis:'',pr:'',gakuchika:'',strengths:'',weaknesses:'',industries:'',notes:''},JSON.parse(localStorage.getItem(SELF_KEY)));}catch{return{ax_salary:'',ax_growth:'',ax_stability:'',ax_purpose:'',ax_culture:'',ax_wlb:'',axis:'',pr:'',gakuchika:'',strengths:'',weaknesses:'',industries:'',notes:''};}}
+function saveSelf(d){localStorage.setItem(SELF_KEY,JSON.stringify(d));}
+
+// ── RATING AXES ──────────────────────────────────────────────────────────────
+const RATING_AXES=[
+  {key:'challenge', label:'やりがい'},
+  {key:'salary',    label:'年収・待遇'},
+  {key:'stability', label:'安定性'},
+  {key:'growth',    label:'成長性'},
+  {key:'wlb',       label:'WLB'},
+];
 function loadSt(idx) {
   const k=storeKey(idx); if(!k) return defState();
   try { return Object.assign(defState(), JSON.parse(localStorage.getItem(k))); } catch { return defState(); }
@@ -840,6 +1520,8 @@ applyDark();
 const INDUSTRIES = [...new Set(DATA.map(r=>r[0]))];
 let activeIndustry='全て', activeUrgency='全て', activeTag='', progressFilter='all';
 let hideFinished=true, favOnly=false, searchText='', sortMode='asc', starFilter=0;
+let resFavOnly=false, resStarFilter=0, resIndustry='全て', resSort='default';
+let currentDetailIdx=null;
 const SORT_MODES=['asc','desc','urgency'];
 const SORT_LABELS={asc:'締切 ▲ 昇順',desc:'締切 ▼ 降順',urgency:'優先度順 ★'};
 const SORT_TH={asc:'締め切り ▲',desc:'締め切り ▼',urgency:'締め切り ★'};
@@ -1210,9 +1892,223 @@ function switchView(v) {
   document.getElementById('tableView').style.display=v==='table'?'':'none';
   document.getElementById('cardsView').style.display=v==='cards'?'':'none';
   document.getElementById('calendarView').style.display=v==='calendar'?'':'none';
+  document.getElementById('researchView').style.display=v==='research'?'':'none';
   if(v==='table') render();
   else if(v==='cards') renderCards();
+  else if(v==='research') renderResearch();
   else renderCalendar();
+}
+
+// ── RENDER RESEARCH ──────────────────────────────────────────────────────────
+function parseSalaryNum(str) {
+  if (!str) return -1;
+  const m = str.replace(/,/g, '').match(/(\d+(?:\.\d+)?)/);
+  return m ? +m[1] : -1;
+}
+
+function renderResearch() {
+  renderDashboard();
+  const grid=document.getElementById('researchGrid');
+  grid.innerHTML='';
+  const entries=getAllData().map((r,i)=>({r,i})).filter(({r,i})=>{
+    const s=loadSt(i);
+    if(resFavOnly&&!s.fav) return false;
+    if(resStarFilter>0&&(s.star||0)<resStarFilter) return false;
+    if(resIndustry!=='全て'&&r[0]!==resIndustry) return false;
+    return true;
+  });
+  if(!entries.length){grid.innerHTML='<div class="empty" style="grid-column:1/-1">該当企業がありません。絞り込みを解除してください。</div>';return;}
+
+  // Sort
+  if(resSort!=='default'){
+    entries.sort((a,b)=>{
+      const salA=COMPANY_SALARY[a.r[1]]||{}, salB=COMPANY_SALARY[b.r[1]]||{};
+      if(resSort==='avg30s-desc'||resSort==='avg30s-asc'){
+        const na=parseSalaryNum(salA.avg30s), nb=parseSalaryNum(salB.avg30s);
+        if(na<0&&nb<0) return 0; if(na<0) return 1; if(nb<0) return -1;
+        return resSort==='avg30s-desc'?nb-na:na-nb;
+      }
+      if(resSort==='entry-desc'||resSort==='entry-asc'){
+        const na=parseSalaryNum(salA.entry), nb=parseSalaryNum(salB.entry);
+        if(na<0&&nb<0) return 0; if(na<0) return 1; if(nb<0) return -1;
+        return resSort==='entry-desc'?nb-na:na-nb;
+      }
+      if(resSort==='star-desc'){
+        return (loadSt(b.i).star||0)-(loadSt(a.i).star||0);
+      }
+      if(resSort==='deadline-asc'){
+        return urgScore(a.r[3],a.r[4])-urgScore(b.r[3],b.r[4]);
+      }
+      return 0;
+    });
+  }
+
+  entries.forEach(({r,i})=>{
+    const s=loadSt(i);
+    const res=s.research||{overview:'',motivation:'',interview:''};
+    const st=getStatus(r[3],r[4]);
+    const badgeCls={済:'sb-done',本日:'sb-today',明日:'sb-tomorrow',未:'sb-upcoming'}[st]||'sb-upcoming';
+    const badgeTx={済:'締切済',本日:'🔴 本日',明日:'🟠 明日',未:'未'}[st]||st;
+    const sal=COMPANY_SALARY[r[1]]||{};
+    const ov=COMPANY_OVERVIEW[r[1]]||'';
+    const hasNotes=res.overview||res.motivation||res.interview;
+    const card=document.createElement('div');
+    card.className='rc';
+    card.dataset.detail=i;
+    card.innerHTML=`
+      <div class="rc-head">
+        <div><div class="rc-name">${r[1]}</div><span class="ind-tag">${r[0]}</span></div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:3px">
+          <button class="fav-btn" data-idx="${i}">${s.fav?'⭐':'☆'}</button>
+          ${starHtml(i,s.star)}
+        </div>
+      </div>
+      <div class="rc-meta">
+        <span class="deadline-date" style="font-size:.82rem">${r[3]}</span>${countdownHtml(r[3])}
+        <span class="status-badge ${badgeCls}">${badgeTx}</span>
+      </div>
+      ${sal.entry||sal.avg30s?`<div style="display:flex;gap:6px;margin-bottom:8px;flex-wrap:wrap">
+        ${sal.entry?`<span style="font-size:.71rem;background:#e8f4fd;color:#2471a3;padding:2px 9px;border-radius:999px;font-weight:600">初任給 ${sal.entry}</span>`:''}
+        ${sal.avg30s?`<span style="font-size:.71rem;background:#eafaf1;color:#1e8449;padding:2px 9px;border-radius:999px;font-weight:600">30代 ${sal.avg30s}</span>`:''}
+      </div>`:''}
+      ${ov?`<div style="font-size:.77rem;color:var(--text2);line-height:1.65;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:10px">${ov}</div>`:''}
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:4px">
+        <span style="font-size:.71rem;color:var(--text3)">${hasNotes?'📝 メモあり':''}</span>
+        <button style="background:var(--accent);color:#fff;border:none;border-radius:6px;padding:5px 13px;font-size:.76rem;font-weight:600;cursor:pointer;pointer-events:none">企業研究を開く →</button>
+      </div>`;
+    grid.appendChild(card);
+  });
+  updateSummary(getEntries());
+}
+
+// ── VISIT HTML BUILDER ───────────────────────────────────────────────────────
+function buildVisitHtml(visits){
+  return visits.map((v,vi)=>`
+    <div class="visit-item">
+      <div class="visit-row">
+        <input class="visit-inp" placeholder="訪問日（例: 6/20）" value="${v.date||''}" data-vi="${vi}" data-vfield="date">
+        <input class="visit-inp" placeholder="部署・職種" value="${v.dept||''}" data-vi="${vi}" data-vfield="dept">
+        <button class="visit-del" data-vi="${vi}" title="削除">✕</button>
+      </div>
+      <textarea class="visit-ta" placeholder="聞いた内容・印象・気づき（社風・働き方・選考情報など）" data-vi="${vi}" data-vfield="notes">${v.notes||''}</textarea>
+    </div>`).join('');
+}
+
+// ── SELF ANALYSIS RENDER ─────────────────────────────────────────────────────
+function renderSelf(){
+  const d=loadSelf();
+  const filled=SELF_FIELDS.filter(f=>d[f.key]&&d[f.key].trim()).length;
+  const pct=Math.round(filled/SELF_FIELDS.length*100);
+  document.getElementById('selfCompletePct').textContent=`完成度 ${pct}%`;
+  document.getElementById('selfBody').innerHTML=`
+    <div class="self-section">
+      <div class="self-section-title">🎯 就活の優先軸（重み付け）</div>
+      <div class="self-section-hint">各軸がどれくらい重要か具体的に記入しておくと、企業比較がしやすくなります</div>
+      <div class="self-axis-grid">
+        ${SELF_AXIS_ITEMS.map(ax=>`
+          <div class="self-axis-item">
+            <span class="self-axis-lbl">${ax.label}</span>
+            <input class="self-axis-inp" data-sfield="${ax.key}" placeholder="重視度・理由" value="${d[ax.key]||''}">
+          </div>`).join('')}
+      </div>
+    </div>
+    ${SELF_FIELDS.map(f=>`
+    <div class="self-section">
+      <div class="self-section-title">${f.emoji} ${f.label}</div>
+      <div class="self-section-hint">${f.hint}</div>
+      <textarea class="self-ta${d[f.key]?' has-data':''}" data-sfield="${f.key}" placeholder="${f.hint}">${d[f.key]||''}</textarea>
+    </div>`).join('')}
+    <div style="text-align:center;padding:20px 0;font-size:.75rem;color:var(--text3)">自己分析データはブラウザのlocalStorageに保存されます。バックアップから一括エクスポートも可能です。</div>`;
+  document.getElementById('selfView').classList.add('open');
+}
+function closeSelf(){document.getElementById('selfView').classList.remove('open');}
+
+// ── OPEN / CLOSE DETAIL ──────────────────────────────────────────────────────
+function openDetail(idx) {
+  currentDetailIdx=idx;
+  const allD=getAllData();
+  if(idx>=allD.length) return;
+  const r=allD[idx];
+  const s=loadSt(idx);
+  const res=s.research||{overview:'',motivation:'',interview:''};
+  const ratings=s.ratings||{challenge:0,salary:0,stability:0,growth:0,wlb:0};
+  const st=getStatus(r[3],r[4]);
+  const badgeCls={済:'sb-done',本日:'sb-today',明日:'sb-tomorrow',未:'sb-upcoming'}[st]||'sb-upcoming';
+  const badgeTx={済:'締切済',本日:'🔴 本日',明日:'🟠 明日',未:'未'}[st]||st;
+  const sal=COMPANY_SALARY[r[1]]||{};
+  document.getElementById('detailCoName').textContent=r[1];
+  const favBtn=document.getElementById('detailFav');
+  favBtn.textContent=s.fav?'⭐':'☆';
+  favBtn.dataset.idx=idx;
+  document.getElementById('detailBody').innerHTML=`
+    <div class="detail-section">
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:10px">
+        <span class="ind-tag">${r[0]}</span>
+        <span class="deadline-date">${r[3]}</span>${countdownHtml(r[3])}
+        <span class="status-badge ${badgeCls}">${badgeTx}</span>
+        ${r[7]?`<a class="link-btn" href="${r[7]}" target="_blank" rel="noopener">採用サイト →</a>`:''}
+      </div>
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+        ${starHtml(idx,s.star)}
+        <select class="progress-select ${PROG_CLS[s.progress]}" id="detailProgSel" data-idx="${idx}">
+          ${PROGRESS.map((p,pi)=>`<option value="${pi}"${s.progress===pi?' selected':''}>${p}</option>`).join('')}
+        </select>
+      </div>
+      ${r[2]&&r[2]!=='-'?`<div style="font-size:.78rem;color:var(--text2);margin-top:6px">プログラム: ${r[2]}</div>`:''}
+      ${r[6]&&r[6]!=='-'?`<div style="font-size:.78rem;color:#e67e22;margin-top:3px">${r[6]}</div>`:''}
+      ${r[5]?`<div style="font-size:.78rem;color:var(--text2);margin-top:3px">開催期間: ${r[5]}</div>`:''}
+    </div>
+    ${(()=>{const inf=COMPANY_INFO[r[1]]||{};if(!Object.keys(inf).length)return '';const rows=[
+      ['代表者',inf.ceo],['設立',inf.founded],['本社',inf.hq],['従業員数',inf.employees],
+      ['売上高',inf.revenue],['営業利益',inf.op_profit],['時価総額',inf.market_cap],['上場',inf.listing]
+    ].filter(x=>x[1]);return `
+    <div class="detail-section">
+      <div class="detail-section-title">📊 企業データ <span style="font-size:.67rem;font-weight:400;color:var(--text3)">（参考値・概算）</span></div>
+      <div class="info-grid">${rows.map(([l,v])=>`<div class="info-item"><div class="info-lbl">${l}</div><div class="info-val">${v}</div></div>`).join('')}</div>
+      ${inf.philosophy?`<div class="philosophy-box">${inf.philosophy}</div>`:''}
+    </div>`;})()}
+    ${sal.entry||sal.avg30s?`
+    <div class="detail-section">
+      <div class="detail-section-title">💰 給与情報</div>
+      <div class="salary-grid">
+        ${sal.entry?`<div class="salary-item"><div class="salary-val">${sal.entry}</div><div class="salary-lbl">初任給（月額）</div></div>`:''}
+        ${sal.avg30s?`<div class="salary-item"><div class="salary-val">${sal.avg30s}</div><div class="salary-lbl">30代平均年収</div></div>`:''}
+      </div>
+      ${sal.note?`<div style="font-size:.72rem;color:var(--text3);margin-top:8px;line-height:1.5">※ ${sal.note}</div>`:''}
+      <div style="font-size:.69rem;color:var(--text3);margin-top:6px">※ 出典: 各社有価証券報告書・口コミサイト等の推計値。目安としてご参照ください。</div>
+    </div>`:''}
+    <div class="detail-section">
+      <div class="detail-section-title">⭐ 企業評価 <span style="font-size:.67rem;font-weight:400;color:var(--text3)">（主観的な印象を5段階で）</span></div>
+      <div class="rating-grid">
+        ${RATING_AXES.map(ax=>`<div class="rating-item"><div class="rating-lbl">${ax.label}</div><div class="rating-stars" data-raxis="${ax.key}">${[1,2,3,4,5].map(n=>`<span class="rating-star${(ratings[ax.key]||0)>=n?' on':''}" data-rv="${n}">★</span>`).join('')}</div></div>`).join('')}
+      </div>
+    </div>
+    <div class="detail-section">
+      <div class="detail-section-title">📋 企業概要</div>
+      ${COMPANY_OVERVIEW[r[1]]?`<div class="rc-info" style="margin-bottom:12px">${COMPANY_OVERVIEW[r[1]]}</div>`:''}
+      <div class="rc-info-lbl">個人メモ</div>
+      <textarea class="detail-ta${res.overview?' has-data':''}" data-ridx="${idx}" data-rfield="overview" placeholder="気になった点・追加メモなど">${res.overview}</textarea>
+    </div>
+    <div class="detail-section">
+      <div class="detail-section-title">💡 志望理由</div>
+      <textarea class="detail-ta${res.motivation?' has-data':''}" data-ridx="${idx}" data-rfield="motivation" placeholder="この企業を志望する理由・入社してやりたいこと">${res.motivation}</textarea>
+    </div>
+    <div class="detail-section">
+      <div class="detail-section-title">🎯 面接対策・逆質問</div>
+      <textarea class="detail-ta${res.interview?' has-data':''}" data-ridx="${idx}" data-rfield="interview" placeholder="想定質問・回答メモ・逆質問リストなど">${res.interview}</textarea>
+    </div>
+    <div class="detail-section">
+      <div class="detail-section-title">👥 OB/OG訪問メモ</div>
+      <div id="detailVisits">${buildVisitHtml(s.visits||[])}</div>
+      <button class="add-visit-btn" id="addVisitBtn">＋ OB/OG訪問を追加</button>
+    </div>`;
+  const dv=document.getElementById('detailView');
+  dv.classList.add('open');
+  dv.scrollTop=0;
+}
+function closeDetail() {
+  document.getElementById('detailView').classList.remove('open');
+  renderResearch();
 }
 
 // ── BULK SELECTION ───────────────────────────────────────────────────────────
@@ -1335,6 +2231,112 @@ document.getElementById('colSite').addEventListener('change',e=>{COLS.site=e.tar
 // Calendar nav
 document.getElementById('calPrev').addEventListener('click',()=>{calMonth--;if(calMonth<0){calMonth=11;calYear--;}renderCalendar();});
 document.getElementById('calNext').addEventListener('click',()=>{calMonth++;if(calMonth>11){calMonth=0;calYear++;}renderCalendar();});
+
+// Research view controls
+const resInd=document.getElementById('resIndustry');
+const resAllOpt=document.createElement('option');resAllOpt.value='全て';resAllOpt.textContent='全業界';resInd.appendChild(resAllOpt);
+IND_GROUPS.forEach(g=>{
+  const grp=document.createElement('optgroup');grp.label=`── ${g.label} ──`;
+  g.inds.filter(i=>INDUSTRIES.includes(i)).forEach(ind=>{const o=document.createElement('option');o.value=ind;o.textContent=ind;grp.appendChild(o);});
+  if(grp.children.length) resInd.appendChild(grp);
+});
+document.getElementById('resFavOnly').addEventListener('change',e=>{resFavOnly=e.target.checked;renderResearch();});
+document.getElementById('resStarFilter').addEventListener('change',e=>{resStarFilter=+e.target.value;renderResearch();});
+resInd.addEventListener('change',e=>{resIndustry=e.target.value;renderResearch();});
+document.getElementById('resSortSel').addEventListener('change',e=>{resSort=e.target.value;renderResearch();});
+
+// Research grid event delegation
+const researchGrid=document.getElementById('researchGrid');
+researchGrid.addEventListener('click',e=>{
+  const fav=e.target.closest('.fav-btn');
+  if(fav){const idx=+fav.dataset.idx;const s=loadSt(idx);s.fav=!s.fav;saveSt(idx,s);renderResearch();return;}
+  const star=e.target.closest('.star-rating');
+  if(star&&e.target.dataset.sv){const idx=+star.dataset.sidx;const v=+e.target.dataset.sv;const s=loadSt(idx);s.star=(s.star===v?0:v);saveSt(idx,s);renderResearch();return;}
+  const card=e.target.closest('.rc[data-detail]');
+  if(card){openDetail(+card.dataset.detail);return;}
+});
+
+// Detail view event delegation
+document.getElementById('detailBack').addEventListener('click',closeDetail);
+document.getElementById('detailFav').addEventListener('click',e=>{
+  const idx=+e.currentTarget.dataset.idx;
+  const s=loadSt(idx);s.fav=!s.fav;saveSt(idx,s);
+  e.currentTarget.textContent=s.fav?'⭐':'☆';
+});
+const detailBody=document.getElementById('detailBody');
+detailBody.addEventListener('input',e=>{
+  const ta=e.target.closest('.detail-ta');
+  if(ta){
+    const idx=+ta.dataset.ridx,field=ta.dataset.rfield;
+    const s=loadSt(idx);
+    if(!s.research) s.research={overview:'',motivation:'',interview:''};
+    s.research[field]=ta.value;
+    saveSt(idx,s);
+    ta.classList.toggle('has-data',!!ta.value);
+  }
+});
+detailBody.addEventListener('change',e=>{
+  const sel=e.target.closest('.progress-select');
+  if(sel){
+    const idx=+sel.dataset.idx;const s=loadSt(idx);const oldP=s.progress;
+    s.progress=+sel.value;saveSt(idx,s);
+    logHist(getAllData()[idx][1],oldP,s.progress);
+    sel.className='progress-select '+PROG_CLS[s.progress];
+    renderDashboard();
+  }
+});
+detailBody.addEventListener('click',e=>{
+  // Star rating (志望度)
+  const star=e.target.closest('.star-rating');
+  if(star&&e.target.dataset.sv){
+    const idx=+star.dataset.sidx,v=+e.target.dataset.sv;
+    const s=loadSt(idx);s.star=(s.star===v?0:v);saveSt(idx,s);
+    star.querySelectorAll('span').forEach((sp,n)=>sp.classList.toggle('on',(n+1)<=s.star));
+    return;
+  }
+  // Company rating (5軸)
+  const rstar=e.target.closest('.rating-star[data-rv]');
+  if(rstar){
+    const row=rstar.closest('.rating-stars');
+    const axis=row.dataset.raxis, val=+rstar.dataset.rv;
+    const s=loadSt(currentDetailIdx);
+    if(!s.ratings) s.ratings={challenge:0,salary:0,stability:0,growth:0,wlb:0};
+    s.ratings[axis]=(s.ratings[axis]===val?0:val);
+    saveSt(currentDetailIdx,s);
+    row.querySelectorAll('.rating-star').forEach((sp,n)=>sp.classList.toggle('on',(n+1)<=s.ratings[axis]));
+    return;
+  }
+  // Add visit
+  if(e.target.id==='addVisitBtn'){
+    const s=loadSt(currentDetailIdx);
+    if(!s.visits) s.visits=[];
+    s.visits.push({date:'',dept:'',notes:''});
+    saveSt(currentDetailIdx,s);
+    document.getElementById('detailVisits').innerHTML=buildVisitHtml(s.visits);
+    return;
+  }
+  // Delete visit
+  const vdel=e.target.closest('.visit-del');
+  if(vdel){
+    const vi=+vdel.dataset.vi;
+    const s=loadSt(currentDetailIdx);
+    s.visits.splice(vi,1);
+    saveSt(currentDetailIdx,s);
+    document.getElementById('detailVisits').innerHTML=buildVisitHtml(s.visits);
+    return;
+  }
+});
+detailBody.addEventListener('input',e=>{
+  // Visit inputs
+  const vinp=e.target.closest('[data-vfield][data-vi]');
+  if(vinp){
+    const vi=+vinp.dataset.vi, field=vinp.dataset.vfield;
+    const s=loadSt(currentDetailIdx);
+    if(!s.visits) s.visits=[];
+    if(s.visits[vi]) s.visits[vi][field]=vinp.value;
+    saveSt(currentDetailIdx,s);
+  }
+});
 // Bulk
 document.getElementById('selAll').addEventListener('change',e=>{
   const entries=getEntries();
@@ -1496,6 +2498,22 @@ document.getElementById('cardsGrid').addEventListener('change',e=>{
     const idx=+sel.dataset.idx;const s=loadSt(idx);const oldP=s.progress;
     s.progress=+sel.value;saveSt(idx,s);logHist(getAllData()[idx][1],oldP,s.progress);
     sel.className='progress-select '+PROG_CLS[s.progress];renderDashboard();
+  }
+});
+
+// Self analysis listeners
+document.getElementById('selfBtn').addEventListener('click', renderSelf);
+document.getElementById('selfBack').addEventListener('click', closeSelf);
+document.getElementById('selfBody').addEventListener('input',e=>{
+  const inp=e.target.closest('[data-sfield]');
+  if(inp){
+    const d=loadSelf();
+    d[inp.dataset.sfield]=inp.value;
+    saveSelf(d);
+    inp.classList.toggle('has-data',!!inp.value);
+    // update completion %
+    const filled=SELF_FIELDS.filter(f=>d[f.key]&&d[f.key].trim()).length;
+    document.getElementById('selfCompletePct').textContent=`完成度 ${Math.round(filled/SELF_FIELDS.length*100)}%`;
   }
 });
 
